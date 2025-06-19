@@ -3,13 +3,10 @@ using System.Collections.Generic;
 
 namespace dungeon
 {
-    public partial class Test : Node
+    public partial class Test : Node3D
     {
         [Export] private string TilesPath = "res://scenes/dungeon-tiles/stone/";
-        [Export] private string DungeonMapPath = "res://assets/dungeon-maps/dlvl1.csv";
-
-        [Export] private int playerStartPosX;
-        [Export] private int playerStartPosY;
+        [Export] private string DungeonMapPath = "res://dungeon-maps/dlvl1.csv";
 
         private string[][] dungeonMap;
 
@@ -189,6 +186,11 @@ namespace dungeon
             }
         }
 
+        public string ReturnDungeonTile(int x, int y)
+        {
+            return dungeonMap[x][y];
+        }
+
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
@@ -207,13 +209,6 @@ namespace dungeon
             }
 
             GenerateMap();
-
-            // Move player to a floor tile
-            var player = GetNodeOrNull<Node3D>("Player"); // adjust path as needed
-            if (player != null)
-            {
-                player.Position = new Vector3(playerStartPosX * 2, 0, playerStartPosY * 2);
-            }
         }
 
         // Called every frame. 'delta' is the elapsed time since the previous frame.
