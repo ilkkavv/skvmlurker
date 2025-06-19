@@ -2,30 +2,32 @@
 
 [ext_resource type="Script" uid="uid://bp23u2xc4eqnm" path="res://scripts/Test.cs" id="1_bl13t"]
 [ext_resource type="Script" uid="uid://bp2qnhw4h83aj" path="res://scripts/TorchFlicker.cs" id="2_bl13t"]
-[ext_resource type="Script" uid="uid://x4y74ept22fq" path="res://scripts/MouseLook.cs" id="2_iyx0m"]
+[ext_resource type="Script" uid="uid://crdwx5rmv7cyn" path="res://scripts/Player.cs" id="2_iyx0m"]
 
 [sub_resource type="Environment" id="Environment_iyx0m"]
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 0.1
+ambient_light_energy = 0.05
 
 [node name="Node3D" type="Node3D"]
 
 [node name="DungeonMap" type="Node3D" parent="."]
 script = ExtResource("1_bl13t")
+playerStartPosX = 29
+playerStartPosY = 39
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="DungeonMap"]
 environment = SubResource("Environment_iyx0m")
 
 [node name="Player" type="Node3D" parent="DungeonMap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 10)
 script = ExtResource("2_iyx0m")
-CameraPath = NodePath("Camera3D")
 
-[node name="Camera3D" type="Camera3D" parent="DungeonMap/Player"]
+[node name="Torch" type="OmniLight3D" parent="DungeonMap/Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="DungeonMap/Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+light_color = Color(0.886275, 0.345098, 0.133333, 1)
 light_energy = 0.5
 script = ExtResource("2_bl13t")
+
+[node name="DungeonCamera" type="Camera3D" parent="DungeonMap/Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+current = true

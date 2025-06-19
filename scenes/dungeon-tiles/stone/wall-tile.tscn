@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwtdc11koqhxf"]
+
+[ext_resource type="ArrayMesh" uid="uid://iyt50emnx8i3" path="res://assets/models/dungeon-tiles/floor-ceiling.obj" id="1_edhkc"]
+[ext_resource type="Material" uid="uid://bh6qk5o5xp4et" path="res://assets/materials/stone-dungeon-material.3d.tres" id="2_hnjel"]
+[ext_resource type="ArrayMesh" uid="uid://ehriqlhei4hw" path="res://assets/models/dungeon-tiles/wall.obj" id="3_w5qnm"]
+
+[node name="DungeonTile" type="Node3D"]
+
+[node name="FloorCeiling" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_edhkc")
+surface_material_override/0 = ExtResource("2_hnjel")
+
+[node name="Walls" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_w5qnm")
+surface_material_override/0 = ExtResource("2_hnjel")

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2to3x8nxvlwq"
-path.s3tc="res://.godot/imported/test.png-b04f023894a45ea434621806389fec71.s3tc.ctex"
+uid="uid://dqk1jceqj161m"
+path.s3tc="res://.godot/imported/stone-dungeon.png-6e5b49c1b3550fb75194f79166c96a5c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/textures/test.png"
-dest_files=["res://.godot/imported/test.png-b04f023894a45ea434621806389fec71.s3tc.ctex"]
+source_file="res://assets/textures/stone-dungeon.png"
+dest_files=["res://.godot/imported/stone-dungeon.png-6e5b49c1b3550fb75194f79166c96a5c.s3tc.ctex"]
 
 [params]
 
@@ -24,7 +24,7 @@ compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=1
+roughness/mode=0
 roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
