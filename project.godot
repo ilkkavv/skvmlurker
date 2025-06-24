@@ -13,7 +13,6 @@ config_version=5
 config/name="Dungeon Crawler"
 run/main_scene="uid://xbivqgmvqqch"
 config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
-config/icon="res://icon.svg"
 
 [display]
 
@@ -23,6 +22,10 @@ window/size/viewport_height=1080
 [dotnet]
 
 project/assembly_name="Dungeon Crawler"
+
+[editor_plugins]
+
+enabled=PackedStringArray()
 
 [input]
 

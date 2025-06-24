@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://clr6qv2hnek8k"]
+
+[node name="Main" type="Node"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+
+[node name="GameWorld" type="Node3D" parent="."]
+
+[node name="Dungeon" type="Node3D" parent="GameWorld"]
+
+[node name="Player" type="Node3D" parent="GameWorld"]
