@@ -9,12 +9,14 @@ namespace dungeon
 		[Export] private int _playerStartPosX = 0;
 		[Export] private int _playerStartPosY = 0;
 		[Export] private Test _dungeonMap;
+		[Export] private AudioStreamPlayer2D _sfxPlayer;
 
 		private Node3D _leftNode;
 		private Node3D _frontNode;
 		private Node3D _rightNode;
 		private Node3D _backNode;
 
+		private bool _playSound = false;
 		private bool _isMoving = false;
 		private bool _isRotating = false;
 		private float _targetRot = 0f;
@@ -40,15 +42,41 @@ namespace dungeon
 		{
 			if (_isMoving)
 			{
-				if (GlobalTransform.Origin.DistanceTo(_targetPos) > 0.01f)
+				float distance = GlobalTransform.Origin.DistanceTo(_targetPos);
+				float moveStep = _movementSpeed * (float)delta;
+
+				if (distance > 0.01f)
 				{
-					Vector3 newPosition = GlobalTransform.Origin + _movementDir * _movementSpeed * (float)delta;
-					GlobalTransform = new Transform3D(GlobalTransform.Basis, newPosition);
+					if (moveStep >= distance)
+					{
+						// Snap to final position to avoid overshoot
+						GlobalTransform = new Transform3D(GlobalTransform.Basis, _targetPos);
+						_isMoving = false;
+
+						if (_playSound)
+						{
+							_sfxPlayer.Play();
+							_playSound = false;
+						}
+					}
+					else
+					{
+						Vector3 newPosition = GlobalTransform.Origin + _movementDir * moveStep;
+						GlobalTransform = new Transform3D(GlobalTransform.Basis, newPosition);
+						_playSound = true;
+					}
 				}
 				else
 				{
+					// Fallback safety
 					_isMoving = false;
 					GlobalTransform = new Transform3D(GlobalTransform.Basis, _targetPos);
+
+					if (_playSound)
+					{
+						_sfxPlayer.Play();
+						_playSound = false;
+					}
 				}
 			}
 		}
@@ -64,6 +92,7 @@ namespace dungeon
 			{
 				Rotation = new Vector3(0, _targetRot, 0);
 				_isRotating = false;
+				//_sfxPlayer.Play();
 			}
 		}
 
@@ -116,6 +145,10 @@ namespace dungeon
 						_targetPos = _backNode.GlobalTransform.Origin;
 						_movementDir = (_targetPos - GlobalTransform.Origin).Normalized();
 					}
+				}
+				if (Input.IsActionJustPressed("Quit"))
+				{
+					GetTree().Quit();
 				}
 			}
 		}
