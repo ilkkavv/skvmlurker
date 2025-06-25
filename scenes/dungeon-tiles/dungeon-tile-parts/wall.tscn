@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cp1hvsxb0m2rm"]
+
+[ext_resource type="ArrayMesh" uid="uid://b6gkrqbsrbdj2" path="res://assets/models/wall.obj" id="1_dpaga"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bgbbd"]
+
+[node name="Wall" type="RigidBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_dpaga")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, -1)
+shape = SubResource("BoxShape3D_bgbbd")

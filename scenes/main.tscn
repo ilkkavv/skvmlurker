@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://clr6qv2hnek8k"]
+[gd_scene load_steps=2 format=3 uid="uid://clr6qv2hnek8k"]
+
+[ext_resource type="PackedScene" uid="uid://utssik1m8fh2" path="res://scenes/dungeon.tscn" id="1_o5qli"]
 
 [node name="Main" type="Node"]
 
@@ -9,9 +11,15 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+handle_input_locally = false
+render_target_update_mode = 4
 
 [node name="GameWorld" type="Node3D" parent="."]
 
-[node name="Dungeon" type="Node3D" parent="GameWorld"]
+[node name="Dungeon" parent="GameWorld" instance=ExtResource("1_o5qli")]
 
 [node name="Player" type="Node3D" parent="GameWorld"]
+
+[node name="Camera3D" type="Camera3D" parent="GameWorld/Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+current = true

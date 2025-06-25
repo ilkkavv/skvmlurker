@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1llk7v42wga1"]
+
+[ext_resource type="ArrayMesh" uid="uid://jut2rtbxdplc" path="res://assets/models/ceiling.obj" id="1_m5qv0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l88t8"]
+
+[node name="Ceiling" type="RigidBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_m5qv0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0)
+shape = SubResource("BoxShape3D_l88t8")
