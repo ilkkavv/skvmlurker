@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://clr6qv2hnek8k"]
+[gd_scene load_steps=6 format=3 uid="uid://clr6qv2hnek8k"]
 
 [ext_resource type="Script" uid="uid://dsn7xspf5t8up" path="res://scripts/PlayerController.cs" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://utssik1m8fh2" path="res://scenes/level.tscn" id="1_o5qli"]
+[ext_resource type="AudioStream" uid="uid://cks36b4ete7kt" path="res://assets/audio/sfx/footstep.wav" id="2_jyhfs"]
 [ext_resource type="Script" uid="uid://cgx0heqlwcxq7" path="res://scripts/TorchFlicker.cs" id="2_sugp2"]
 
 [sub_resource type="Environment" id="Environment_o5qli"]
@@ -29,11 +30,14 @@ grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
 handle_input_locally = false
+audio_listener_enable_3d = true
 render_target_update_mode = 4
 
-[node name="PlayerCharacter" type="Node3D" parent="CanvasLayer/SubViewportContainer/SubViewport" node_paths=PackedStringArray("_frontRay", "_leftRay", "_rightRay", "_backRay")]
+[node name="PlayerCharacter" type="Node3D" parent="CanvasLayer/SubViewportContainer/SubViewport" node_paths=PackedStringArray("_footstepPlayer", "_frontRay", "_leftRay", "_rightRay", "_backRay")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_0wfyh")
+_movementSpeed = 5.0
+_footstepPlayer = NodePath("FootstepPlayer")
 _frontRay = NodePath("FrontRay")
 _leftRay = NodePath("LeftRay")
 _rightRay = NodePath("RightRay")
@@ -41,6 +45,17 @@ _backRay = NodePath("BackRay")
 
 [node name="PlayerCamera" type="Camera3D" parent="CanvasLayer/SubViewportContainer/SubViewport/PlayerCharacter"]
 current = true
+
+[node name="AudioListener3D" type="AudioListener3D" parent="CanvasLayer/SubViewportContainer/SubViewport/PlayerCharacter"]
+current = true
+
+[node name="FootstepPlayer" type="AudioStreamPlayer3D" parent="CanvasLayer/SubViewportContainer/SubViewport/PlayerCharacter"]
+stream = ExtResource("2_jyhfs")
+
+[node name="Torch" type="OmniLight3D" parent="CanvasLayer/SubViewportContainer/SubViewport/PlayerCharacter"]
+light_color = Color(0.713726, 0.243137, 0, 1)
+light_energy = 0.01
+script = ExtResource("2_sugp2")
 
 [node name="FrontRay" type="RayCast3D" parent="CanvasLayer/SubViewportContainer/SubViewport/PlayerCharacter"]
 target_position = Vector3(0, 0, -2)
@@ -53,11 +68,6 @@ target_position = Vector3(2, 0, 0)
 
 [node name="BackRay" type="RayCast3D" parent="CanvasLayer/SubViewportContainer/SubViewport/PlayerCharacter"]
 target_position = Vector3(0, 0, 2)
-
-[node name="Torch" type="OmniLight3D" parent="CanvasLayer/SubViewportContainer/SubViewport/PlayerCharacter"]
-light_color = Color(0.921569, 0.556863, 0, 1)
-light_energy = 0.01
-script = ExtResource("2_sugp2")
 
 [node name="GameWorld" type="Node3D" parent="."]
 
