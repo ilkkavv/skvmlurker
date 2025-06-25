@@ -1,18 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://utssik1m8fh2"]
+[gd_scene load_steps=5 format=3 uid="uid://utssik1m8fh2"]
 
 [ext_resource type="PackedScene" uid="uid://17wwd1lpdh5e" path="res://scenes/dungeon-tiles/open-tile.tscn" id="1_0wj4k"]
 [ext_resource type="PackedScene" uid="uid://3ylgp2pjv45g" path="res://scenes/dungeon-tiles/wall-tile.tscn" id="2_fvacq"]
 [ext_resource type="PackedScene" uid="uid://doyhhf0kojq6n" path="res://scenes/dungeon-tiles/corridor-tile.tscn" id="3_ys5p8"]
 [ext_resource type="PackedScene" uid="uid://ck8bi77dhcsfd" path="res://scenes/dungeon-tiles/corner-tile.tscn" id="4_hsn05"]
 
-[sub_resource type="Environment" id="Environment_0wj4k"]
-ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 0.01
-
-[node name="Dungeon" type="Node3D"]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_0wj4k")
+[node name="Level" type="Node3D"]
 
 [node name="DungeonTiles" type="Node3D" parent="."]
 
