@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://b36yf0fchgh1d"]
+
+[ext_resource type="PackedScene" uid="uid://ck8bi77dhcsfd" path="res://scenes/dungeon-tiles/corner-tile.tscn" id="1_bpre1"]
+[ext_resource type="PackedScene" uid="uid://3ylgp2pjv45g" path="res://scenes/dungeon-tiles/wall-tile.tscn" id="2_fulge"]
+[ext_resource type="PackedScene" uid="uid://17wwd1lpdh5e" path="res://scenes/dungeon-tiles/open-tile.tscn" id="3_t0m34"]
+[ext_resource type="PackedScene" uid="uid://lkltmikugp7l" path="res://scenes/dungeon-tiles/stairs.tscn" id="4_bpre1"]
+
+[node name="Dlvl1" type="Node3D"]
+
+[node name="Corner" parent="." instance=ExtResource("1_bpre1")]
+
+[node name="Corner2" parent="." instance=ExtResource("1_bpre1")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 4)
+
+[node name="Wall" parent="." instance=ExtResource("2_fulge")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 2)
+
+[node name="Corner3" parent="." instance=ExtResource("1_bpre1")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 4)
+
+[node name="Corner4" parent="." instance=ExtResource("1_bpre1")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 4, 0, 0)
+
+[node name="Wall2" parent="." instance=ExtResource("2_fulge")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 4, 0, 2)
+
+[node name="Open" parent="." instance=ExtResource("3_t0m34")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+
+[node name="Wall3" parent="." instance=ExtResource("2_fulge")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2, 0, 4)
+
+[node name="Open2" parent="." instance=ExtResource("3_t0m34")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Stairs" parent="." instance=ExtResource("4_bpre1")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2, -4, -4)
+_targetScenePath = "uid://b2bsyw6245omu"
+_newPlayerPos = Vector3(2, 0, 0)
+_newPlayerRot = 180.0

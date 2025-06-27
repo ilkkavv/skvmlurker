@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://3ylgp2pjv45g"]
 
-[ext_resource type="PackedScene" uid="uid://b1llk7v42wga1" path="res://scenes/dungeon-tiles/dungeon-tile-parts/ceiling.tscn" id="1_mfd05"]
-[ext_resource type="PackedScene" uid="uid://cp1hvsxb0m2rm" path="res://scenes/dungeon-tiles/dungeon-tile-parts/wall.tscn" id="2_swhsi"]
-[ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tiles/dungeon-tile-parts/floor.tscn" id="3_rkc4l"]
+[ext_resource type="PackedScene" uid="uid://b1llk7v42wga1" path="res://scenes/dungeon-tile-parts/ceiling.tscn" id="1_mfd05"]
+[ext_resource type="PackedScene" uid="uid://cp1hvsxb0m2rm" path="res://scenes/dungeon-tile-parts/wall.tscn" id="2_swhsi"]
+[ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="3_rkc4l"]
 
 [node name="Wall" type="Node3D"]
 

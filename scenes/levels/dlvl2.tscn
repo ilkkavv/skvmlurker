@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://b2bsyw6245omu"]
+
+[ext_resource type="PackedScene" uid="uid://ck8bi77dhcsfd" path="res://scenes/dungeon-tiles/corner-tile.tscn" id="1_trdtl"]
+[ext_resource type="PackedScene" uid="uid://3ylgp2pjv45g" path="res://scenes/dungeon-tiles/wall-tile.tscn" id="2_utfrk"]
+[ext_resource type="PackedScene" uid="uid://17wwd1lpdh5e" path="res://scenes/dungeon-tiles/open-tile.tscn" id="3_kbkpe"]
+[ext_resource type="PackedScene" uid="uid://doyhhf0kojq6n" path="res://scenes/dungeon-tiles/corridor-tile.tscn" id="5_73m78"]
+[ext_resource type="PackedScene" uid="uid://lkltmikugp7l" path="res://scenes/dungeon-tiles/stairs.tscn" id="5_kbkpe"]
+[ext_resource type="PackedScene" uid="uid://dk5ksk0x4fhql" path="res://scenes/dungeon-tiles/end-tile.tscn" id="5_utfrk"]
+[ext_resource type="PackedScene" uid="uid://jom4mpp0rhqy" path="res://scenes/dungeon-tiles/door-tile.tscn" id="7_d64tl"]
+
+[node name="Dlvl1" type="Node3D"]
+
+[node name="Corner" parent="." instance=ExtResource("1_trdtl")]
+
+[node name="Corner2" parent="." instance=ExtResource("1_trdtl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 4)
+
+[node name="Wall" parent="." instance=ExtResource("2_utfrk")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 2)
+
+[node name="Corner3" parent="." instance=ExtResource("1_trdtl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 4)
+
+[node name="Corner4" parent="." instance=ExtResource("1_trdtl")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 4, 0, 0)
+
+[node name="Wall2" parent="." instance=ExtResource("2_utfrk")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 4, 0, 2)
+
+[node name="Open" parent="." instance=ExtResource("3_kbkpe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+
+[node name="Open2" parent="." instance=ExtResource("3_kbkpe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Open3" parent="." instance=ExtResource("3_kbkpe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+
+[node name="Stairs" parent="." instance=ExtResource("5_kbkpe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+_targetScenePath = "uid://b36yf0fchgh1d"
+_newPlayerPos = Vector3(2, 0, 0)
+_newPlayerRot = 180.0
+
+[node name="Corridor" parent="." instance=ExtResource("5_73m78")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
+
+[node name="Corridor2" parent="." instance=ExtResource("5_73m78")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 10)
+
+[node name="Corner5" parent="." instance=ExtResource("1_trdtl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, 0, 12)
+
+[node name="Corridor3" parent="." instance=ExtResource("5_73m78")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 0, 12)
+
+[node name="End-tile" parent="." instance=ExtResource("5_utfrk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6, 0, 12)
+
+[node name="Door" parent="." instance=ExtResource("7_d64tl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 7)
+
+[node name="Corridor4" parent="." instance=ExtResource("5_73m78")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 8)
