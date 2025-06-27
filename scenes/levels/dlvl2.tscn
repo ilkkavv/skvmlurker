@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://doyhhf0kojq6n" path="res://scenes/dungeon-tiles/corridor-tile.tscn" id="5_73m78"]
 [ext_resource type="PackedScene" uid="uid://lkltmikugp7l" path="res://scenes/dungeon-tiles/stairs.tscn" id="5_kbkpe"]
 [ext_resource type="PackedScene" uid="uid://dk5ksk0x4fhql" path="res://scenes/dungeon-tiles/end-tile.tscn" id="5_utfrk"]
-[ext_resource type="PackedScene" uid="uid://jom4mpp0rhqy" path="res://scenes/dungeon-tiles/door-tile.tscn" id="7_d64tl"]
+[ext_resource type="PackedScene" uid="uid://jom4mpp0rhqy" path="res://scenes/dungeon-tiles/gate-tile.tscn" id="7_d64tl"]
 
 [node name="Dlvl1" type="Node3D"]
 
