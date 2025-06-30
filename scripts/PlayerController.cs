@@ -12,6 +12,10 @@ namespace dungeonCrawler
 		[Export] private RayCast3D _backRay;
 		[Export] private Dungeon _dungeon;
 
+		[Export] private Camera3D _playerCamera;
+		[Export] private Node3D _player;
+		[Export] private float _interactDistance = 1.0f;
+
 		private Tween tween;
 		private Stairs _stairs;
 		public bool _blockInput = false;
@@ -83,6 +87,14 @@ namespace dungeonCrawler
 			}
 		}
 
+		public override void _Input(InputEvent @event)
+		{
+			if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+			{
+				TryClickObject();
+			}
+		}
+
 		private void MoveInDirection(Vector3 direction)
 		{
 			tween = CreateTween();
@@ -134,6 +146,41 @@ namespace dungeonCrawler
 			}
 
 			return false;
+		}
+
+		private void TryClickObject()
+		{
+			Vector2 mousePos = GetViewport().GetMousePosition();
+			Vector3 from = _playerCamera.ProjectRayOrigin(mousePos);
+			Vector3 to = from + _playerCamera.ProjectRayNormal(mousePos) * 100f;
+
+			PhysicsRayQueryParameters3D rayParams = new()
+			{
+				From = from,
+				To = to,
+				CollideWithAreas = true,
+				CollideWithBodies = true
+			};
+
+			var spaceState = GetWorld3D().DirectSpaceState;
+			var result = spaceState.IntersectRay(rayParams);
+
+			if (result.Count > 0)
+			{
+				var collider = result["collider"].As<Node3D>();
+				if (collider != null)
+				{
+					float distance = _player.GlobalPosition.DistanceTo(collider.GlobalPosition);
+
+					if (distance <= _interactDistance)
+					{
+						if (collider.HasMethod("OnInteract"))
+						{
+							collider.Call("OnInteract");
+						}
+					}
+				}
+			}
 		}
 	}
 }

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 namespace dungeonCrawler
 {
@@ -14,9 +13,11 @@ namespace dungeonCrawler
 		[Export] private float _openDelay = 0.2f;
 		[Export] private float _closeDelay = 0.1f;
 
-		public async void OpenGate()
+		private bool _isActive = true; // Track if the node is still alive
+
+		public async void OpenGate(float timer = 0f)
 		{
-			if (_gateOpen)
+			if (_gateOpen || !_isActive)
 				return;
 
 			_gateOpen = true;
@@ -24,23 +25,37 @@ namespace dungeonCrawler
 			float targetY = _openHeight;
 			float currentY = _fence.Position.Y;
 
-			while (currentY < targetY)
+			while (currentY < targetY && _gateOpen && _isActive)
 			{
 				currentY = Mathf.Min(currentY + _stepHeight, targetY);
-				_fence.Position = new Vector3(0, currentY, 0);
 
-				_sfxPlayer.PitchScale = 1;
-				_sfxPlayer.Play();
+				if (_isActive)
+					_fence.Position = new Vector3(0, currentY, 0);
+
+				if (_isActive)
+				{
+					_sfxPlayer.PitchScale = 1;
+					_sfxPlayer.Play();
+				}
 
 				await ToSignal(GetTree().CreateTimer(_openDelay), "timeout");
 			}
 
-			_fence.Position = new Vector3(0, _openHeight, 0);
+			if (_gateOpen && _isActive)
+			{
+				_fence.Position = new Vector3(0, _openHeight, 0);
+			}
+
+			if (timer > 0)
+			{
+				await ToSignal(GetTree().CreateTimer(timer), "timeout");
+				CloseGate();
+			}
 		}
 
 		public async void CloseGate()
 		{
-			if (!_gateOpen)
+			if (!_gateOpen || !_isActive)
 				return;
 
 			_gateOpen = false;
@@ -48,41 +63,43 @@ namespace dungeonCrawler
 			float targetY = 0f;
 			float currentY = _fence.Position.Y;
 
-			while (currentY > targetY)
+			while (currentY > targetY && !_gateOpen && _isActive)
 			{
 				currentY = Mathf.Max(currentY - _stepHeight, targetY);
-				_fence.Position = new Vector3(0, currentY, 0);
 
-				_sfxPlayer.PitchScale = 0.8f;
-				_sfxPlayer.Play();
+				if (_isActive)
+					_fence.Position = new Vector3(0, currentY, 0);
+
+				if (_isActive)
+				{
+					_sfxPlayer.PitchScale = 0.8f;
+					_sfxPlayer.Play();
+				}
 
 				await ToSignal(GetTree().CreateTimer(_closeDelay), "timeout");
 			}
 
-			_fence.Position = new Vector3(0, 0, 0);
+			if (!_gateOpen && _isActive)
+			{
+				_fence.Position = new Vector3(0, 0, 0);
+			}
 		}
 
-		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
-			if (_gateOpen)
+			if (_gateOpen && _fence != null)
 			{
 				_fence.Position = new Vector3(0, _openHeight, 0);
 			}
 		}
 
-		// Called every frame. 'delta' is the elapsed time since the previous frame.
+		public override void _ExitTree()
+		{
+			_isActive = false;
+		}
+
 		public override void _Process(double delta)
 		{
-			if (Input.IsActionJustPressed("Test"))
-			{
-				OpenGate();
-			}
-
-			if (Input.IsActionJustPressed("Close"))
-			{
-				CloseGate();
-			}
 		}
 	}
 }

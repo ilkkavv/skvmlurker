@@ -1,0 +1,26 @@
+[gd_scene load_steps=8 format=3 uid="uid://dg4wapa0u5snl"]
+
+[ext_resource type="Script" uid="uid://di7ukpdtdfo32" path="res://scripts/Lever.cs" id="1_bktly"]
+[ext_resource type="PackedScene" uid="uid://b1llk7v42wga1" path="res://scenes/dungeon-tile-parts/ceiling.tscn" id="1_ca1ar"]
+[ext_resource type="PackedScene" uid="uid://b028jk47qbsju" path="res://scenes/dungeon-tile-parts/lever-wall.tscn" id="2_bktly"]
+[ext_resource type="PackedScene" uid="uid://cdv5qy6k73x6p" path="res://scenes/dungeon-tile-parts/lever-handle.tscn" id="3_6gd7h"]
+[ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="4_3ai3i"]
+[ext_resource type="Script" uid="uid://c18rfwuar0jrv" path="res://scripts/LeverHandle.cs" id="5_6gd7h"]
+[ext_resource type="AudioStream" uid="uid://bsljp60m3jwge" path="res://assets/audio/sfx/lever.wav" id="7_3ai3i"]
+
+[node name="Lever" type="Node3D" node_paths=PackedStringArray("_handle", "_sfxPlayer")]
+script = ExtResource("1_bktly")
+_handle = NodePath("Lever-handle")
+_sfxPlayer = NodePath("AudioStreamPlayer3D")
+
+[node name="Ceiling" parent="." instance=ExtResource("1_ca1ar")]
+
+[node name="Lever-wall" parent="." instance=ExtResource("2_bktly")]
+
+[node name="Lever-handle" parent="." instance=ExtResource("3_6gd7h")]
+script = ExtResource("5_6gd7h")
+
+[node name="Floor" parent="." instance=ExtResource("4_3ai3i")]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_3ai3i")
