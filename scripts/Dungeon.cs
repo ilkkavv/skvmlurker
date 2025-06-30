@@ -28,7 +28,7 @@ namespace dungeonCrawler
 				return;
 			}
 
-			ChangeLevel(startScene, new Vector3(2, 0, 4), 0);
+			ChangeLevel(startScene, new Vector3(0, 0, 0), 0);
 		}
 
 		// Called every frame. 'delta' is the elapsed time since the previous frame.

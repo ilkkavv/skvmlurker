@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck8bi77dhcsfd"]
+
+[ext_resource type="PackedScene" uid="uid://cp1hvsxb0m2rm" path="res://scenes/dungeon-tile-parts/wall.tscn" id="2_h8ywf"]
+
+[node name="Corner" type="Node3D"]
+
+[node name="WallFront" parent="." instance=ExtResource("2_h8ywf")]
+
+[node name="WallLeft" parent="." instance=ExtResource("2_h8ywf")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://17wwd1lpdh5e"]
+[gd_scene load_steps=3 format=3 uid="uid://cdwmiqgk2kjqr"]
 
 [ext_resource type="PackedScene" uid="uid://b1llk7v42wga1" path="res://scenes/dungeon-tile-parts/ceiling.tscn" id="1_br51j"]
 [ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="2_hnbnk"]
