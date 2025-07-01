@@ -4,21 +4,22 @@ namespace dungeonCrawler
 {
 	public partial class PlayerController : Node3D
 	{
-		[Export] private float _movementSpeed = 6f;
-		[Export] private AudioStreamPlayer3D _footstepPlayer;
+		[Export] private float _movementSpeed = 5f;
+		[Export] private AudioStreamPlayer3D _sfxPlayer;
 		[Export] private RayCast3D _frontRay;
 		[Export] private RayCast3D _leftRay;
 		[Export] private RayCast3D _rightRay;
 		[Export] private RayCast3D _backRay;
-		[Export] private Dungeon _dungeon;
+		[Export] private RayCast3D _downRay;
+		private Dungeon _dungeon;
 
 		[Export] private Camera3D _playerCamera;
-		[Export] private Node3D _player;
+		[Export] private Player _player;
 		[Export] private float _interactDistance = 1.0f;
 
 		private Tween tween;
 		private Stairs _stairs;
-		public bool _blockInput = false;
+		public bool _blocksInput = false;
 
 		private float _travelDistance = 2f;
 		private float _travelTime;
@@ -26,9 +27,14 @@ namespace dungeonCrawler
 
 		public override void _Ready()
 		{
+			// Get the root node (Main)
+			Node main = GetTree().Root.GetNode("Main");
+			// Get Dungeon node from the scene
+			_dungeon = main.GetNode<Dungeon>("GameWorld/Dungeon");
+
 			_travelTime = _travelDistance / _movementSpeed;
 
-			if (_footstepPlayer == null)
+			if (_sfxPlayer == null)
 			{
 				GD.PrintErr("Sound effect player is not assigned!");
 			}
@@ -36,38 +42,41 @@ namespace dungeonCrawler
 
 		public override void _PhysicsProcess(double delta)
 		{
-			if (!_blockInput)
+			if (!_player._blockInput)
 			{
 				if (tween != null && tween.IsRunning())
 					return;
 
+				if (CheckForFall())
+					return;
+
 				if (Input.IsActionPressed("MoveForward"))
-				{
-					if (CheckStairs(_frontRay))
 					{
-						_dungeon.ChangeLevel(_stairs.ReturnTargetScene(),
-							_stairs.ReturnNewPlayerPos(),
-							_stairs.ReturnNewPlayerRot());
+						if (CheckStairs(_frontRay))
+						{
+							_dungeon.ChangeLevel(_stairs.ReturnTargetScene(),
+								_stairs.ReturnNewPlayerPos(),
+								_stairs.ReturnNewPlayerRot());
+						}
+						else if (!_frontRay.IsColliding())
+						{
+							MoveInDirection(-_player.Transform.Basis.Z.Normalized()); // ← Forward
+						}
 					}
-					else if (!_frontRay.IsColliding())
-					{
-						MoveInDirection(-Transform.Basis.Z.Normalized());
-					}
-				}
 
 				if (Input.IsActionPressed("MoveLeft") && !_leftRay.IsColliding())
 				{
-					MoveInDirection(-Transform.Basis.X.Normalized());
+					MoveInDirection(-_player.Transform.Basis.X.Normalized()); // ← Left
 				}
 
 				if (Input.IsActionPressed("MoveRight") && !_rightRay.IsColliding())
 				{
-					MoveInDirection(Transform.Basis.X.Normalized());
+					MoveInDirection(_player.Transform.Basis.X.Normalized()); // ← Right
 				}
 
 				if (Input.IsActionPressed("MoveBackward") && !_backRay.IsColliding())
 				{
-					MoveInDirection(Transform.Basis.Z.Normalized());
+					MoveInDirection(_player.Transform.Basis.Z.Normalized()); // ← Backward
 				}
 
 				if (Input.IsActionPressed("TurnLeft"))
@@ -98,8 +107,10 @@ namespace dungeonCrawler
 		private void MoveInDirection(Vector3 direction)
 		{
 			tween = CreateTween();
-			tween.TweenProperty(this, "transform",
-				Transform.Translated(direction * _travelDistance), _travelTime);
+
+			Transform3D targetTransform = _player.Transform.Translated(direction * _travelDistance);
+
+			tween.TweenProperty(_player, "transform", targetTransform, _travelTime);
 
 			tween.Parallel()
 				.TweenCallback(Callable.From(() => PlayFootstep()))
@@ -109,21 +120,55 @@ namespace dungeonCrawler
 		private void RotateByAngle(float angle)
 		{
 			tween = CreateTween();
-			Basis rotated = Transform.Basis.Rotated(Vector3.Up, angle);
-			Transform3D newTransform = Transform;
-			newTransform.Basis = rotated;
-			tween.TweenProperty(this, "transform", newTransform, _travelTime);
 
-			//tween.Parallel()
-			//	.TweenCallback(Callable.From(() => PlayFootstep()))
-			//	.SetDelay(_travelTime / 1.5f);
+			Basis rotated = _player.Transform.Basis.Rotated(Vector3.Up, angle);
+			Transform3D newTransform = _player.Transform;
+			newTransform.Basis = rotated;
+
+			tween.TweenProperty(_player, "transform", newTransform, _travelTime);
 		}
+
+		private bool CheckForFall()
+		{
+			if (_downRay.IsColliding())
+			{
+				return false;
+			}
+			else
+			{
+				Fall();
+				return true;
+			}
+		}
+
+		private void Fall()
+		{
+			// Block input during fall (optional)
+			_player._blockInput = true;
+
+			// Create tween
+			tween = CreateTween();
+
+			// Fall settings
+			float fallDistance = 10f;
+			float fallDuration = 1f;
+
+			// Target position
+			Vector3 startPos = _player.GlobalPosition;
+			Vector3 endPos = startPos + Vector3.Down * fallDistance;
+
+			// Animate just the position
+			tween.TweenProperty(_player, "global_position", endPos, fallDuration)
+				 .SetTrans(Tween.TransitionType.Cubic)
+				 .SetEase(Tween.EaseType.In);
+		}
+
 
 		private void PlayFootstep()
 		{
-			_footstepPlayer.VolumeDb = (float)GD.RandRange(0f, -5f);
-			_footstepPlayer.PitchScale = (float)GD.RandRange(0.5f, 0.75f);
-			_footstepPlayer.Play();
+			_sfxPlayer.VolumeDb = (float)GD.RandRange(0f, -5f);
+			_sfxPlayer.PitchScale = (float)GD.RandRange(0.5f, 0.75f);
+			_sfxPlayer.Play();
 		}
 
 		private bool CheckStairs(RayCast3D raycast)
@@ -170,7 +215,7 @@ namespace dungeonCrawler
 				var collider = result["collider"].As<Node3D>();
 				if (collider != null)
 				{
-					float distance = _player.GlobalPosition.DistanceTo(collider.GlobalPosition);
+					float distance = GlobalPosition.DistanceTo(collider.GlobalPosition);
 
 					if (distance <= _interactDistance)
 					{

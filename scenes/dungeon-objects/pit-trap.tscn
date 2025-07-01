@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfe37333d2r0h"]
+
+[ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="1_eex7b"]
+[ext_resource type="Script" uid="uid://cru846jukt02g" path="res://scripts/PitTrap.cs" id="1_vgt70"]
+[ext_resource type="PackedScene" uid="uid://bg168fmwt06ed" path="res://scenes/dungeon-objects/shaft.tscn" id="2_m0bdf"]
+[ext_resource type="AudioStream" uid="uid://db1heb060dofu" path="res://assets/audio/sfx/pit-trap.wav" id="4_7dl5f"]
+
+[node name="PitTrap" type="Node3D" node_paths=PackedStringArray("_fakeFloor", "_raycast", "_sfxPlayer")]
+script = ExtResource("1_vgt70")
+_fakeFloor = NodePath("FakeFloor")
+_raycast = NodePath("RayCast3D")
+_sfxPlayer = NodePath("SFXPlayer")
+
+[node name="FakeFloor" parent="." instance=ExtResource("1_eex7b")]
+
+[node name="Shaft" parent="." instance=ExtResource("2_m0bdf")]
+
+[node name="SFXPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_7dl5f")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+target_position = Vector3(0, 1, 0)

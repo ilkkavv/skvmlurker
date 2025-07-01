@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://k4a3y5f8mdsx"]
+
+[ext_resource type="Script" uid="uid://catjos4pdmkip" path="res://scripts/Player.cs" id="1_dqkch"]
+[ext_resource type="Script" uid="uid://dsn7xspf5t8up" path="res://scripts/PlayerController.cs" id="1_qhqgy"]
+[ext_resource type="AudioStream" uid="uid://cks36b4ete7kt" path="res://assets/audio/sfx/footstep.wav" id="2_dqkch"]
+[ext_resource type="Script" uid="uid://cgx0heqlwcxq7" path="res://scripts/TorchFlicker.cs" id="3_qlg0r"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tbgi4"]
+
+[node name="Player" type="Node3D" groups=["player"]]
+script = ExtResource("1_dqkch")
+
+[node name="PlayerController" type="StaticBody3D" parent="." node_paths=PackedStringArray("_sfxPlayer", "_frontRay", "_leftRay", "_rightRay", "_backRay", "_downRay", "_playerCamera", "_player") groups=["player"]]
+script = ExtResource("1_qhqgy")
+_sfxPlayer = NodePath("SFXPlayer")
+_frontRay = NodePath("CollisionShape3D/FrontRay")
+_leftRay = NodePath("CollisionShape3D/LeftRay")
+_rightRay = NodePath("CollisionShape3D/RightRay")
+_backRay = NodePath("CollisionShape3D/BackRay")
+_downRay = NodePath("CollisionShape3D/DownRay")
+_playerCamera = NodePath("PlayerCamera")
+_player = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SphereShape3D_tbgi4")
+
+[node name="FrontRay" type="RayCast3D" parent="PlayerController/CollisionShape3D"]
+target_position = Vector3(0, 0, -2)
+
+[node name="LeftRay" type="RayCast3D" parent="PlayerController/CollisionShape3D"]
+target_position = Vector3(-2, 0, 0)
+
+[node name="RightRay" type="RayCast3D" parent="PlayerController/CollisionShape3D"]
+target_position = Vector3(2, 0, 0)
+
+[node name="BackRay" type="RayCast3D" parent="PlayerController/CollisionShape3D"]
+target_position = Vector3(0, 0, 2)
+
+[node name="DownRay" type="RayCast3D" parent="PlayerController/CollisionShape3D"]
+target_position = Vector3(0, -2, 0)
+
+[node name="PlayerCamera" type="Camera3D" parent="PlayerController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+current = true
+
+[node name="AudioListener3D" type="AudioListener3D" parent="PlayerController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+current = true
+
+[node name="SFXPlayer" type="AudioStreamPlayer3D" parent="PlayerController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+stream = ExtResource("2_dqkch")
+
+[node name="Torch" type="OmniLight3D" parent="PlayerController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+light_color = Color(0.713726, 0.243137, 0, 1)
+light_energy = 0.01
+script = ExtResource("3_qlg0r")

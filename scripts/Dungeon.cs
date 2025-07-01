@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace dungeonCrawler
@@ -6,7 +7,7 @@ namespace dungeonCrawler
 	{
 		[Export(PropertyHint.File, "*.tscn")]
 		private string _dlvl1Path;
-		[Export] private PlayerController _playerCharacter;
+		[Export] private Player _player;
 		[Export] private ScreenFader _screenFader;
 		[Export] private float _fadeTime = 0.5f;
 
@@ -38,13 +39,14 @@ namespace dungeonCrawler
 
 		private void SetPlayerPos(Vector3 position, float rotation)
 		{
-			_playerCharacter.GlobalPosition = position;
-			_playerCharacter.GlobalRotationDegrees = new Vector3(0, rotation, 0);
+			_player.GlobalPosition = position;
+			_player.GlobalRotationDegrees = new Vector3(0, rotation, 0);
 		}
 
-		public void ChangeLevel(PackedScene targetLevel, Vector3 newPlayerPos, float newPlayerRot)
+		public void ChangeLevel(PackedScene targetLevel, Vector3 newPlayerPos,
+						float? newPlayerRot = null, bool fallDamage = false)
 		{
-			_playerCharacter._blockInput = true;
+			_player._blockInput = true;
 
 			if (_screenFader == null)
 			{
@@ -52,14 +54,19 @@ namespace dungeonCrawler
 				return;
 			}
 
-			// Fade to black and chain logic after completion
+			// Start fade to black
 			_screenFader.FadeToBlack(_fadeTime);
 
+			// Create tween for timing
 			var tween = GetTree().CreateTween();
-			tween.TweenInterval(_fadeTime); // Delay to match fade duration
+
+			// Step 1: Wait for fade out
+			tween.TweenInterval(_fadeTime);
+
+			// Step 2: Load new level
 			tween.TweenCallback(Callable.From(() =>
 			{
-				// Remove current dungeon level
+				// Remove current level
 				var currentDlvl = GetNodeOrNull<Node>("Level");
 				if (currentDlvl != null)
 				{
@@ -73,20 +80,38 @@ namespace dungeonCrawler
 					return;
 				}
 
-				// Instance and add new dungeon level
+				// Add new level
 				var newLevelInstance = targetLevel.Instantiate<Node>();
 				newLevelInstance.Name = "Level";
 				AddChild(newLevelInstance);
 
-				// Set player position and rotation
-				SetPlayerPos(newPlayerPos, newPlayerRot);
+				// Move player (with or without new rotation)
+				float finalRot = newPlayerRot ?? _player.GlobalRotationDegrees.Y;
+				SetPlayerPos(newPlayerPos, finalRot);
 
-				// Fade back in
+				// Start fade back in
 				_screenFader.FadeBack(_fadeTime);
+			}));
 
-				_playerCharacter._blockInput = false;
-			}
-			));
+			// Step 3: Wait for fade back in
+			tween.TweenInterval(_fadeTime);
+
+			// Step 4: Re-enable player input
+			tween.TweenCallback(Callable.From(() =>
+			{
+				_player._blockInput = false;
+
+				if (fallDamage)
+				{
+					GD.Print("Player takes fall damage!");
+					// TODO: Apply fall damage here
+				}
+			}));
+		}
+
+		internal void ChangeLevel(string targetScenePath, Vector3 newPlayerPos, float v)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
