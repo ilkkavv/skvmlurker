@@ -37,7 +37,7 @@ namespace dungeonCrawler
 		{
 		}
 
-		private void SetPlayerPos(Vector3 position, float rotation)
+		public void SetPlayerPos(Vector3 position, float rotation)
 		{
 			_player.GlobalPosition = position;
 			_player.GlobalRotationDegrees = new Vector3(0, rotation, 0);

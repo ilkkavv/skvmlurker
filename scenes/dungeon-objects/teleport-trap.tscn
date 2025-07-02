@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://des1iao7oaelb"]
+
+[ext_resource type="Script" uid="uid://dxru1r674frj8" path="res://scripts/TeleportTrap.cs" id="1_fngpb"]
+[ext_resource type="AudioStream" uid="uid://dnp8axv01funr" path="res://assets/audio/sfx/teleport.wav" id="1_na260"]
+
+[node name="Teleport-trap" type="Node3D" node_paths=PackedStringArray("_raycast", "_sfxPlayer")]
+script = ExtResource("1_fngpb")
+_raycast = NodePath("RayCast3D")
+_sfxPlayer = NodePath("SFXPlayer")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 1, 0)
+
+[node name="SFXPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_na260")

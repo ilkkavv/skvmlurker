@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b36yf0fchgh1d"]
+[gd_scene load_steps=14 format=3 uid="uid://b36yf0fchgh1d"]
 
 [ext_resource type="PackedScene" uid="uid://ck8bi77dhcsfd" path="res://scenes/dungeon-wall-tiles/corner-tile.tscn" id="1_bpre1"]
 [ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="1_c7ctl"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dg4wapa0u5snl" path="res://scenes/dungeon-objects/lever.tscn" id="9_kb635"]
 [ext_resource type="PackedScene" uid="uid://dfe37333d2r0h" path="res://scenes/dungeon-objects/pit-trap.tscn" id="11_o0tqa"]
 [ext_resource type="PackedScene" uid="uid://c7tm1mo2ev7kv" path="res://scenes/dungeon-objects/illusory-wall.tscn" id="12_kuggi"]
+[ext_resource type="PackedScene" uid="uid://des1iao7oaelb" path="res://scenes/dungeon-objects/teleport-trap.tscn" id="13_sn6fm"]
 
 [node name="Dlvl1" type="Node3D"]
 
@@ -1364,3 +1365,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
 
 [node name="Illusory-wall2" parent="." instance=ExtResource("12_kuggi")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -16)
+
+[node name="Teleport-trap" parent="." instance=ExtResource("13_sn6fm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
