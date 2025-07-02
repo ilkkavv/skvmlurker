@@ -23,32 +23,32 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 ---
 
 **3. "Push Stone Boulder (Yo Frankie!)"**
-- Original Author: Mattias Westlund  
-- Source: https://opengameart.org/content/push-stone-boulder-yo-frankie  
-- License: CC-BY 3.0  
+- Original Author: Mattias Westlund
+- Source: https://opengameart.org/content/push-stone-boulder-yo-frankie
+- License: CC-BY 3.0
 - Used As:
   - `pressure-plate-press.wav`
-  - `pressure-plate-release.wav`  
-- Attribution: © Mattias Westlund – [Link](https://opengameart.org/content/push-stone-boulder-yo-frankie)  
+  - `pressure-plate-release.wav`
+- Attribution: © Mattias Westlund – [Link](https://opengameart.org/content/push-stone-boulder-yo-frankie)
 - Notes: Edited in Audacity.
 
 ---
 
 **4. "Footsteps on Different Surfaces"**
-- Original Author: kwahmah_02  
-- Source: https://opengameart.org/content/footsteps-on-different-surfaces  
-- License: CC-BY 3.0  
-- Used As: `footstep.wav`  
-- Attribution: © kwahmah_02 – [Link](https://opengameart.org/content/footsteps-on-different-surfaces)  
+- Original Author: kwahmah_02
+- Source: https://opengameart.org/content/footsteps-on-different-surfaces
+- License: CC-BY 3.0
+- Used As: `footstep.wav`
+- Attribution: © kwahmah_02 – [Link](https://opengameart.org/content/footsteps-on-different-surfaces)
 - Notes: Slight editing in Audacity.
 
 ---
 
 **5. "Dungeon Ambience"**
-- Original Author: artisticdude  
-- Source: https://opengameart.org/content/dungeon-ambience  
-- License: CC0  
-- Used As: `dungeon_ambience.wav`  
+- Original Author: artisticdude
+- Source: https://opengameart.org/content/dungeon-ambience
+- License: CC0
+- Used As: `dungeon.ogg`
 - Notes: No editing.
 
 ---
@@ -56,8 +56,8 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 **6. "Teleport Spell"**
 - Original Author: Ogrebane
 - Source: https://opengameart.org/content/teleport-spell
-- License: CC0  
-- Used As: `teleport.wav`  
+- License: CC0
+- Used As: `teleport.wav`
 - Notes: No editing.
 
 ---
@@ -65,8 +65,8 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 **7. "5 break, crunch impacts"**
 - Original Author: Independent.nu
 - Source: https://opengameart.org/content/5-break-crunch-impacts
-- License: CC0  
-- Used As: `pit-trap.wav`  
+- License: CC0
+- Used As: `pit-trap.wav`
 - Notes: Slight editing in Audacity.
 
 ---
@@ -74,8 +74,8 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 **8. "Energy Drain"**
 - Original Author: qubodup
 - Source: https://opengameart.org/content/energy-drain
-- License: CC0  
-- Used As: `illusory-wall.wav`  
+- License: CC0
+- Used As: `illusory-wall.wav`
 - Notes: Slight editing in Audacity.
 
 ---

@@ -166,7 +166,7 @@ namespace dungeonCrawler
 
 		private void PlayFootstep()
 		{
-			_sfxPlayer.VolumeDb = (float)GD.RandRange(0f, -5f);
+			_sfxPlayer.VolumeDb = (float)GD.RandRange(-100f, -105f);
 			_sfxPlayer.PitchScale = (float)GD.RandRange(0.5f, 0.75f);
 			_sfxPlayer.Play();
 		}

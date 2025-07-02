@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://clr6qv2hnek8k"]
+[gd_scene load_steps=6 format=3 uid="uid://clr6qv2hnek8k"]
 
 [ext_resource type="PackedScene" uid="uid://k4a3y5f8mdsx" path="res://scenes/player.tscn" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://cvmkee83k3516" path="res://scripts/Dungeon.cs" id="4_jyhfs"]
+[ext_resource type="AudioStream" uid="uid://8jhnijip0mxr" path="res://assets/audio/bgm/dungeon.ogg" id="4_tbgi4"]
 [ext_resource type="Script" uid="uid://dkcjsp1hutjew" path="res://scripts/ScreenFader.cs" id="4_tefeu"]
 
 [sub_resource type="Environment" id="Environment_o5qli"]
@@ -60,3 +61,8 @@ script = ExtResource("4_jyhfs")
 _dlvl1Path = "uid://b36yf0fchgh1d"
 _player = NodePath("../../CanvasLayer/SubViewportContainer/SubViewport/Player")
 _screenFader = NodePath("../../CanvasLayer/ScreenFader")
+
+[node name="BGMPlayer" type="AudioStreamPlayer2D" parent="GameWorld"]
+stream = ExtResource("4_tbgi4")
+volume_db = 10.0
+autoplay = true
