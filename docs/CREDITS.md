@@ -75,7 +75,7 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 - Original Author: qubodup
 - Source: https://opengameart.org/content/energy-drain
 - License: CC0  
-- Used As: `illusionary-wall.wav`  
+- Used As: `illusory-wall.wav`  
 - Notes: Slight editing in Audacity.
 
 ---

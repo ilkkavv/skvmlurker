@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dib647lambwwa"
-path="res://.godot/imported/illusionary-wall.wav-9302ed75ad1dc8be78d550e96a1ca233.sample"
+path="res://.godot/imported/illusory-wall.wav-872490c5738ec3054aa67688218c851a.sample"
 
 [deps]
 
-source_file="res://assets/audio/sfx/illusionary-wall.wav"
-dest_files=["res://.godot/imported/illusionary-wall.wav-9302ed75ad1dc8be78d550e96a1ca233.sample"]
+source_file="res://assets/audio/sfx/illusory-wall.wav"
+dest_files=["res://.godot/imported/illusory-wall.wav-872490c5738ec3054aa67688218c851a.sample"]
 
 [params]
 

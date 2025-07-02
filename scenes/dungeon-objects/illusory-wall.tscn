@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7tm1mo2ev7kv"]
+
+[ext_resource type="Script" uid="uid://xvt7485v1w3h" path="res://scripts/IllusoryWall.cs" id="1_5u27u"]
+[ext_resource type="ArrayMesh" uid="uid://b6gkrqbsrbdj2" path="res://assets/models/wall.obj" id="1_qqe3f"]
+[ext_resource type="Material" uid="uid://dyxlrsbnrhxpg" path="res://assets/materials/brick-dungeon-alpha.tres" id="2_5u27u"]
+[ext_resource type="AudioStream" uid="uid://dib647lambwwa" path="res://assets/audio/sfx/illusory-wall.wav" id="3_u0ejc"]
+
+[node name="Illusory-wall" type="Node3D" node_paths=PackedStringArray("_wall", "_frontRay", "_backRay", "_sfxPlayer")]
+script = ExtResource("1_5u27u")
+_wall = NodePath("StaticBody3D/MeshInstance3D")
+_frontRay = NodePath("FrontRay")
+_backRay = NodePath("BackRay")
+_sfxPlayer = NodePath("SFXPlayer")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = ExtResource("1_qqe3f")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_5u27u")
+
+[node name="FrontRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+target_position = Vector3(0, 0, 0.45)
+
+[node name="BackRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+target_position = Vector3(0, 0, -0.45)
+
+[node name="SFXPlayer" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+stream = ExtResource("3_u0ejc")
+volume_db = -20.0
