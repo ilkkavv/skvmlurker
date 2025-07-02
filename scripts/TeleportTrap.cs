@@ -11,6 +11,7 @@ namespace dungeonCrawler
 		[Export] private bool _triggerOnce = false;
 
 		private Dungeon _dungeon;
+		private Player _player;
 		private ScreenFader _screenFader;
 		private bool _triggered = false;
 
@@ -44,6 +45,13 @@ namespace dungeonCrawler
 				{
 					if (colliderNode.IsInGroup("player"))
 					{
+						if (colliderNode.GetParent() is Player playerNode)
+						{
+							_player = playerNode;
+						}
+
+						GD.Print("Teleport triggered!");
+
 						Trigger();
 					}
 				}
@@ -52,6 +60,9 @@ namespace dungeonCrawler
 
 		private void Trigger()
 		{
+			_player.StopPlayer();
+			_player._blockInput = true;
+
 			if (_triggerOnce)
 			{
 				_triggered = true;
@@ -60,6 +71,8 @@ namespace dungeonCrawler
 			_sfxPlayer.Play();
 			_screenFader.Flash(new Color(0.545f, 0.545f, 0.796f, 1f));
 			_dungeon.SetPlayerPos(_newPlayerPos, _newPlayerRot);
+
+			_player._blockInput = false;
 		}
 	}
 }

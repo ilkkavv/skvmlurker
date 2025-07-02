@@ -1309,6 +1309,9 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8, 0, 
 [node name="Wall33" parent="Walls" instance=ExtResource("6_d74uk")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8, 0, -24)
 
+[node name="Wall34" parent="Walls" instance=ExtResource("6_d74uk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -16)
+
 [node name="Objects" type="Node3D" parent="."]
 
 [node name="GateClosed" parent="Objects" instance=ExtResource("7_p6x0l")]
@@ -1353,23 +1356,20 @@ _targetScenePath = "uid://dx6hs4v6kfn22"
 _newPlayerPos = Vector3(10, 0, -32)
 _newPlayerRot = 180.0
 
-[node name="PitTrap" parent="." instance=ExtResource("11_o0tqa")]
+[node name="PitTrap" parent="Objects" instance=ExtResource("11_o0tqa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 _targetScenePath = "uid://dx6hs4v6kfn22"
 _newPlayerPos = Vector3(0, 0, 4)
 
-[node name="Illusory-wall" parent="." instance=ExtResource("12_kuggi")]
+[node name="Illusory-wall" parent="Objects" instance=ExtResource("12_kuggi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
 
-[node name="Illusory-wall2" parent="." instance=ExtResource("12_kuggi")]
+[node name="Illusory-wall2" parent="Objects" instance=ExtResource("12_kuggi")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -16)
 
-[node name="Teleport-trap" parent="." instance=ExtResource("13_sn6fm")]
+[node name="Teleport-trap" parent="Objects" instance=ExtResource("13_sn6fm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
 
-[node name="Secret-button" parent="." node_paths=PackedStringArray("_gate") instance=ExtResource("14_rg66n")]
+[node name="Secret-button" parent="Objects" node_paths=PackedStringArray("_gate") instance=ExtResource("14_rg66n")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -16)
-_gate = NodePath("../Objects/GateClosed")
-
-[node name="Wall" parent="." instance=ExtResource("6_d74uk")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -16)
+_gate = NodePath("../GateClosed")

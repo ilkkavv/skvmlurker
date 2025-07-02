@@ -17,7 +17,7 @@ namespace dungeonCrawler
 		[Export] private Player _player;
 		[Export] private float _interactDistance = 1.0f;
 
-		private Tween tween;
+		public Tween tween;
 		private Stairs _stairs;
 		public bool _blocksInput = false;
 
