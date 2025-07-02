@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b36yf0fchgh1d"]
+[gd_scene load_steps=15 format=3 uid="uid://b36yf0fchgh1d"]
 
 [ext_resource type="PackedScene" uid="uid://ck8bi77dhcsfd" path="res://scenes/dungeon-wall-tiles/corner-tile.tscn" id="1_bpre1"]
 [ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="1_c7ctl"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dfe37333d2r0h" path="res://scenes/dungeon-objects/pit-trap.tscn" id="11_o0tqa"]
 [ext_resource type="PackedScene" uid="uid://c7tm1mo2ev7kv" path="res://scenes/dungeon-objects/illusory-wall.tscn" id="12_kuggi"]
 [ext_resource type="PackedScene" uid="uid://des1iao7oaelb" path="res://scenes/dungeon-objects/teleport-trap.tscn" id="13_sn6fm"]
+[ext_resource type="PackedScene" uid="uid://vaddryju6pwi" path="res://scenes/dungeon-objects/secret-button.tscn" id="14_rg66n"]
 
 [node name="Dlvl1" type="Node3D"]
 
@@ -1170,9 +1171,6 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, 0, 
 [node name="Corridor29" parent="Walls" instance=ExtResource("5_d74uk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
 
-[node name="Corridor30" parent="Walls" instance=ExtResource("5_d74uk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
-
 [node name="Corridor31" parent="Walls" instance=ExtResource("5_d74uk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
 
@@ -1368,3 +1366,10 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 
 [node name="Teleport-trap" parent="." instance=ExtResource("13_sn6fm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+
+[node name="Secret-button" parent="." node_paths=PackedStringArray("_gate") instance=ExtResource("14_rg66n")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -16)
+_gate = NodePath("../Objects/GateClosed")
+
+[node name="Wall" parent="." instance=ExtResource("6_d74uk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -16)
