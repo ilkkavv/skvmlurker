@@ -12,6 +12,8 @@ namespace DungeonCrawler
 		[Export] private float _fallDistance = 10f;
 		[Export] private float _fallDuration = 1f;
 		[Export] private float _raycastDistance = 100f;
+		[Export] private string _pathToFootstepSfx = "res://assets/audio/sfx/footstep.wav";
+		[Export] private string _pathToGruntSfx = "res://assets/audio/sfx/grunt.wav";
 
 		// === Internal Node References ===
 		private AudioStreamPlayer3D _sfxPlayer;
@@ -22,6 +24,8 @@ namespace DungeonCrawler
 		private RayCast3D _downRaycast;
 		private Camera3D _playerCamera;
 		private Player _player;
+		private AudioStream _footstepSound;
+		private AudioStream _gruntSound;
 
 		// === Constants ===
 		private const float TravelDistance = 2f;
@@ -71,6 +75,8 @@ namespace DungeonCrawler
 			_downRaycast = GetNodeOrNull<RayCast3D>("CollisionShape3D/DownRaycast");
 			_playerCamera = GetNodeOrNull<Camera3D>("PlayerCamera");
 			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("SFXPlayer");
+			_footstepSound = GD.Load<AudioStream>(_pathToFootstepSfx);
+			_gruntSound = GD.Load<AudioStream>(_pathToGruntSfx);
 
 			// Null checks with clear messages
 			if (_frontRaycast == null) GD.PrintErr("PlayerController: FrontRaycast not found.");
@@ -80,8 +86,10 @@ namespace DungeonCrawler
 			if (_downRaycast == null) GD.PrintErr("PlayerController: DownRaycast not found.");
 			if (_playerCamera == null) GD.PrintErr("PlayerController: PlayerCamera not found.");
 			if (_sfxPlayer == null) GD.PrintErr("PlayerController: SFXPlayer not found.");
+			if (_footstepSound == null) GD.PrintErr("PlayerController: Footstep sound effect not found.");
+			if (_gruntSound == null) GD.PrintErr("PlayerController: Grunt sound effect not found.");
 
-			_travelTime = TravelDistance / _movementSpeed;
+				_travelTime = TravelDistance / _movementSpeed;
 		}
 
 		/// <summary>
@@ -146,7 +154,7 @@ namespace DungeonCrawler
 			if (raycast == null || direction == Vector3.Zero)
 				return;
 
-			// Priority 1: check for stairs
+			// 1. Try stairs
 			if (CheckStairs(raycast))
 			{
 				_dungeon?.ChangeLevel(
@@ -157,17 +165,22 @@ namespace DungeonCrawler
 				return;
 			}
 
-			// Priority 2: check for illusory wall
-			if (!CheckIllusoryWall(raycast))
+			// 2. Try illusory wall
+			if (CheckIllusoryWall(raycast))
 			{
-				MoveInDirection(direction);
+				// Don't move immediately; wait for reveal
 				return;
 			}
 
-			// Default movement if no collision
+			// 3. Check if clear
 			if (!raycast.IsColliding())
 			{
 				MoveInDirection(direction);
+			}
+			else
+			{
+				if (!_sfxPlayer.Playing)
+					PlayGrunt();
 			}
 		}
 
@@ -351,11 +364,20 @@ namespace DungeonCrawler
 		/// </summary>
 		private void PlayFootstep()
 		{
-			if (_sfxPlayer == null)
-				return;
-
+			_sfxPlayer.Stream = _footstepSound;
 			_sfxPlayer.VolumeDb = (float)GD.RandRange(-100f, -105f);
 			_sfxPlayer.PitchScale = (float)GD.RandRange(0.5f, 0.75f);
+			_sfxPlayer.Play();
+		}
+
+		/// <summary>
+		/// Plays a randomized footstep sound effect.
+		/// </summary>
+		private void PlayGrunt()
+		{
+			_sfxPlayer.Stream = _gruntSound;
+			_sfxPlayer.VolumeDb = 0f;
+			_sfxPlayer.PitchScale = 1f;
 			_sfxPlayer.Play();
 		}
 

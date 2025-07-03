@@ -80,6 +80,15 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 
 ---
 
+**9. "Grunt"**
+- Original Author: n3b
+- Source: https://opengameart.org/content/grunt
+- License: CC-BY 3.0
+- Used As: `grunt.wav`
+- Notes: Slight editing in Ableton Live Lite.
+
+---
+
 ## 📄 License Notes
 
 - **CC0** assets do not require attribution, but are credited here out of courtesy.
