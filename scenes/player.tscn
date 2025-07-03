@@ -13,38 +13,38 @@ script = ExtResource("1_dqkch")
 [node name="PlayerController" type="StaticBody3D" parent="." node_paths=PackedStringArray("_sfxPlayer", "_frontRay", "_leftRay", "_rightRay", "_backRay", "_downRay", "_playerCamera", "_player") groups=["player"]]
 script = ExtResource("1_qhqgy")
 _sfxPlayer = NodePath("SFXPlayer")
-_frontRay = NodePath("CollisionShape3D/FrontRay")
-_leftRay = NodePath("CollisionShape3D/LeftRay")
-_rightRay = NodePath("CollisionShape3D/RightRay")
-_backRay = NodePath("CollisionShape3D/BackRay")
-_downRay = NodePath("CollisionShape3D/DownRay")
+_frontRay = NodePath("CollisionShape/FrontRaycast")
+_leftRay = NodePath("CollisionShape/LeftRaycast")
+_rightRay = NodePath("CollisionShape/RightRaycast")
+_backRay = NodePath("CollisionShape/BackRaycast")
+_downRay = NodePath("CollisionShape/DownRaycast")
 _playerCamera = NodePath("PlayerCamera")
 _player = NodePath("..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerController"]
+[node name="CollisionShape" type="CollisionShape3D" parent="PlayerController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("SphereShape3D_tbgi4")
 
-[node name="FrontRay" type="RayCast3D" parent="PlayerController/CollisionShape3D"]
+[node name="FrontRaycast" type="RayCast3D" parent="PlayerController/CollisionShape"]
 target_position = Vector3(0, 0, -2)
 
-[node name="LeftRay" type="RayCast3D" parent="PlayerController/CollisionShape3D"]
+[node name="LeftRaycast" type="RayCast3D" parent="PlayerController/CollisionShape"]
 target_position = Vector3(-2, 0, 0)
 
-[node name="RightRay" type="RayCast3D" parent="PlayerController/CollisionShape3D"]
+[node name="RightRaycast" type="RayCast3D" parent="PlayerController/CollisionShape"]
 target_position = Vector3(2, 0, 0)
 
-[node name="BackRay" type="RayCast3D" parent="PlayerController/CollisionShape3D"]
+[node name="BackRaycast" type="RayCast3D" parent="PlayerController/CollisionShape"]
 target_position = Vector3(0, 0, 2)
 
-[node name="DownRay" type="RayCast3D" parent="PlayerController/CollisionShape3D"]
+[node name="DownRaycast" type="RayCast3D" parent="PlayerController/CollisionShape"]
 target_position = Vector3(0, -2, 0)
 
 [node name="PlayerCamera" type="Camera3D" parent="PlayerController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 current = true
 
-[node name="AudioListener3D" type="AudioListener3D" parent="PlayerController"]
+[node name="AudioListener" type="AudioListener3D" parent="PlayerController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 current = true
 
