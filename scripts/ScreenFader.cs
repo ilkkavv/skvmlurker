@@ -2,16 +2,21 @@ using Godot;
 
 namespace dungeonCrawler
 {
+	/// <summary>
+	/// Handles screen fading transitions (e.g., fade to black and back).
+	/// </summary>
 	public partial class ScreenFader : ColorRect
 	{
 		private Tween _currentTween;
 
+		/// <summary>
+		/// Fades the screen to black over the given duration.
+		/// </summary>
+		/// <param name="duration">Duration of fade in seconds.</param>
 		public void FadeToBlack(float duration = 0.5f)
 		{
 			Visible = true;
-
-			// Set the color to black before fading
-			Color = new Color(0, 0, 0); // RGB black
+			Color = new Color(0, 0, 0); // Set background color to black
 
 			_currentTween?.Kill();
 
@@ -19,39 +24,16 @@ namespace dungeonCrawler
 			_currentTween.TweenProperty(this, "modulate:a", 1f, duration);
 		}
 
+		/// <summary>
+		/// Fades the screen back to transparent over the given duration.
+		/// </summary>
+		/// <param name="duration">Duration of fade out in seconds.</param>
 		public void FadeBack(float duration = 0.5f)
 		{
-			// Cancel any existing tween
 			_currentTween?.Kill();
 
 			_currentTween = GetTree().CreateTween();
 			_currentTween.TweenProperty(this, "modulate:a", 0f, duration);
-			_currentTween.Finished += () => Visible = false;
-		}
-
-		public void Flash(Color flashColor, float flashDuration = 0.2f)
-		{
-			Visible = true;
-			_currentTween?.Kill();
-
-			// Set the actual ColorRect color
-			Color = flashColor;
-
-			// Start fully transparent (but with color)
-			Modulate = new Color(1, 1, 1, 0f); // No tinting, just use ColorRect's color
-
-			_currentTween = GetTree().CreateTween();
-
-			_currentTween
-				.TweenProperty(this, "modulate:a", 1f, flashDuration * 0.5f)
-				.SetTrans(Tween.TransitionType.Sine)
-				.SetEase(Tween.EaseType.Out);
-
-			_currentTween
-				.TweenProperty(this, "modulate:a", 0f, flashDuration * 0.5f)
-				.SetTrans(Tween.TransitionType.Sine)
-				.SetEase(Tween.EaseType.In);
-
 			_currentTween.Finished += () => Visible = false;
 		}
 	}

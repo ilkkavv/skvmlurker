@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://clr6qv2hnek8k"]
+[gd_scene load_steps=7 format=3 uid="uid://clr6qv2hnek8k"]
 
 [ext_resource type="PackedScene" uid="uid://k4a3y5f8mdsx" path="res://scenes/player.tscn" id="1_sugp2"]
+[ext_resource type="Script" uid="uid://8rfa0re8gx1i" path="res://scripts/ScreenFlasher.cs" id="3_tbgi4"]
 [ext_resource type="Script" uid="uid://cvmkee83k3516" path="res://scripts/Dungeon.cs" id="4_jyhfs"]
 [ext_resource type="AudioStream" uid="uid://8jhnijip0mxr" path="res://assets/audio/bgm/dungeon.ogg" id="4_tbgi4"]
 [ext_resource type="Script" uid="uid://dkcjsp1hutjew" path="res://scripts/ScreenFader.cs" id="4_tefeu"]
@@ -50,6 +51,22 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 script = ExtResource("4_tefeu")
+
+[node name="ScreenFlasher" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("3_tbgi4")
 
 [node name="GameWorld" type="Node3D" parent="."]
 

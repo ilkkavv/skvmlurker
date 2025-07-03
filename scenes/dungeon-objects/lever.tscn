@@ -6,10 +6,9 @@
 [ext_resource type="Script" uid="uid://c18rfwuar0jrv" path="res://scripts/LeverHandle.cs" id="5_6gd7h"]
 [ext_resource type="AudioStream" uid="uid://bsljp60m3jwge" path="res://assets/audio/sfx/lever.wav" id="7_3ai3i"]
 
-[node name="Lever" type="Node3D" node_paths=PackedStringArray("_handle", "_sfxPlayer")]
+[node name="Lever" type="Node3D" node_paths=PackedStringArray("_gatesArray")]
 script = ExtResource("1_bktly")
-_handle = NodePath("Handle")
-_sfxPlayer = NodePath("SFXPlayer")
+_gatesArray = []
 
 [node name="Wall" parent="." instance=ExtResource("2_bktly")]
 

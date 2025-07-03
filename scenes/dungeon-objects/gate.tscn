@@ -5,10 +5,8 @@
 [ext_resource type="AudioStream" uid="uid://h0bvq3tusgxp" path="res://assets/audio/sfx/gate.wav" id="4_q326e"]
 [ext_resource type="PackedScene" uid="uid://dsnrlf1tbxpck" path="res://scenes/dungeon-tile-parts/gate-body.tscn" id="4_slhlu"]
 
-[node name="Gate" type="Node3D" node_paths=PackedStringArray("_fence", "_sfxPlayer")]
+[node name="Gate" type="Node3D"]
 script = ExtResource("1_hr1a4")
-_fence = NodePath("GateBody")
-_sfxPlayer = NodePath("SFXPlayer")
 
 [node name="GateWall" parent="." instance=ExtResource("3_5s6n8")]
 

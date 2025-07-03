@@ -21,7 +21,7 @@ namespace dungeonCrawler
 		private Area3D _triggerArea;
 		private AudioStreamPlayer2D _sfxPlayer;
 		private Dungeon _dungeon;
-		private ScreenFader _screenFader;
+		private ScreenFlasher _screenFlasher;
 		private Player _player;
 
 		private bool _isTriggered = false; // Internal flag to prevent multiple triggers
@@ -60,12 +60,12 @@ namespace dungeonCrawler
 			// Resolve references to world systems
 			Node main = GetTree().Root.GetNodeOrNull("Main");
 			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
-			_screenFader = main?.GetNodeOrNull<ScreenFader>("CanvasLayer/ScreenFader");
+			_screenFlasher = main?.GetNodeOrNull<ScreenFlasher>("CanvasLayer/ScreenFlasher");
 
 			if (_dungeon == null)
 				GD.PrintErr("TeleportTrap: Dungeon not found.");
 
-			if (_screenFader == null)
+			if (_screenFlasher == null)
 				GD.PrintErr("TeleportTrap: ScreenFader not found.");
 		}
 
@@ -114,7 +114,7 @@ namespace dungeonCrawler
 			_sfxPlayer?.Play();
 
 			// Screen flash for teleport effect
-			_screenFader?.Flash(new Color(0.545f, 0.545f, 0.796f, 1f)); // Light purple
+			_screenFlasher?.Flash(new Color(0.545f, 0.545f, 0.796f, 1f)); // Light purple
 
 			// Move player
 			_dungeon?.SetPlayerPos(_targetPosition, _targetRotation);

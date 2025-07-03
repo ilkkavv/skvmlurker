@@ -44,7 +44,7 @@ namespace dungeonCrawler
 
 			// Gather non-null gates from array
 			if (_gatesArray != null)
-				_gates = _gatesArray.Where(g => g != null).ToList();
+				_gates = [.. _gatesArray.Where(g => g != null)];
 
 			// Warnings
 			if (_handle == null) GD.PrintErr("Lever: Handle node not found.");
