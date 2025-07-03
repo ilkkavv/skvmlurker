@@ -18,7 +18,7 @@ _releaseSfxPath = "res://assets/audio/sfx/pressure-plate-release.wav"
 
 [node name="TriggerArea" type="Area3D" parent="."]
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="TriggerArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TriggerArea"]
 shape = SubResource("SphereShape3D_x5uxn")
 
 [node name="SFXPlayer" type="AudioStreamPlayer3D" parent="."]
