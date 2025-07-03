@@ -7,7 +7,7 @@ namespace dungeonCrawler
 		[Export] private StaticBody3D _fence;
 		[Export] private AudioStreamPlayer3D _sfxPlayer;
 
-		[Export] private bool _gateOpen = false;
+		[Export] public bool _gateOpen = false;
 		[Export] private float _openHeight = 1.4f;
 		[Export] private float _stepHeight = 0.2f;
 		[Export] private float _openDelay = 0.2f;

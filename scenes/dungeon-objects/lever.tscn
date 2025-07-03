@@ -8,14 +8,14 @@
 
 [node name="Lever" type="Node3D" node_paths=PackedStringArray("_handle", "_sfxPlayer")]
 script = ExtResource("1_bktly")
-_handle = NodePath("Lever-handle")
-_sfxPlayer = NodePath("AudioStreamPlayer3D")
+_handle = NodePath("Handle")
+_sfxPlayer = NodePath("SFXPlayer")
 
-[node name="Lever-wall" parent="." instance=ExtResource("2_bktly")]
+[node name="Wall" parent="." instance=ExtResource("2_bktly")]
 
-[node name="Lever-handle" parent="." instance=ExtResource("3_6gd7h")]
+[node name="Handle" parent="." instance=ExtResource("3_6gd7h")]
 script = ExtResource("5_6gd7h")
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+[node name="SFXPlayer" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 stream = ExtResource("7_3ai3i")

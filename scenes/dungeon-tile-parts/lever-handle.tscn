@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_3wbhl"]
 size = Vector3(0.6, 0.0998657, 0.1)
 
-[node name="Lever-handle" type="StaticBody3D"]
+[node name="LeverHandle" type="StaticBody3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_a4m26")
