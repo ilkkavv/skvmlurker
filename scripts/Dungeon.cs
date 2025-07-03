@@ -1,117 +1,136 @@
-using System;
 using Godot;
+using System.Threading.Tasks;
 
 namespace dungeonCrawler
 {
 	public partial class Dungeon : Node3D
 	{
+		#region Fields and Configuration
+
 		[Export(PropertyHint.File, "*.tscn")]
-		private string _dlvl1Path;
-		[Export] private Player _player;
-		[Export] private ScreenFader _screenFader;
+		private string _startLevelPath;
+
 		[Export] private float _fadeTime = 0.5f;
 
-		private Node3D _currentDlvl;
+		private Player _player;
+		private ScreenFader _screenFader;
+		private Node3D _currentLevel;
 
-		// Called when the node enters the scene tree for the first time.
+		#endregion
+
+		#region Godot Lifecycle
+
+		/// <summary>
+		/// Called when the node enters the scene tree. Initializes references and loads the starting level.
+		/// </summary>
 		public override void _Ready()
 		{
-			if (string.IsNullOrEmpty(_dlvl1Path))
+			// Resolve required references from the scene
+			var main = GetTree().Root.GetNodeOrNull("Main");
+			if (main == null)
 			{
-				GD.PrintErr("Level path is empty!");
+				GD.PrintErr("Dungeon: 'Main' node not found.");
 				return;
 			}
 
-			PackedScene startScene = ResourceLoader.Load<PackedScene>(_dlvl1Path);
+			_player = main.GetNodeOrNull<Player>("GameWorld/Player");
+			if (_player == null)
+			{
+				GD.PrintErr("Dungeon: Failed to find Player node at 'GameWorld/Player'.");
+				return;
+			}
+
+			_screenFader = main.GetNodeOrNull<ScreenFader>("UI/ScreenFader");
+			if (_screenFader == null)
+			{
+				GD.PrintErr("Dungeon: Failed to find ScreenFader node at 'UI/ScreenFader'.");
+				return;
+			}
+
+			// Load initial level
+			if (string.IsNullOrEmpty(_startLevelPath))
+			{
+				GD.PrintErr("Dungeon: No start level path specified.");
+				return;
+			}
+
+			PackedScene startScene = ResourceLoader.Load<PackedScene>(_startLevelPath);
 			if (startScene == null)
 			{
-				GD.PrintErr($"Could not load scene from path: {_dlvl1Path}");
+				GD.PrintErr($"Dungeon: Failed to load scene from path: {_startLevelPath}");
 				return;
 			}
 
-			ChangeLevel(startScene, new Vector3(0, 0, 0), 0);
+			_ = ChangeLevel(startScene, Vector3.Zero, 0f); // Fire and forget
 		}
 
-		// Called every frame. 'delta' is the elapsed time since the previous frame.
-		public override void _Process(double delta)
-		{
-		}
+		#endregion
 
+		#region Public Methods
+
+		/// <summary>
+		/// Sets the player's global position and Y rotation in degrees.
+		/// </summary>
 		public void SetPlayerPos(Vector3 position, float rotation)
 		{
 			_player.GlobalPosition = position;
 			_player.GlobalRotationDegrees = new Vector3(0, rotation, 0);
 		}
 
-		public void ChangeLevel(PackedScene targetLevel, Vector3 newPlayerPos,
-						float? newPlayerRot = null, bool fallDamage = false)
+		/// <summary>
+		/// Changes the current level to the given scene and repositions the player.
+		/// Handles fade out/in transitions and optional fall damage.
+		/// </summary>
+		/// <param name="targetScene">Scene to load as the new level.</param>
+		/// <param name="newPlayerPos">Where to place the player.</param>
+		/// <param name="newPlayerRot">Optional new Y rotation.</param>
+		/// <param name="fallDamage">Whether fall damage should be triggered.</param>
+		public async Task ChangeLevel(PackedScene targetScene, Vector3 newPlayerPos, float? newPlayerRot = null, bool fallDamage = false)
 		{
-			_player._blockInput = true;
-
-			if (_screenFader == null)
+			if (targetScene == null)
 			{
-				GD.PrintErr("Screen Fader is null!");
+				GD.PrintErr("Dungeon: Target scene is null.");
 				return;
 			}
 
-			// Start fade to black
+			_player.BlockInput();
+
+			// Fade to black and wait
 			_screenFader.FadeToBlack(_fadeTime);
+			await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
 
-			// Create tween for timing
-			var tween = GetTree().CreateTween();
-
-			// Step 1: Wait for fade out
-			tween.TweenInterval(_fadeTime);
-
-			// Step 2: Load new level
-			tween.TweenCallback(Callable.From(() =>
+			// Remove existing level if any
+			Node oldLevel = GetNodeOrNull<Node>("Level");
+			if (oldLevel != null)
 			{
-				// Remove current level
-				var currentDlvl = GetNodeOrNull<Node>("Level");
-				if (currentDlvl != null)
-				{
-					RemoveChild(currentDlvl);
-					currentDlvl.Free();
-				}
+				RemoveChild(oldLevel);
+				oldLevel.QueueFree();
+			}
 
-				if (targetLevel == null)
-				{
-					GD.PrintErr("Target scene is null!");
-					return;
-				}
+			// Instantiate and add new level
+			Node newLevelInstance = targetScene.Instantiate<Node>();
+			newLevelInstance.Name = "Level";
+			AddChild(newLevelInstance);
+			_currentLevel = newLevelInstance as Node3D;
 
-				// Add new level
-				var newLevelInstance = targetLevel.Instantiate<Node>();
-				newLevelInstance.Name = "Level";
-				AddChild(newLevelInstance);
+			// Position and rotate player
+			float finalRot = newPlayerRot ?? _player.GlobalRotationDegrees.Y;
+			SetPlayerPos(newPlayerPos, finalRot);
 
-				// Move player (with or without new rotation)
-				float finalRot = newPlayerRot ?? _player.GlobalRotationDegrees.Y;
-				SetPlayerPos(newPlayerPos, finalRot);
+			// Fade back in and wait
+			_screenFader.FadeBack(_fadeTime);
+			await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
 
-				// Start fade back in
-				_screenFader.FadeBack(_fadeTime);
-			}));
+			// Re-enable player input
+			_player.UnblockInput();
 
-			// Step 3: Wait for fade back in
-			tween.TweenInterval(_fadeTime);
-
-			// Step 4: Re-enable player input
-			tween.TweenCallback(Callable.From(() =>
+			if (fallDamage)
 			{
-				_player._blockInput = false;
-
-				if (fallDamage)
-				{
-					GD.Print("Player takes fall damage!");
-					// TODO: Apply fall damage here
-				}
-			}));
+				GD.Print("Player takes fall damage! (not yet implemented)");
+				// TODO: Apply actual fall damage here
+			}
 		}
 
-		internal void ChangeLevel(string targetScenePath, Vector3 newPlayerPos, float v)
-		{
-			throw new NotImplementedException();
-		}
+		#endregion
 	}
 }
