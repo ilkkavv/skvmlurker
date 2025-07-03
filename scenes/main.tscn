@@ -56,11 +56,9 @@ script = ExtResource("4_tefeu")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="GameWorld"]
 environment = SubResource("Environment_o5qli")
 
-[node name="Dungeon" type="Node3D" parent="GameWorld" node_paths=PackedStringArray("_player", "_screenFader")]
+[node name="Dungeon" type="Node3D" parent="GameWorld"]
 script = ExtResource("4_jyhfs")
-_dlvl1Path = "uid://b36yf0fchgh1d"
-_player = NodePath("../../CanvasLayer/SubViewportContainer/SubViewport/Player")
-_screenFader = NodePath("../../CanvasLayer/ScreenFader")
+_startLevelPath = "uid://b36yf0fchgh1d"
 
 [node name="BGMPlayer" type="AudioStreamPlayer2D" parent="GameWorld"]
 stream = ExtResource("4_tbgi4")

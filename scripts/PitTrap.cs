@@ -1,73 +1,94 @@
 using Godot;
-using System;
 
 namespace dungeonCrawler
 {
 	public partial class PitTrap : Node3D
 	{
+		#region Fields and Nodes
+
 		[Export(PropertyHint.File, "*.tscn")]
 		private string _targetScenePath = "";
 
-		[Export] private Vector3 _newPlayerPos;
+		[Export] private Vector3 _teleportPosition;
 
-		[Export] private StaticBody3D _fakeFloor;
-		[Export] private RayCast3D _raycast;
-		[Export] private AudioStreamPlayer3D _sfxPlayer;
+		private StaticBody3D _fakeFloor;
+		private AudioStreamPlayer3D _sfxPlayer;
+		private Area3D _triggerArea;
 
-		private bool _triggered = false;
+		private bool _isTriggered = false;
 		private Dungeon _dungeon;
 
-		// Called when the node enters the scene tree for the first time.
+		#endregion
+
+		#region Setup
+
 		public override void _Ready()
 		{
-			if (_triggered)
-			{
-				_fakeFloor.Visible = false;
-			}
+			// Get child nodes
+			_fakeFloor = GetNodeOrNull<StaticBody3D>("FakeFloor");
+			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("SFXPlayer");
+			_triggerArea = GetNodeOrNull<Area3D>("TriggerArea");
 
-			// Get the root node (Main)
-			Node main = GetTree().Root.GetNode("Main");
-			// Get Dungeon node from the scene
-			_dungeon = main.GetNode<Dungeon>("GameWorld/Dungeon");
+			if (_fakeFloor == null) GD.PrintErr("PitTrap: FakeFloor node not found.");
+			if (_sfxPlayer == null) GD.PrintErr("PitTrap: SFXPlayer node not found.");
+			if (_triggerArea == null) GD.PrintErr("PitTrap: TriggerArea (Area3D) node not found.");
+
+			// Connect signal
+			if (_triggerArea != null)
+				_triggerArea.BodyEntered += OnBodyEntered;
+
+			// Get Dungeon reference
+			Node main = GetTree().Root.GetNodeOrNull("Main");
+			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
+
+			if (_dungeon == null)
+				GD.PrintErr("PitTrap: Dungeon reference not found.");
 		}
 
-		// Called every frame. 'delta' is the elapsed time since the previous frame.
-		public override void _Process(double delta)
-		{
-			CheckForPlayer();
-		}
+		#endregion
 
-		private void CheckForPlayer()
+		#region Trigger Logic
+
+		private void OnBodyEntered(Node3D body)
 		{
-			if (_raycast.IsColliding() && !_triggered)
+			if (_isTriggered || body == null)
+				return;
+
+			if (body.IsInGroup("player"))
 			{
-				var collider = _raycast.GetCollider();
-
-				if (collider is Node colliderNode)
-				{
-					if (colliderNode.IsInGroup("player"))
-					{
-						TriggerTrap();
-					}
-				}
+				TriggerTrap();
 			}
 		}
 
 		private async void TriggerTrap()
 		{
-			_triggered = true;
-			_sfxPlayer.Play();
+			_isTriggered = true;
 
-			_fakeFloor.Visible = false;
+			_sfxPlayer?.Play();
 
-			var collider = _fakeFloor.GetNode<CollisionShape3D>("CollisionShape3D");
+			if (_fakeFloor != null)
+			{
+				_fakeFloor.Visible = false;
+				var collider = _fakeFloor.GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
+				if (collider != null)
+					collider.SetDeferred("disabled", true);
+			}
 
-			// Safely disable in next physics frame
-			collider.SetDeferred("disabled", true);
+			await ToSignal(GetTree().CreateTimer(1f), SceneTreeTimer.SignalName.Timeout);
 
-			await ToSignal(GetTree().CreateTimer(1f), "timeout");
+			if (_dungeon != null && !string.IsNullOrEmpty(_targetScenePath))
+			{
+				var nextScene = ResourceLoader.Load<PackedScene>(_targetScenePath);
+				if (nextScene == null)
+				{
+					GD.PrintErr($"PitTrap: Failed to load scene at '{_targetScenePath}'");
+					return;
+				}
 
-			_dungeon.ChangeLevel(ResourceLoader.Load<PackedScene>(_targetScenePath), _newPlayerPos);
+				await _dungeon.ChangeLevel(nextScene, _teleportPosition, fallDamage: true);
+			}
 		}
+
+		#endregion
 	}
 }

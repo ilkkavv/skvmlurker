@@ -33,17 +33,17 @@ namespace dungeonCrawler
 				return;
 			}
 
-			_player = main.GetNodeOrNull<Player>("GameWorld/Player");
+			_player = main.GetNodeOrNull<Player>("CanvasLayer/SubViewportContainer/SubViewport/Player");
 			if (_player == null)
 			{
-				GD.PrintErr("Dungeon: Failed to find Player node at 'GameWorld/Player'.");
+				GD.PrintErr("Dungeon: Failed to find Player node at 'CanvasLayer/SubViewportContainer/SubViewport/Player'.");
 				return;
 			}
 
-			_screenFader = main.GetNodeOrNull<ScreenFader>("UI/ScreenFader");
+			_screenFader = main.GetNodeOrNull<ScreenFader>("CanvasLayer/ScreenFader");
 			if (_screenFader == null)
 			{
-				GD.PrintErr("Dungeon: Failed to find ScreenFader node at 'UI/ScreenFader'.");
+				GD.PrintErr("Dungeon: Failed to find ScreenFader node at 'CanvasLayer/ScreenFader'.");
 				return;
 			}
 
