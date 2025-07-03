@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddx7hvwortcxe"]
+
+[ext_resource type="ArrayMesh" uid="uid://b6gkrqbsrbdj2" path="res://assets/models/wall.obj" id="1_uath3"]
+[ext_resource type="Material" uid="uid://dyxlrsbnrhxpg" path="res://assets/materials/brick-dungeon-alpha.tres" id="2_uath3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bgbbd"]
+size = Vector3(2, 2, 0.001)
+
+[node name="FakeWall" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_uath3")
+surface_material_override/0 = ExtResource("2_uath3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.0005)
+shape = SubResource("BoxShape3D_bgbbd")

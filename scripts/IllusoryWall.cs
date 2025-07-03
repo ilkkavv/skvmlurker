@@ -1,77 +1,92 @@
 using Godot;
 
-namespace dungeonCrawl
+namespace dungeonCrawler
 {
+	/// <summary>
+	/// An illusory wall that visually fades and disables collision when the player attempts to walk into it.
+	/// Commonly used for hidden or secret passageways.
+	/// </summary>
 	public partial class IllusoryWall : Node3D
 	{
-		[Export] private MeshInstance3D _wall;
-		[Export] private RayCast3D _frontRay;
-		[Export] private RayCast3D _backRay;
-		[Export] private AudioStreamPlayer3D _sfxPlayer;
+		#region Private Fields
 
-		private bool _open = false;
+		private Node3D _wallRoot;                   // The "Wall" scene instance
+		private MeshInstance3D _mesh;               // The mesh inside Wall
+		private CollisionShape3D _collider;         // Collider inside Wall
+		private AudioStreamPlayer3D _sfxPlayer;     // Reveal SFX
+		private bool _isRevealed = false;           // State flag
 
-		// Called when the node enters the scene tree for the first time.
+		#endregion
+
+		#region Lifecycle
+
 		public override void _Ready()
 		{
-			if (_open)
+			_wallRoot = GetNodeOrNull<Node3D>("FakeWall");
+			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("SFXPlayer");
+
+			if (_wallRoot == null)
 			{
-				Visible = false;
+				GD.PrintErr("IllusoryWall: 'Wall' node not found.");
+				return;
 			}
+
+			_mesh = _wallRoot.GetNodeOrNull<MeshInstance3D>("MeshInstance3D");
+			_collider = _wallRoot.GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
+
+			if (_mesh == null)
+				GD.PrintErr("IllusoryWall: MeshInstance3D not found under Wall.");
+			if (_collider == null)
+				GD.PrintErr("IllusoryWall: CollisionShape3D not found under Wall.");
+			if (_sfxPlayer == null)
+				GD.PrintErr("IllusoryWall: SFXPlayer node not found.");
 		}
 
-		// Called every frame. 'delta' is the elapsed time since the previous frame.
-		public override void _Process(double delta)
-		{
-			if (!_open)
-				CheckForPlayer();
-		}
+		#endregion
 
-		private void CheckForPlayer()
-		{
-			Node collider = null;
+		#region Public API
 
-			if (_frontRay.IsColliding())
+		/// <summary>
+		/// Reveals the illusory wall by disabling its collider, fading its mesh,
+		/// and hiding it after the fade completes.
+		/// </summary>
+		public async void TryReveal()
+		{
+			if (_isRevealed || _mesh == null || _collider == null)
+				return;
+
+			_isRevealed = true;
+
+			_sfxPlayer?.Play();
+
+			if (_mesh.GetActiveMaterial(0) is not StandardMaterial3D sharedMaterial)
 			{
-				collider = _frontRay.GetCollider() as Node;
+				GD.PrintErr("IllusoryWall: Active material is not a StandardMaterial3D.");
+				return;
 			}
 
-			if (_backRay.IsColliding())
-			{
-				collider = _backRay.GetCollider() as Node;
-			}
+			var uniqueMaterial = (StandardMaterial3D)sharedMaterial.Duplicate();
+			_mesh.SetSurfaceOverrideMaterial(0, uniqueMaterial);
 
-			if (collider != null && collider.IsInGroup("player"))
-			{
-				Open();
-			}
-		}
+			uniqueMaterial.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
+			uniqueMaterial.AlbedoColor = new Color(
+				uniqueMaterial.AlbedoColor.R,
+				uniqueMaterial.AlbedoColor.G,
+				uniqueMaterial.AlbedoColor.B,
+				1f
+			);
 
-		private async void Open()
-		{
-			_open = true;
-
-			_sfxPlayer.Play();
-
-			// Get the original shared material
-			var sharedMaterial = _wall.GetActiveMaterial(0) as StandardMaterial3D;
-			if (sharedMaterial == null) return;
-
-			// Duplicate it so this wall has its own unique material
-			var material = (StandardMaterial3D)sharedMaterial.Duplicate();
-			_wall.SetSurfaceOverrideMaterial(0, material); // Apply the unique material
-
-			// Set transparency mode and starting alpha
-			material.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
-			material.AlbedoColor = new Color(material.AlbedoColor.R, material.AlbedoColor.G, material.AlbedoColor.B, 1.0f);
-
-			// Fade out using Tween
 			var tween = CreateTween();
-			tween.TweenProperty(material, "albedo_color:a", 0.0f, 1f);
+			tween.TweenProperty(uniqueMaterial, "albedo_color:a", 0f, 1f)
+				.SetTrans(Tween.TransitionType.Sine)
+				.SetEase(Tween.EaseType.InOut);
+
 			await ToSignal(tween, Tween.SignalName.Finished);
 
-			Visible = false;
+			_collider.SetDeferred("disabled", true);
+			_wallRoot.Visible = false;
 		}
+
+		#endregion
 	}
 }
-

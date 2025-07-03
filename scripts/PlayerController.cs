@@ -119,30 +119,56 @@ namespace dungeonCrawler
 		/// </summary>
 		private void HandleMovementInput()
 		{
+			Vector3 direction = Vector3.Zero;
+			RayCast3D raycast = null;
+
 			if (Input.IsActionPressed("MoveForward"))
 			{
-				if (CheckStairs(_frontRaycast))
-				{
-					_dungeon?.ChangeLevel(
-						_stairs.ReturnTargetScene(),
-						_stairs.ReturnNewPlayerPos(),
-						_stairs.ReturnNewPlayerRot()
-					);
-				}
-				else if (!_frontRaycast.IsColliding())
-				{
-					MoveInDirection(-_player.Transform.Basis.Z.Normalized());
-				}
+				direction = -_player.Transform.Basis.Z.Normalized();
+				raycast = _frontRaycast;
+			}
+			else if (Input.IsActionPressed("MoveLeft"))
+			{
+				direction = -_player.Transform.Basis.X.Normalized();
+				raycast = _leftRaycast;
+			}
+			else if (Input.IsActionPressed("MoveRight"))
+			{
+				direction = _player.Transform.Basis.X.Normalized();
+				raycast = _rightRaycast;
+			}
+			else if (Input.IsActionPressed("MoveBackward"))
+			{
+				direction = _player.Transform.Basis.Z.Normalized();
+				raycast = _backRaycast;
 			}
 
-			if (Input.IsActionPressed("MoveLeft") && !_leftRaycast.IsColliding())
-				MoveInDirection(-_player.Transform.Basis.X.Normalized());
+			if (raycast == null || direction == Vector3.Zero)
+				return;
 
-			if (Input.IsActionPressed("MoveRight") && !_rightRaycast.IsColliding())
-				MoveInDirection(_player.Transform.Basis.X.Normalized());
+			// Priority 1: check for stairs
+			if (CheckStairs(raycast))
+			{
+				_dungeon?.ChangeLevel(
+					_stairs.ReturnTargetScene(),
+					_stairs.ReturnNewPlayerPos(),
+					_stairs.ReturnNewPlayerRot()
+				);
+				return;
+			}
 
-			if (Input.IsActionPressed("MoveBackward") && !_backRaycast.IsColliding())
-				MoveInDirection(_player.Transform.Basis.Z.Normalized());
+			// Priority 2: check for illusory wall
+			if (!CheckIllusoryWall(raycast))
+			{
+				MoveInDirection(direction);
+				return;
+			}
+
+			// Default movement if no collision
+			if (!raycast.IsColliding())
+			{
+				MoveInDirection(direction);
+			}
 		}
 
 		/// <summary>
@@ -285,6 +311,30 @@ namespace dungeonCrawler
 				if (colliderNode.GetParent() is Stairs stairsNode)
 				{
 					_stairs = stairsNode;
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Checks if the given raycast is colliding with an illusory wall.
+		/// If so, triggers the wall to reveal itself and returns true.
+		/// </summary>
+		/// <param name="raycast">The RayCast3D used for detection.</param>
+		/// <returns>True if an illusory wall was detected and triggered; otherwise, false.</returns>
+		private static bool CheckIllusoryWall(RayCast3D raycast)
+		{
+			if (raycast == null || !raycast.IsColliding())
+				return false;
+
+			var collider = raycast.GetCollider();
+			if (collider is Node colliderNode && colliderNode.IsInGroup("illusory-wall"))
+			{
+				if (colliderNode.GetParent() is IllusoryWall wall)
+				{
+					wall.TryReveal();
 					return true;
 				}
 			}
