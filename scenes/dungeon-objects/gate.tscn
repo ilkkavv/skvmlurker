@@ -1,20 +1,20 @@
 [gd_scene load_steps=5 format=3 uid="uid://jom4mpp0rhqy"]
 
 [ext_resource type="Script" uid="uid://dlkrsairjfodw" path="res://scripts/Gate.cs" id="1_hr1a4"]
-[ext_resource type="PackedScene" uid="uid://c8vhbifiv6sxq" path="res://scenes/dungeon-tile-parts/gate-doorway.tscn" id="3_5s6n8"]
+[ext_resource type="PackedScene" uid="uid://c8vhbifiv6sxq" path="res://scenes/dungeon-tile-parts/gate-wall.tscn" id="3_5s6n8"]
 [ext_resource type="AudioStream" uid="uid://h0bvq3tusgxp" path="res://assets/audio/sfx/gate.wav" id="4_q326e"]
-[ext_resource type="PackedScene" uid="uid://dsnrlf1tbxpck" path="res://scenes/dungeon-tile-parts/gate-fence.tscn" id="4_slhlu"]
+[ext_resource type="PackedScene" uid="uid://dsnrlf1tbxpck" path="res://scenes/dungeon-tile-parts/gate-body.tscn" id="4_slhlu"]
 
 [node name="Gate" type="Node3D" node_paths=PackedStringArray("_fence", "_sfxPlayer")]
 script = ExtResource("1_hr1a4")
-_fence = NodePath("Gate-fence")
-_sfxPlayer = NodePath("AudioStreamPlayer3D")
+_fence = NodePath("GateBody")
+_sfxPlayer = NodePath("SFXPlayer")
 
-[node name="Gate-doorway" parent="." instance=ExtResource("3_5s6n8")]
+[node name="GateWall" parent="." instance=ExtResource("3_5s6n8")]
 
-[node name="Gate-fence" parent="." instance=ExtResource("4_slhlu")]
+[node name="GateBody" parent="." instance=ExtResource("4_slhlu")]
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+[node name="SFXPlayer" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 stream = ExtResource("4_q326e")
 volume_db = -10.0

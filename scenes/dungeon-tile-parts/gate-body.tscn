@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_m5dj5"]
 size = Vector3(2, 2.5, 0.5)
 
-[node name="Gate-fence" type="StaticBody3D"]
+[node name="GateBody" type="StaticBody3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_sn6n5")
