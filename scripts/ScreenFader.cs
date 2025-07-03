@@ -1,6 +1,6 @@
 using Godot;
 
-namespace dungeonCrawler
+namespace DungeonCrawler
 {
 	/// <summary>
 	/// Handles screen fading transitions (e.g., fade to black and back).

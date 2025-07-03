@@ -1,6 +1,6 @@
 using Godot;
 
-namespace dungeonCrawler
+namespace DungeonCrawler
 {
 	/// <summary>
 	/// Flashes a colored overlay on the screen for a brief duration.

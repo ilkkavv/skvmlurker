@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace dungeonCrawler
+namespace DungeonCrawler
 {
 	/// <summary>
 	/// A lever that can toggle multiple connected gates.

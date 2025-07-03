@@ -1,6 +1,6 @@
 using Godot;
 
-namespace dungeonCrawler
+namespace DungeonCrawler
 {
 	/// <summary>
 	/// A teleport trap that instantly moves the player to a target position and rotation upon entering a trigger area.

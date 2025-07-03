@@ -1,6 +1,6 @@
 using Godot;
 
-namespace dungeonCrawler
+namespace DungeonCrawler
 {
 	/// <summary>
 	/// An illusory wall that visually fades and disables collision when the player attempts to walk into it.

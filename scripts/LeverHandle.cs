@@ -1,6 +1,6 @@
 using Godot;
 
-namespace dungeonCrawler
+namespace DungeonCrawler
 {
 	/// <summary>
 	/// Interactable component for a lever's handle.

@@ -1,7 +1,7 @@
-using Godot;
 using System.Threading.Tasks;
+using Godot;
 
-namespace dungeonCrawler
+namespace DungeonCrawler
 {
 	public partial class Dungeon : Node3D
 	{

@@ -1,6 +1,6 @@
 using Godot;
 
-namespace dungeonCrawler
+namespace DungeonCrawler
 {
 	/// <summary>
 	/// PressurePlate detects when the player steps on it using Area3D.
@@ -23,7 +23,7 @@ namespace dungeonCrawler
 		private StaticBody3D _plate;
 		private AudioStreamPlayer3D _sfxPlayer;
 		private bool _isPressed = false;
-		
+
 		private const float PressDepth = 0.05f;
 
 		#endregion
