@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dsnrlf1tbxpck"]
 
 [ext_resource type="ArrayMesh" uid="uid://7cboxcivdwb4" path="res://assets/models/door-gate.obj" id="1_sn6n5"]
-[ext_resource type="Material" uid="uid://dyxlrsbnrhxpg" path="res://assets/materials/brick-dungeon-alpha.tres" id="2_orn37"]
+[ext_resource type="Material" uid="uid://dyxlrsbnrhxpg" path="res://assets/materials/dungeon-alpha.tres" id="2_orn37"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m5dj5"]
 size = Vector3(2, 2.5, 0.5)

@@ -87,6 +87,22 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 - Used As: `grunt.wav`
 - Notes: Slight editing in Ableton Live Lite.
 
+**9. "Grunt 2"**
+- Original Author: n3b
+- Source: https://opengameart.org/content/grunt-2
+- License: CC-BY 3.0
+- Used As: `hurt.wav`
+- Notes: No editing.
+
+---
+
+**10. "20 Sword Sound Effects (Attacks and Clashes)"**
+- Original Author: StarNinjas
+- Source: https://opengameart.org/content/20-sword-sound-effects-attacks-and-clashes
+- License: CC0
+- Used As: `spike-trap-trigger.wav` and `spike-trap-reset.wav`
+- Notes: Slight editing and layering Audacity.
+
 ---
 
 ## 📄 License Notes

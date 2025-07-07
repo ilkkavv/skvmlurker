@@ -14,6 +14,7 @@ namespace DungeonCrawler
 		[Export] private float _raycastDistance = 100f;
 		[Export] private string _pathToFootstepSfx = "res://assets/audio/sfx/footstep.wav";
 		[Export] private string _pathToGruntSfx = "res://assets/audio/sfx/grunt.wav";
+		[Export] private string _pathToHurtSfx = "res://assets/audio/sfx/hurt.wav";
 
 		// === Internal Node References ===
 		private AudioStreamPlayer3D _sfxPlayer;
@@ -26,6 +27,7 @@ namespace DungeonCrawler
 		private Player _player;
 		private AudioStream _footstepSound;
 		private AudioStream _gruntSound;
+		private AudioStream _hurtSound;
 
 		// === Constants ===
 		private const float TravelDistance = 2f;
@@ -77,6 +79,7 @@ namespace DungeonCrawler
 			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("SFXPlayer");
 			_footstepSound = GD.Load<AudioStream>(_pathToFootstepSfx);
 			_gruntSound = GD.Load<AudioStream>(_pathToGruntSfx);
+			_hurtSound = GD.Load<AudioStream>(_pathToHurtSfx);
 
 			// Null checks with clear messages
 			if (_frontRaycast == null) GD.PrintErr("PlayerController: FrontRaycast not found.");
@@ -88,6 +91,7 @@ namespace DungeonCrawler
 			if (_sfxPlayer == null) GD.PrintErr("PlayerController: SFXPlayer not found.");
 			if (_footstepSound == null) GD.PrintErr("PlayerController: Footstep sound effect not found.");
 			if (_gruntSound == null) GD.PrintErr("PlayerController: Grunt sound effect not found.");
+			if (_hurtSound == null) GD.PrintErr("PlayerController: Hurt sound effect not found.");
 
 				_travelTime = TravelDistance / _movementSpeed;
 		}
@@ -371,11 +375,22 @@ namespace DungeonCrawler
 		}
 
 		/// <summary>
-		/// Plays a randomized footstep sound effect.
+		/// Plays a grunt sound effect.
 		/// </summary>
 		private void PlayGrunt()
 		{
 			_sfxPlayer.Stream = _gruntSound;
+			_sfxPlayer.VolumeDb = 0f;
+			_sfxPlayer.PitchScale = 1f;
+			_sfxPlayer.Play();
+		}
+
+		/// <summary>
+		/// Plays a hurt sound effect.
+		/// </summary>
+		public void PlayHurt()
+		{
+			_sfxPlayer.Stream = _hurtSound;
 			_sfxPlayer.VolumeDb = 0f;
 			_sfxPlayer.PitchScale = 1f;
 			_sfxPlayer.Play();

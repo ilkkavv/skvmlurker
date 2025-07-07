@@ -13,8 +13,8 @@ namespace DungeonCrawler
 		[Export(PropertyHint.File, "*.tscn")]
 		private string _targetScenePath = "";
 
-		[Export]
-		private Vector3 _teleportPosition;
+		[Export] private Vector3 _teleportPosition;
+		[Export] private bool _fallDamage = true;
 
 		#endregion
 
@@ -25,6 +25,7 @@ namespace DungeonCrawler
 		private Area3D _triggerArea;
 
 		private bool _isTriggered = false;
+
 		private Dungeon _dungeon;
 
 		#endregion
@@ -113,7 +114,7 @@ namespace DungeonCrawler
 					return;
 				}
 
-				await _dungeon.ChangeLevel(nextScene, _teleportPosition, fallDamage: true);
+				await _dungeon.ChangeLevel(nextScene, _teleportPosition, fallDamage: _fallDamage);
 			}
 		}
 

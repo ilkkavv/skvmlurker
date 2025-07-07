@@ -33,7 +33,7 @@ namespace DungeonCrawler
 
 			// Fade out
 			_currentTween
-				.TweenProperty(this, "modulate:a", 0f, flashDuration * 0.5f)
+				.TweenProperty(this, "modulate:a", 0f, flashDuration * 0.2f)
 				.SetTrans(Tween.TransitionType.Sine)
 				.SetEase(Tween.EaseType.In);
 

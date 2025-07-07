@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dyxlrsbnrhxpg"]
+
+[ext_resource type="Texture2D" uid="uid://c120y8enj3cty" path="res://assets/textures/dungeon-alpha.png" id="1_w5aen"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+depth_draw_mode = 1
+albedo_texture = ExtResource("1_w5aen")

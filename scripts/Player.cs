@@ -1,13 +1,26 @@
+using System;
 using Godot;
 
 namespace DungeonCrawler
 {
 	public partial class Player : Node3D
 	{
+		#region Player Attributes and Stats
+
+		private int _str;
+		private int _agi;
+		private int _con;
+		private int _wis;
+
+		private int _hp = 20;
+
+		#endregion
+
 		#region Fields and Properties
 
 		private bool _isInputBlocked = true;
 		private PlayerController _playerController;
+		private ScreenFlasher _screenFlasher;
 
 		/// <summary>
 		/// Whether player input is currently blocked.
@@ -29,6 +42,18 @@ namespace DungeonCrawler
 			{
 				GD.PrintErr("Player: Failed to find PlayerController as a child node.");
 			}
+
+			// Get Dungeon reference from scene root
+			Node main = GetTree().Root.GetNodeOrNull("Main");
+			if (main == null)
+			{
+				GD.PrintErr("PlayerController: 'Main' node not found in scene tree.");
+				return;
+			}
+
+			_screenFlasher = main.GetNodeOrNull<ScreenFlasher>("CanvasLayer/ScreenFlasher");
+			if (_screenFlasher == null)
+				GD.PrintErr("PlayerController: ScreenFlasher node not found at 'CanvasLayer/ScreenFlasher'.");
 		}
 
 		#endregion
@@ -64,5 +89,25 @@ namespace DungeonCrawler
 		}
 
 		#endregion
+
+		public void TakeDamage(int diceCount, int diceType)
+		{
+			Random rnd = new();
+			int damage = diceCount * rnd.Next(1, (diceType + 1));
+			GD.Print($"You take {damage} damage!");
+			_hp -= damage;
+			GD.Print($"HP = {_hp}.");
+
+			// Screen flash for damage effect
+			_screenFlasher?.Flash(new Color(255f, 0f, 0f, 255f)); // Red
+			_playerController.PlayHurt();
+
+			if (_hp <= 0) Die();
+		}
+
+		private void Die()
+		{
+			GD.Print("You died!");
+		}
 	}
 }

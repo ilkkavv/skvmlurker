@@ -117,18 +117,18 @@ namespace DungeonCrawler
 			float finalRot = newPlayerRot ?? _player.GlobalRotationDegrees.Y;
 			SetPlayerPos(newPlayerPos, finalRot);
 
+			// Player takes fall damage
+			if (fallDamage)
+			{
+				_player.TakeDamage(1, 6);
+			}
+
 			// Fade back in and wait
 			_screenFader.FadeBack(_fadeTime);
 			await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
 
 			// Re-enable player input
 			_player.UnblockInput();
-
-			if (fallDamage)
-			{
-				GD.Print("Player takes fall damage! (not yet implemented)");
-				// TODO: Apply actual fall damage here
-			}
 		}
 
 		#endregion

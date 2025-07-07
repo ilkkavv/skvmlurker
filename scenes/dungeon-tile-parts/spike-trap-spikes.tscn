@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgau872x8o7oj"]
+
+[ext_resource type="ArrayMesh" uid="uid://ho2w1xm7fx47" path="res://assets/models/spike-trap-spikes.obj" id="1_d1suq"]
+[ext_resource type="Material" uid="uid://dyxlrsbnrhxpg" path="res://assets/materials/dungeon-alpha.tres" id="2_tdm8h"]
+
+[node name="SpikeTrapSpikes" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_d1suq")
+surface_material_override/0 = ExtResource("2_tdm8h")
