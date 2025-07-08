@@ -95,6 +95,7 @@ namespace DungeonCrawler
 					return;
 				}
 
+				_player?.BlockInput();
 				TriggerTeleport();
 			}
 		}
@@ -110,7 +111,6 @@ namespace DungeonCrawler
 
 			// Freeze player and play effect
 			_player?.StopPlayer();
-			_player?.BlockInput();
 			_sfxPlayer?.Play();
 
 			// Screen flash for teleport effect

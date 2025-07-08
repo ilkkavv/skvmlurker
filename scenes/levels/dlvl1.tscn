@@ -1314,21 +1314,27 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 
 [node name="GateClosed" parent="Objects" instance=ExtResource("7_p6x0l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -17)
+GateId = "gate1"
 
 [node name="GateClosed2" parent="Objects" instance=ExtResource("7_p6x0l")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 23, 0, -14)
+GateId = "gate2"
 
 [node name="Gate1" parent="Objects" instance=ExtResource("7_p6x0l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -17)
+GateId = "gate3"
 
 [node name="Gate2" parent="Objects" instance=ExtResource("7_p6x0l")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 19, 0, -24)
+GateId = "gate4"
 
 [node name="Gate3" parent="Objects" instance=ExtResource("7_p6x0l")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, -26)
+GateId = "gate5"
 
 [node name="Gate4" parent="Objects" instance=ExtResource("7_p6x0l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -31)
+GateId = "gate6"
 
 [node name="Pressure-plate1" parent="Objects" node_paths=PackedStringArray("_gate") instance=ExtResource("8_p6x0l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -14)
@@ -1364,6 +1370,9 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 
 [node name="Teleport-trap" parent="Objects" instance=ExtResource("13_sn6fm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+
+[node name="Teleport-trap2" parent="Objects" instance=ExtResource("13_sn6fm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
 
 [node name="Secret-button" parent="Objects" node_paths=PackedStringArray("_gate") instance=ExtResource("14_rg66n")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -16)

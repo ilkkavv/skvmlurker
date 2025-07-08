@@ -21,6 +21,7 @@ namespace DungeonCrawler
 		private bool _isInputBlocked = true;
 		private PlayerController _playerController;
 		private ScreenFlasher _screenFlasher;
+		private ScreenFader _screenFader;
 
 		/// <summary>
 		/// Whether player input is currently blocked.
@@ -54,6 +55,9 @@ namespace DungeonCrawler
 			_screenFlasher = main.GetNodeOrNull<ScreenFlasher>("CanvasLayer/ScreenFlasher");
 			if (_screenFlasher == null)
 				GD.PrintErr("PlayerController: ScreenFlasher node not found at 'CanvasLayer/ScreenFlasher'.");
+			_screenFader = main.GetNodeOrNull<ScreenFader>("CanvasLayer/ScreenFader");
+			if (_screenFader == null)
+				GD.PrintErr("PlayerController: ScreenFader node not found at 'CanvasLayer/ScreenFader'.");
 		}
 
 		#endregion
@@ -107,6 +111,8 @@ namespace DungeonCrawler
 
 		private void Die()
 		{
+			BlockInput();
+			_screenFader.FadeToBlack();
 			GD.Print("You died!");
 		}
 	}

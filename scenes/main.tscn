@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://clr6qv2hnek8k"]
+[gd_scene load_steps=8 format=3 uid="uid://clr6qv2hnek8k"]
 
 [ext_resource type="PackedScene" uid="uid://k4a3y5f8mdsx" path="res://scenes/player.tscn" id="1_sugp2"]
+[ext_resource type="Script" uid="uid://jceswpgjtehe" path="res://scripts/SaveManager.cs" id="1_tefeu"]
 [ext_resource type="Script" uid="uid://8rfa0re8gx1i" path="res://scripts/ScreenFlasher.cs" id="3_tbgi4"]
 [ext_resource type="Script" uid="uid://cvmkee83k3516" path="res://scripts/Dungeon.cs" id="4_jyhfs"]
 [ext_resource type="AudioStream" uid="uid://8jhnijip0mxr" path="res://assets/audio/bgm/dungeon.ogg" id="4_tbgi4"]
@@ -13,6 +14,9 @@ ambient_light_energy = 0.03
 fog_light_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node"]
+
+[node name="SaveManager" type="Node" parent="."]
+script = ExtResource("1_tefeu")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

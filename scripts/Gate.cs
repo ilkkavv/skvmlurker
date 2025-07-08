@@ -11,6 +11,7 @@ namespace DungeonCrawler
 	{
 		#region Exported Settings
 
+		[Export] public string GateId { private set; get; }
 		[Export] public bool _gateOpen = false;
 		[Export] private float _openHeight = 1.4f;
 		[Export] private float _stepHeight = 0.2f;
@@ -21,6 +22,7 @@ namespace DungeonCrawler
 
 		#region Private Fields
 
+		private Dungeon _dungeon;
 		private StaticBody3D _gateBody;
 		private AudioStreamPlayer3D _sfxPlayer;
 		private bool _isActive = true;
@@ -31,18 +33,19 @@ namespace DungeonCrawler
 
 		public override void _Ready()
 		{
+			Node main = GetTree().Root.GetNodeOrNull("Main");
+			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
+
 			// Get internal nodes
 			_gateBody = GetNodeOrNull<StaticBody3D>("GateBody");
 			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("SFXPlayer");
 
+			if (_dungeon == null) GD.PrintErr("Gate: Dungeon not found.");
 			if (_gateBody == null) GD.PrintErr("Gate: GateBody node not found.");
 			if (_sfxPlayer == null) GD.PrintErr("Gate: SFXPlayer node not found.");
+			if (string.IsNullOrEmpty(GateId)) GD.PrintErr("Gate: ID not set.");
 
-			// If gate should start open, position it accordingly
-			if (_gateOpen && _gateBody != null)
-			{
-				_gateBody.Position = new Vector3(0, _openHeight, 0);
-			}
+			_dungeon.AddGate(this);
 		}
 
 		public override void _ExitTree()
@@ -83,6 +86,7 @@ namespace DungeonCrawler
 
 			if (timer > 0)
 			{
+				_gateOpen = false;
 				await ToSignal(GetTree().CreateTimer(timer), SceneTreeTimer.SignalName.Timeout);
 				CloseGate();
 			}
@@ -111,6 +115,19 @@ namespace DungeonCrawler
 			}
 
 			_gateBody.Position = new Vector3(0, 0, 0);
+		}
+
+		public void InitializeState()
+		{
+			if (_dungeon == null || string.IsNullOrEmpty(GateId)) return;
+
+			_gateOpen = _dungeon.LoadObjectState("gate", GateId, "open");
+			GD.Print($"Initializing gate: {GateId} {_gateOpen}");
+
+			if (_gateOpen && _gateBody != null)
+			{
+				_gateBody.Position = new Vector3(0, _openHeight, 0);
+			}
 		}
 
 		/// <summary>
