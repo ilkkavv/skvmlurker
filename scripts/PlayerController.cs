@@ -101,12 +101,13 @@ namespace DungeonCrawler
 		/// </summary>
 		public override void _PhysicsProcess(double delta)
 		{
+			HandleSystemInput();
+
 			if (_player.IsInputBlocked || IsTweenRunning() || CheckForFall())
 				return;
 
 			HandleMovementInput();
 			HandleRotationInput();
-			HandleSystemInput();
 		}
 
 		#endregion

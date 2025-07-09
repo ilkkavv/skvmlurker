@@ -4,19 +4,32 @@ using Godot;
 
 namespace DungeonCrawler
 {
+	/// <summary>
+	/// The main controller for managing the dungeon, level transitions,
+	/// and save/load logic for all interactive dungeon objects.
+	/// </summary>
 	public partial class Dungeon : Node3D
 	{
-		#region Fields and Configuration
+		#region Exported Configuration
 
 		[Export(PropertyHint.File, "*.tscn")]
 		private string _startLevelPath;
 
-		[Export] private float _fadeTime = 0.5f;
+		[Export]
+		private float _fadeTime = 0.5f;
+
+		#endregion
+
+		#region Runtime References
 
 		private Player _player;
 		private ScreenFader _screenFader;
-		private Node3D _currentLevel;
 		private SaveManager _saveManager;
+		private Node3D _currentLevel;
+
+		#endregion
+
+		#region Tracked Dungeon Objects
 
 		private List<Gate> _gates = new();
 		private List<PitTrap> _pitTraps = new();
@@ -27,15 +40,14 @@ namespace DungeonCrawler
 
 		#endregion
 
-		#region Godot Lifecycle
+		#region Lifecycle
 
 		/// <summary>
-		/// Called when the node enters the scene tree. Initializes references and loads the starting level.
+		/// Initializes references and loads the starting level on scene entry.
 		/// </summary>
 		public override void _Ready()
 		{
-			// Resolve required references from the scene
-			var main = GetTree().Root.GetNodeOrNull("Main");
+			Node main = GetTree().Root.GetNodeOrNull("Main");
 			if (main == null)
 			{
 				GD.PrintErr("Dungeon: 'Main' node not found.");
@@ -45,32 +57,31 @@ namespace DungeonCrawler
 			_player = main.GetNodeOrNull<Player>("CanvasLayer/SubViewportContainer/SubViewport/Player");
 			if (_player == null)
 			{
-				GD.PrintErr("Dungeon: Failed to find Player node at 'CanvasLayer/SubViewportContainer/SubViewport/Player'.");
+				GD.PrintErr("Dungeon: Player not found.");
 				return;
 			}
 
 			_screenFader = main.GetNodeOrNull<ScreenFader>("CanvasLayer/ScreenFader");
 			if (_screenFader == null)
 			{
-				GD.PrintErr("Dungeon: Failed to find ScreenFader node at 'CanvasLayer/ScreenFader'.");
+				GD.PrintErr("Dungeon: ScreenFader not found.");
 				return;
 			}
 
 			_saveManager = main.GetNodeOrNull<SaveManager>("SaveManager");
 			if (_saveManager == null)
 			{
-				GD.PrintErr("Dungeon: Failed to find SaveManager node at 'Main/SaveManager'.");
+				GD.PrintErr("Dungeon: SaveManager not found.");
 				return;
 			}
 
-			// Load initial level
 			if (string.IsNullOrEmpty(_startLevelPath))
 			{
 				GD.PrintErr("Dungeon: No start level path specified.");
 				return;
 			}
 
-			PackedScene startScene = ResourceLoader.Load<PackedScene>(_startLevelPath);
+			var startScene = ResourceLoader.Load<PackedScene>(_startLevelPath);
 			if (startScene == null)
 			{
 				GD.PrintErr($"Dungeon: Failed to load scene from path: {_startLevelPath}");
@@ -82,10 +93,10 @@ namespace DungeonCrawler
 
 		#endregion
 
-		#region Public Methods
+		#region Public API
 
 		/// <summary>
-		/// Sets the player's global position and Y rotation in degrees.
+		/// Positions the player at the specified location and Y-rotation.
 		/// </summary>
 		public void SetPlayerPos(Vector3 position, float rotation)
 		{
@@ -94,13 +105,9 @@ namespace DungeonCrawler
 		}
 
 		/// <summary>
-		/// Changes the current level to the given scene and repositions the player.
-		/// Handles fade out/in transitions and optional fall damage.
+		/// Transitions to a new level scene, saving current object states
+		/// and restoring them after load. Handles fade and optional fall damage.
 		/// </summary>
-		/// <param name="targetScene">Scene to load as the new level.</param>
-		/// <param name="newPlayerPos">Where to place the player.</param>
-		/// <param name="newPlayerRot">Optional new Y rotation.</param>
-		/// <param name="fallDamage">Whether fall damage should be triggered.</param>
 		public async Task ChangeLevel(PackedScene targetScene, Vector3 newPlayerPos, float? newPlayerRot = null, bool fallDamage = false)
 		{
 			if (targetScene == null)
@@ -110,18 +117,14 @@ namespace DungeonCrawler
 			}
 
 			_player.BlockInput();
-
-			// Fade to black and wait
 			_screenFader.FadeToBlack(_fadeTime);
 			await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
 
-			// Save object states after fade but before clearing
 			if (_currentLevel != null)
 				SaveObjectStates();
-			// Reset object lists
+
 			ClearObjectLists();
 
-			// Remove existing level if any
 			if (_currentLevel != null)
 			{
 				RemoveChild(_currentLevel);
@@ -129,51 +132,37 @@ namespace DungeonCrawler
 				_currentLevel = null;
 			}
 
-			// Instantiate and prepare new level
-			Node newLevelInstance = targetScene.Instantiate();
-			Node3D newLevelAsNode3D = newLevelInstance as Node3D;
-
-			if (newLevelAsNode3D == null)
+			var newLevelInstance = targetScene.Instantiate() as Node3D;
+			if (newLevelInstance == null)
 			{
-				GD.PrintErr("[Dungeon] Loaded level is not a Node3D!");
+				GD.PrintErr("Dungeon: Loaded level is not a Node3D.");
 				return;
 			}
 
-			// Assign level name from file path
 			string scenePath = targetScene.ResourcePath;
 			if (string.IsNullOrEmpty(scenePath))
-			{
-				GD.PrintErr("[Dungeon] Target scene has no ResourcePath! Assigning fallback name.");
 				scenePath = _startLevelPath;
-			}
 
-			string levelName = scenePath.GetFile().GetBaseName();
-
-			_currentLevel = newLevelAsNode3D;
+			_currentLevel = newLevelInstance;
 			AddChild(_currentLevel);
 
-			GD.Print($"[Dungeon] Loaded level: {_currentLevel.Name}");
+			GD.Print($"Dungeon: Loaded level: {_currentLevel.Name}");
 
-			// Position and rotate player
 			float finalRot = newPlayerRot ?? _player.GlobalRotationDegrees.Y;
 			SetPlayerPos(newPlayerPos, finalRot);
 
-			//InitializeObjectStates();
-
-			// Player takes fall damage
 			if (fallDamage)
-			{
 				_player.TakeDamage(1, 6);
-			}
 
-			// Fade back in and wait
 			_screenFader.FadeBack(_fadeTime);
 			await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
 
-			// Re-enable player input
 			_player.UnblockInput();
 		}
 
+		/// <summary>
+		/// Registers a dungeon object for later state saving and initialization.
+		/// </summary>
 		public void AddObject(Node3D obj)
 		{
 			switch (obj)
@@ -197,23 +186,29 @@ namespace DungeonCrawler
 					_teleportTraps.Add(teleportTrap);
 					break;
 				default:
-					GD.PrintErr($"[Dungeon] Unhandled object type in AddObject: {obj.GetType().Name}");
+					GD.PrintErr($"Dungeon: Unhandled object type in AddObject: {obj.GetType().Name}");
 					break;
 			}
 		}
 
+		/// <summary>
+		/// Loads a boolean state for a specific object from the current level's saved data.
+		/// </summary>
 		public bool LoadObjectState(string objectType, string objectId, string key)
 		{
 			if (_currentLevel == null)
-			{
 				return false;
-			}
 
 			return _saveManager.LoadBoolValue(_currentLevel.Name, objectType, objectId, key);
 		}
 
 		#endregion
 
+		#region State Management
+
+		/// <summary>
+		/// Saves the state of all registered dungeon objects into persistent storage.
+		/// </summary>
 		private void SaveObjectStates()
 		{
 			Dictionary<string, bool> gatesToSave = [];
@@ -223,35 +218,38 @@ namespace DungeonCrawler
 			Dictionary<string, bool> secretButtonsToSave = [];
 			Dictionary<string, bool> teleportTrapsToSave = [];
 
-			foreach (var entry in _gates)
-			{
-				gatesToSave.Add(entry.GateId, entry._gateOpen);
-			}
-			foreach (var entry in _pitTraps)
-			{
-				pitTrapsToSave.Add(entry.PitTrapId, entry._isTriggered);
-			}
-			foreach (var entry in _illusoryWalls)
-			{
-				illusoryWallsToSave.Add(entry.IllusoryWallId, entry._isRevealed);
-			}
-			foreach (var entry in _levers)
-			{
-				leversToSave.Add(entry.LeverId, entry._leverOn);
-			}
-			foreach (var entry in _secretButtons)
-			{
-				secretButtonsToSave.Add(entry.SecretButtonId, entry._pressed);
-			}
-			foreach (var entry in _teleportTraps)
-			{
-				teleportTrapsToSave.Add(entry.TeleportTrapId, entry._isTriggered);
-			}
+			foreach (var gate in _gates)
+				gatesToSave[gate.GateId] = gate._gateOpen;
 
-			_saveManager.SaveLevel(_currentLevel.Name, gatesToSave, pitTrapsToSave,
-				illusoryWallsToSave, leversToSave, secretButtonsToSave, teleportTrapsToSave);
+			foreach (var pitTrap in _pitTraps)
+				pitTrapsToSave[pitTrap.PitTrapId] = pitTrap._isTriggered;
+
+			foreach (var wall in _illusoryWalls)
+				illusoryWallsToSave[wall.IllusoryWallId] = wall._isRevealed;
+
+			foreach (var lever in _levers)
+				leversToSave[lever.LeverId] = lever._leverOn;
+
+			foreach (var button in _secretButtons)
+				secretButtonsToSave[button.SecretButtonId] = button._pressed;
+
+			foreach (var trap in _teleportTraps)
+				teleportTrapsToSave[trap.TeleportTrapId] = trap._isTriggered;
+
+			_saveManager.SaveLevel(
+				_currentLevel.Name,
+				gatesToSave,
+				pitTrapsToSave,
+				illusoryWallsToSave,
+				leversToSave,
+				secretButtonsToSave,
+				teleportTrapsToSave
+			);
 		}
 
+		/// <summary>
+		/// Clears all internal object references in preparation for scene unloading.
+		/// </summary>
 		private void ClearObjectLists()
 		{
 			_gates.Clear();
@@ -261,5 +259,7 @@ namespace DungeonCrawler
 			_secretButtons.Clear();
 			_teleportTraps.Clear();
 		}
+
+		#endregion
 	}
 }

@@ -3,9 +3,13 @@ using Godot;
 
 namespace DungeonCrawler
 {
+	/// <summary>
+	/// Represents the player character in the dungeon.
+	/// Handles stats, damage, input control, and death logic.
+	/// </summary>
 	public partial class Player : Node3D
 	{
-		#region Player Attributes and Stats
+		#region Player Stats
 
 		private int _str;
 		private int _agi;
@@ -16,17 +20,22 @@ namespace DungeonCrawler
 
 		#endregion
 
-		#region Fields and Properties
+		#region Dependencies
 
-		private bool _isInputBlocked = true;
 		private PlayerController _playerController;
 		private ScreenFlasher _screenFlasher;
 		private ScreenFader _screenFader;
 
+		#endregion
+
+		#region Properties
+
 		/// <summary>
-		/// Whether player input is currently blocked.
+		/// Indicates whether player input is currently blocked.
 		/// </summary>
-		public bool IsInputBlocked => _isInputBlocked;
+		public bool IsInputBlocked { get; private set; } = false;
+
+		private bool _isDead = false;
 
 		#endregion
 
@@ -34,30 +43,28 @@ namespace DungeonCrawler
 
 		/// <summary>
 		/// Called when the node enters the scene tree.
-		/// Sets up references to child components.
+		/// Sets up component references from the scene.
 		/// </summary>
 		public override void _Ready()
 		{
 			_playerController = GetNodeOrNull<PlayerController>("PlayerController");
 			if (_playerController == null)
-			{
-				GD.PrintErr("Player: Failed to find PlayerController as a child node.");
-			}
+				GD.PrintErr("Player: PlayerController not found.");
 
-			// Get Dungeon reference from scene root
 			Node main = GetTree().Root.GetNodeOrNull("Main");
 			if (main == null)
 			{
-				GD.PrintErr("PlayerController: 'Main' node not found in scene tree.");
+				GD.PrintErr("Player: 'Main' node not found.");
 				return;
 			}
 
 			_screenFlasher = main.GetNodeOrNull<ScreenFlasher>("CanvasLayer/ScreenFlasher");
 			if (_screenFlasher == null)
-				GD.PrintErr("PlayerController: ScreenFlasher node not found at 'CanvasLayer/ScreenFlasher'.");
+				GD.PrintErr("Player: ScreenFlasher not found at 'CanvasLayer/ScreenFlasher'.");
+
 			_screenFader = main.GetNodeOrNull<ScreenFader>("CanvasLayer/ScreenFader");
 			if (_screenFader == null)
-				GD.PrintErr("PlayerController: ScreenFader node not found at 'CanvasLayer/ScreenFader'.");
+				GD.PrintErr("Player: ScreenFader not found at 'CanvasLayer/ScreenFader'.");
 		}
 
 		#endregion
@@ -65,27 +72,30 @@ namespace DungeonCrawler
 		#region Input Control
 
 		/// <summary>
-		/// Blocks player input. Used during animations or scripted events.
+		/// Disables all player input (used during events or death).
 		/// </summary>
 		public void BlockInput()
 		{
-			_isInputBlocked = true;
+			IsInputBlocked = true;
 		}
 
 		/// <summary>
-		/// Unblocks player input. Call when player can move again.
+		/// Enables player input, unless the player is dead.
 		/// </summary>
 		public void UnblockInput()
 		{
-			_isInputBlocked = false;
+			if (_isDead)
+				return;
+
+			IsInputBlocked = false;
 		}
 
 		#endregion
 
-		#region Control and Animation
+		#region Movement Control
 
 		/// <summary>
-		/// Immediately stops the player by killing the current tween animation.
+		/// Immediately stops any active movement tween.
 		/// </summary>
 		public void StopPlayer()
 		{
@@ -94,26 +104,41 @@ namespace DungeonCrawler
 
 		#endregion
 
+		#region Combat and Health
+
+		/// <summary>
+		/// Deals randomized damage to the player and handles death logic.
+		/// </summary>
+		/// <param name="diceCount">Number of dice to roll.</param>
+		/// <param name="diceType">Type of dice (e.g., 6-sided).</param>
 		public void TakeDamage(int diceCount, int diceType)
 		{
 			Random rnd = new();
-			int damage = diceCount * rnd.Next(1, (diceType + 1));
+			int damage = diceCount * rnd.Next(1, diceType + 1);
 			GD.Print($"You take {damage} damage!");
+
 			_hp -= damage;
-			GD.Print($"HP = {_hp}.");
+			GD.Print($"HP = {_hp}");
 
-			// Screen flash for damage effect
-			_screenFlasher?.Flash(new Color(255f, 0f, 0f, 255f)); // Red
-			_playerController.PlayHurt();
+			// Visual/audio feedback
+			_screenFlasher?.Flash(new Color(1f, 0f, 0f, 1f)); // Red flash
+			_playerController?.PlayHurt();
 
-			if (_hp <= 0) Die();
+			if (_hp <= 0)
+				Die();
 		}
 
+		/// <summary>
+		/// Triggers the player's death sequence.
+		/// </summary>
 		private void Die()
 		{
 			BlockInput();
-			_screenFader.FadeToBlack();
+			_isDead = true;
+			_screenFader?.FadeToBlack();
 			GD.Print("You died!");
 		}
+
+		#endregion
 	}
 }

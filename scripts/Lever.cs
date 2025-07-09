@@ -5,16 +5,22 @@ using Godot;
 namespace DungeonCrawler
 {
 	/// <summary>
-	/// A lever that can toggle multiple connected gates.
-	/// When activated, it animates a handle, plays a sound effect,
-	/// and opens or closes the gates it's connected to.
+	/// A lever that toggles its state and opens/closes connected gates.
+	/// Includes handle animation, sound effect, and persistent state loading.
 	/// </summary>
 	public partial class Lever : Node3D
 	{
-		#region Exported Settings
+		#region Exported Properties
 
+		/// <summary>
+		/// Unique identifier used for state saving/loading.
+		/// </summary>
 		[Export] public string LeverId { private set; get; }
-		[Export] private Gate[] _gatesArray; // Assign in the editor
+
+		/// <summary>
+		/// Array of gates this lever controls. Assigned via editor.
+		/// </summary>
+		[Export] private Gate[] _gatesArray;
 
 		#endregion
 
@@ -30,35 +36,43 @@ namespace DungeonCrawler
 
 		private StaticBody3D _handle;
 		private AudioStreamPlayer3D _sfxPlayer;
-		public bool _leverOn;
-		private List<Gate> _gates = new();
 		private Dungeon _dungeon;
+
+		/// <summary>
+		/// Current state of the lever (true = down/on).
+		/// </summary>
+		public bool _leverOn;
+
+		private List<Gate> _gates = new();
 
 		#endregion
 
 		#region Lifecycle
 
+		/// <summary>
+		/// Called when the lever enters the scene tree.
+		/// Initializes references, gathers assigned gates, and loads saved state.
+		/// </summary>
 		public override void _Ready()
 		{
-			// Get internal references
 			_handle = GetNodeOrNull<StaticBody3D>("Handle");
 			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("SFXPlayer");
 
-			// Gather non-null gates from array
 			if (_gatesArray != null)
 				_gates = [.. _gatesArray.Where(g => g != null)];
 
-			// Warnings
 			if (_handle == null) GD.PrintErr("Lever: Handle node not found.");
 			if (_sfxPlayer == null) GD.PrintErr("Lever: SFXPlayer node not found.");
 			if (_gates.Count == 0) GD.PrintErr("Lever: No gates assigned.");
 
-			// Get dungeon reference from the root
 			Node main = GetTree().Root.GetNodeOrNull("Main");
 			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
 
 			if (_dungeon == null)
-				GD.PrintErr("PitTrap: Dungeon reference not found.");
+			{
+				GD.PrintErr("Lever: Dungeon reference not found.");
+				return;
+			}
 
 			_dungeon.AddObject(this);
 			InitializeState();
@@ -69,23 +83,20 @@ namespace DungeonCrawler
 		#region Lever Logic
 
 		/// <summary>
-		/// Toggles the lever's state (on/off), animates the handle,
-		/// plays a sound, and toggles all connected gates.
+		/// Flips the lever's state and toggles all connected gates.
+		/// Includes a short delay and sound feedback.
 		/// </summary>
 		public async void ToggleLever()
 		{
 			if (_handle == null || _sfxPlayer == null || _gates.Count == 0)
 				return;
 
-			// Toggle state and visuals
 			_leverOn = !_leverOn;
 			_handle.Position = _leverOn ? HandleDownPosition : HandleUpPosition;
 			_sfxPlayer.Play();
 
-			// Wait briefly before toggling gates
 			await ToSignal(GetTree().CreateTimer(LeverDelaySeconds), SceneTreeTimer.SignalName.Timeout);
 
-			// Toggle all gates
 			foreach (Gate gate in _gates)
 			{
 				if (gate._gateOpen)
@@ -97,12 +108,20 @@ namespace DungeonCrawler
 
 		#endregion
 
+		#region Initialization
+
+		/// <summary>
+		/// Loads the lever's state from the save system and updates handle position.
+		/// </summary>
 		private void InitializeState()
 		{
-			if (_dungeon == null || _handle == null) return;
+			if (_dungeon == null || _handle == null)
+				return;
 
 			_leverOn = _dungeon.LoadObjectState("Lever", LeverId, "On");
 			_handle.Position = _leverOn ? HandleDownPosition : HandleUpPosition;
 		}
+
+		#endregion
 	}
 }

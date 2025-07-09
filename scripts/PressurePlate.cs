@@ -3,8 +3,8 @@ using Godot;
 namespace DungeonCrawler
 {
 	/// <summary>
-	/// PressurePlate detects when the player steps on it using Area3D.
-	/// It plays sound effects, lowers the plate visually, and opens a gate.
+	/// A pressure plate that detects when the player steps on it using Area3D.
+	/// Plays sound effects, visually moves the plate, and opens a connected gate.
 	/// </summary>
 	public partial class PressurePlate : Node3D
 	{
@@ -13,7 +13,11 @@ namespace DungeonCrawler
 		[Export] private Gate _gate;
 		[Export] private string _pressSfxPath;
 		[Export] private string _releaseSfxPath;
-		[Export] private float _gateOpenDuration = 0f; // If duration is 0, the gate stays open indefinitely
+
+		/// <summary>
+		/// Duration in seconds to keep the gate open. If 0, the gate stays open indefinitely.
+		/// </summary>
+		[Export] private float _gateOpenDuration = 0f;
 
 		#endregion
 
@@ -31,29 +35,28 @@ namespace DungeonCrawler
 		#region Lifecycle
 
 		/// <summary>
-		/// Initializes node references and connects area signals.
+		/// Called when the node is added to the scene.
+		/// Sets up references and connects signals.
 		/// </summary>
 		public override void _Ready()
 		{
-			// Find child nodes
 			_triggerArea = GetNodeOrNull<Area3D>("TriggerArea");
 			_plate = GetNodeOrNull<StaticBody3D>("Plate");
 			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("SFXPlayer");
 
-			// Error checks for critical nodes
 			if (_triggerArea == null)
-			{
 				GD.PrintErr("PressurePlate: Missing TriggerArea node.");
-				return;
+			else
+			{
+				_triggerArea.BodyEntered += OnBodyEntered;
+				_triggerArea.BodyExited += OnBodyExited;
 			}
+
 			if (_plate == null)
 				GD.PrintErr("PressurePlate: Plate node not found.");
+
 			if (_sfxPlayer == null)
 				GD.PrintErr("PressurePlate: SFXPlayer node not found.");
-
-			// Connect signals
-			_triggerArea.BodyEntered += OnBodyEntered;
-			_triggerArea.BodyExited += OnBodyExited;
 		}
 
 		#endregion
@@ -61,7 +64,8 @@ namespace DungeonCrawler
 		#region Signal Handlers
 
 		/// <summary>
-		/// Called when a body enters the trigger area. If it's the player, activates the plate.
+		/// Called when a body enters the trigger area.
+		/// Activates the plate if it's the player.
 		/// </summary>
 		private void OnBodyEntered(Node3D body)
 		{
@@ -72,7 +76,8 @@ namespace DungeonCrawler
 		}
 
 		/// <summary>
-		/// Called when a body exits the trigger area. If it's the player, releases the plate.
+		/// Called when a body exits the trigger area.
+		/// Deactivates the plate if it's the player.
 		/// </summary>
 		private void OnBodyExited(Node3D body)
 		{
@@ -87,24 +92,23 @@ namespace DungeonCrawler
 		#region Plate Logic
 
 		/// <summary>
-		/// Handles visual, audio, and logic changes when the plate is pressed or released.
+		/// Handles animation, sound, and gate interaction when the plate is pressed or released.
 		/// </summary>
-		/// <param name="pressed">True to press the plate, false to release it.</param>
+		/// <param name="pressed">True to press the plate; false to release it.</param>
 		private async void TogglePlate(bool pressed)
 		{
 			_isPressed = pressed;
 
-			// Visually move the plate down or up
+			// Animate plate position
 			if (_plate != null)
-			{
 				_plate.Position = pressed ? new Vector3(0, PressDepth, 0) : Vector3.Zero;
-			}
 
-			// Load and play appropriate sound effect
+			// Play sound
 			if (_sfxPlayer != null)
 			{
 				string sfxPath = pressed ? _pressSfxPath : _releaseSfxPath;
-				AudioStream stream = GD.Load<AudioStream>(sfxPath);
+				var stream = GD.Load<AudioStream>(sfxPath);
+
 				if (stream != null)
 				{
 					_sfxPlayer.Stream = stream;
@@ -112,11 +116,11 @@ namespace DungeonCrawler
 				}
 				else
 				{
-					GD.PrintErr($"PressurePlate: Could not load sound: {sfxPath}");
+					GD.PrintErr($"PressurePlate: Could not load sound at path: {sfxPath}");
 				}
 			}
 
-			// Open gate if assigned and plate is pressed
+			// Open gate if applicable
 			if (pressed && _gate != null)
 			{
 				await ToSignal(GetTree().CreateTimer(0.5f), SceneTreeTimer.SignalName.Timeout);

@@ -3,17 +3,24 @@ using Godot;
 namespace DungeonCrawler
 {
 	/// <summary>
-	/// A teleport trap that instantly moves the player to a target position and rotation upon entering a trigger area.
-	/// Optionally limits the trap to trigger only once. Plays a sound and screen flash when activated.
+	/// A teleport trap that moves the player instantly to a defined position and rotation when entered.
+	/// Can be configured to trigger once or repeatedly. Plays a sound and visual flash when triggered.
 	/// </summary>
 	public partial class TeleportTrap : Node3D
 	{
 		#region Exported Settings
 
+		/// <summary>Unique identifier used for save/load state tracking.</summary>
 		[Export] public string TeleportTrapId { private set; get; }
-		[Export] private Vector3 _targetPosition = Vector3.Zero;  // Destination position for the player
-		[Export] private float _targetRotation = 0f;              // Y-axis rotation to apply after teleport
-		[Export] private bool _triggerOnce = false;               // Whether the trap can be triggered only once
+
+		/// <summary>Target global position to teleport the player to.</summary>
+		[Export] private Vector3 _targetPosition = Vector3.Zero;
+
+		/// <summary>Y-axis rotation (in degrees) to apply to the player after teleport.</summary>
+		[Export] private float _targetRotation = 0f;
+
+		/// <summary>If true, this trap can only trigger once per runtime.</summary>
+		[Export] private bool _triggerOnce = false;
 
 		#endregion
 
@@ -25,7 +32,8 @@ namespace DungeonCrawler
 		private ScreenFlasher _screenFlasher;
 		private Player _player;
 
-		public bool _isTriggered = false; // Internal flag to prevent multiple triggers
+		private const float _controlDelay = 0.25f; // Delay before regaining control
+		public bool _isTriggered = false;          // Flag for one-time triggers
 
 		#endregion
 
@@ -33,45 +41,40 @@ namespace DungeonCrawler
 
 		/// <summary>
 		/// Called when the node enters the scene tree.
-		/// Resolves child nodes and dependencies, and connects signals.
+		/// Grabs required references and sets up signal handling.
 		/// </summary>
 		public override void _Ready()
 		{
-			// Skip setup if already triggered (e.g., if trap is one-time use)
 			if (_isTriggered)
 			{
 				Visible = false;
 				return;
 			}
 
-			// Resolve internal node references
+			// Local node references
 			_triggerArea = GetNodeOrNull<Area3D>("TriggerArea");
 			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer2D>("SFXPlayer");
 
 			if (_triggerArea == null)
 				GD.PrintErr("TeleportTrap: Missing TriggerArea node.");
-
 			if (_sfxPlayer == null)
 				GD.PrintErr("TeleportTrap: Missing SFXPlayer node.");
-
-			// Connect trigger signal
-			if (_triggerArea != null)
+			else
 				_triggerArea.BodyEntered += OnBodyEntered;
 
-			// Resolve references to world systems
+			// External references
 			Node main = GetTree().Root.GetNodeOrNull("Main");
 			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
 			_screenFlasher = main?.GetNodeOrNull<ScreenFlasher>("CanvasLayer/ScreenFlasher");
 
 			if (_dungeon == null)
 				GD.PrintErr("TeleportTrap: Dungeon not found.");
-
 			if (_screenFlasher == null)
-				GD.PrintErr("TeleportTrap: ScreenFader not found.");
+				GD.PrintErr("TeleportTrap: ScreenFlasher not found.");
 
 			if (_triggerOnce)
 			{
-				_dungeon.AddObject(this);
+				_dungeon?.AddObject(this);
 				InitializeState();
 			}
 		}
@@ -81,62 +84,57 @@ namespace DungeonCrawler
 		#region Trigger Logic
 
 		/// <summary>
-		/// Called when a body enters the trigger area.
-		/// Triggers the teleport if the body is the player.
+		/// Fired when a body enters the trigger area. Teleports player if conditions are met.
 		/// </summary>
 		private void OnBodyEntered(Node3D body)
 		{
-			// Ignore if already used or invalid body
-			if (_isTriggered || body == null)
+			if (_isTriggered || body == null || !body.IsInGroup("player"))
 				return;
 
-			// Check for player tag
-			if (body.IsInGroup("player"))
+			_player = body.GetParentOrNull<Player>();
+			if (_player == null)
 			{
-				// Resolve the Player script (assumes trigger is child of PlayerController)
-				_player = body.GetParentOrNull<Player>();
-
-				if (_player == null)
-				{
-					GD.PrintErr("TeleportTrap: Could not resolve Player script.");
-					return;
-				}
-
-				_player?.BlockInput();
-				TriggerTeleport();
+				GD.PrintErr("TeleportTrap: Could not resolve Player node.");
+				return;
 			}
+
+			_player.BlockInput();
+			TriggerTeleport();
 		}
 
 		/// <summary>
-		/// Executes the teleport: stops input, plays effect, moves player, and restores input.
+		/// Executes teleportation, plays visual/audio effects, and delays input recovery.
 		/// </summary>
-		private void TriggerTeleport()
+		private async void TriggerTeleport()
 		{
-			// Disable future triggers if set to single use
 			if (_triggerOnce)
 				_isTriggered = true;
 
-			// Freeze player and play effect
-			_player?.StopPlayer();
+			_player.StopPlayer();
 			_sfxPlayer?.Play();
 
-			// Screen flash for teleport effect
-			_screenFlasher?.Flash(new Color(0.545f, 0.545f, 0.796f, 1f)); // Light purple
-
-			// Move player
+			_screenFlasher?.Flash(new Color(0.545f, 0.545f, 0.796f, 1f)); // Light purple flash
 			_dungeon?.SetPlayerPos(_targetPosition, _targetRotation);
 
-			// Restore player control
-			_player?.UnblockInput();
+			await ToSignal(GetTree().CreateTimer(_controlDelay), SceneTreeTimer.SignalName.Timeout);
+			_player.UnblockInput();
 		}
 
 		#endregion
 
+		#region Save/Load
+
+		/// <summary>
+		/// Loads the trigger state for one-time traps.
+		/// </summary>
 		private void InitializeState()
 		{
-			if (_dungeon == null || _triggerArea == null) return;
+			if (_dungeon == null || string.IsNullOrEmpty(TeleportTrapId))
+				return;
 
 			_isTriggered = _dungeon.LoadObjectState("TeleportTrap", TeleportTrapId, "Triggered");
 		}
+
+		#endregion
 	}
 }

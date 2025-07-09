@@ -11,17 +11,32 @@ namespace DungeonCrawler
 	{
 		#region Exported Settings
 
+		/// <summary>
+		/// Unique ID used for saving the button's state.
+		/// </summary>
 		[Export] public string SecretButtonId { private set; get; }
+
+		/// <summary>
+		/// Gate that this button controls. Must be assigned in the editor.
+		/// </summary>
 		[Export] private Gate _gate;
+
+		/// <summary>
+		/// Delay (in seconds) between pressing the button and opening the gate.
+		/// </summary>
 		[Export] private float _pressDelay = 0.3f;
 
 		#endregion
 
 		#region Private Fields
 
-		private StaticBody3D _tile;
-		private AudioStreamPlayer3D _sfxPlayer;
-		private Dungeon _dungeon;
+		private StaticBody3D _tile;                 // The button mesh that animates inward
+		private AudioStreamPlayer3D _sfxPlayer;     // Plays press sound effect
+		private Dungeon _dungeon;                   // Reference to the dungeon system
+
+		/// <summary>
+		/// Whether the button has already been pressed.
+		/// </summary>
 		public bool _pressed = false;
 
 		private static readonly Vector3 PressedPosition = new(0, 0, -0.1f);
@@ -30,6 +45,9 @@ namespace DungeonCrawler
 
 		#region Lifecycle
 
+		/// <summary>
+		/// Called when the node enters the scene. Grabs references and restores state.
+		/// </summary>
 		public override void _Ready()
 		{
 			_tile = GetNodeOrNull<StaticBody3D>("Tile");
@@ -42,14 +60,14 @@ namespace DungeonCrawler
 			if (_gate == null)
 				GD.PrintErr("SecretButton: Gate reference not assigned.");
 
-			// Get dungeon reference from the root
+			// Get Dungeon reference
 			Node main = GetTree().Root.GetNodeOrNull("Main");
 			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
 
 			if (_dungeon == null)
-				GD.PrintErr("PitTrap: Dungeon reference not found.");
+				GD.PrintErr("SecretButton: Dungeon reference not found.");
 
-			_dungeon.AddObject(this);
+			_dungeon?.AddObject(this);
 			InitializeState();
 		}
 
@@ -58,7 +76,8 @@ namespace DungeonCrawler
 		#region Button Logic
 
 		/// <summary>
-		/// Presses the tile, plays a sound, and opens the gate. Can only be triggered once.
+		/// Activates the button. Moves it inward, plays a sound, and opens the gate after a short delay.
+		/// Only works once.
 		/// </summary>
 		public async void Activate()
 		{
@@ -79,14 +98,22 @@ namespace DungeonCrawler
 
 		#endregion
 
+		#region State Persistence
+
+		/// <summary>
+		/// Loads the button's pressed state from save data, and updates visuals if already pressed.
+		/// </summary>
 		private void InitializeState()
 		{
-			if (_dungeon == null || _tile == null) return;
+			if (_dungeon == null || string.IsNullOrEmpty(SecretButtonId))
+				return;
 
 			_pressed = _dungeon.LoadObjectState("SecretButton", SecretButtonId, "Pressed");
 
-			if (_pressed)
+			if (_pressed && _tile != null)
 				_tile.Position = PressedPosition;
 		}
+
+		#endregion
 	}
 }

@@ -3,8 +3,8 @@ using Godot;
 namespace DungeonCrawler
 {
 	/// <summary>
-	/// An illusory wall that visually fades and disables collision when the player attempts to walk into it.
-	/// Commonly used for hidden or secret passageways.
+	/// An illusory wall that fades out and disables its collider when revealed.
+	/// Often used for secret passages. State persists through saves.
 	/// </summary>
 	public partial class IllusoryWall : Node3D
 	{
@@ -16,18 +16,21 @@ namespace DungeonCrawler
 
 		#region Private Fields
 
-		private Node3D _wallRoot;                   // The "Wall" scene instance
-		private MeshInstance3D _mesh;               // The mesh inside Wall
-		private CollisionShape3D _collider;         // Collider inside Wall
-		private AudioStreamPlayer3D _sfxPlayer;     // Reveal SFX
-		public bool _isRevealed = false;           // State flag
+		private Node3D _wallRoot;                  // The parent node holding mesh and collider
+		private MeshInstance3D _mesh;              // Visual component
+		private CollisionShape3D _collider;        // Physical barrier
+		private AudioStreamPlayer3D _sfxPlayer;    // Sound effect on reveal
+		private Dungeon _dungeon;                  // Reference to dungeon for state saving
 
-		private Dungeon _dungeon;
+		public bool _isRevealed = false;           // Whether the wall has already been revealed
 
 		#endregion
 
 		#region Lifecycle
 
+		/// <summary>
+		/// Called when the wall enters the scene. Caches references, initializes state, and registers with the dungeon.
+		/// </summary>
 		public override void _Ready()
 		{
 			_wallRoot = GetNodeOrNull<Node3D>("FakeWall");
@@ -35,26 +38,26 @@ namespace DungeonCrawler
 
 			if (_wallRoot == null)
 			{
-				GD.PrintErr("IllusoryWall: 'Wall' node not found.");
+				GD.PrintErr("IllusoryWall: 'FakeWall' node not found.");
 				return;
 			}
 
 			_mesh = _wallRoot.GetNodeOrNull<MeshInstance3D>("MeshInstance3D");
 			_collider = _wallRoot.GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
 
-			if (_mesh == null)
-				GD.PrintErr("IllusoryWall: MeshInstance3D not found under Wall.");
-			if (_collider == null)
-				GD.PrintErr("IllusoryWall: CollisionShape3D not found under Wall.");
-			if (_sfxPlayer == null)
-				GD.PrintErr("IllusoryWall: SFXPlayer node not found.");
+			if (_mesh == null) GD.PrintErr("IllusoryWall: MeshInstance3D not found.");
+			if (_collider == null) GD.PrintErr("IllusoryWall: CollisionShape3D not found.");
+			if (_sfxPlayer == null) GD.PrintErr("IllusoryWall: SFXPlayer node not found.");
 
-			// Get dungeon reference from the root
+			// Get Dungeon reference
 			Node main = GetTree().Root.GetNodeOrNull("Main");
 			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
 
 			if (_dungeon == null)
-				GD.PrintErr("PitTrap: Dungeon reference not found.");
+			{
+				GD.PrintErr("IllusoryWall: Dungeon reference not found.");
+				return;
+			}
 
 			_dungeon.AddObject(this);
 			InitializeState();
@@ -65,8 +68,8 @@ namespace DungeonCrawler
 		#region Public API
 
 		/// <summary>
-		/// Reveals the illusory wall by disabling its collider, fading its mesh,
-		/// and hiding it after the fade completes.
+		/// Reveals the wall by fading out its material and disabling its collider.
+		/// Safe to call multiple times; only triggers once.
 		/// </summary>
 		public async void TryReveal()
 		{
@@ -107,9 +110,15 @@ namespace DungeonCrawler
 
 		#endregion
 
+		#region Initialization
+
+		/// <summary>
+		/// Restores the revealed state from the save system, disabling visuals and collision if already triggered.
+		/// </summary>
 		private void InitializeState()
 		{
-			if (_dungeon == null || string.IsNullOrEmpty(IllusoryWallId)) return;
+			if (_dungeon == null || string.IsNullOrEmpty(IllusoryWallId))
+				return;
 
 			_isRevealed = _dungeon.LoadObjectState("IllusoryWall", IllusoryWallId, "Revealed");
 
@@ -119,5 +128,7 @@ namespace DungeonCrawler
 				_wallRoot.Visible = false;
 			}
 		}
+
+		#endregion
 	}
 }
