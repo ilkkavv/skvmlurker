@@ -45,7 +45,8 @@ namespace DungeonCrawler
 			if (_sfxPlayer == null) GD.PrintErr("Gate: SFXPlayer node not found.");
 			if (string.IsNullOrEmpty(GateId)) GD.PrintErr("Gate: ID not set.");
 
-			_dungeon.AddGate(this);
+			_dungeon.AddObject(this);
+			InitializeState();
 		}
 
 		public override void _ExitTree()
@@ -117,12 +118,11 @@ namespace DungeonCrawler
 			_gateBody.Position = new Vector3(0, 0, 0);
 		}
 
-		public void InitializeState()
+		private void InitializeState()
 		{
 			if (_dungeon == null || string.IsNullOrEmpty(GateId)) return;
 
-			_gateOpen = _dungeon.LoadObjectState("gate", GateId, "open");
-			GD.Print($"Initializing gate: {GateId} {_gateOpen}");
+			_gateOpen = _dungeon.LoadObjectState("Gate", GateId, "Open");
 
 			if (_gateOpen && _gateBody != null)
 			{

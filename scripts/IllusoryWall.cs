@@ -8,13 +8,21 @@ namespace DungeonCrawler
 	/// </summary>
 	public partial class IllusoryWall : Node3D
 	{
+		#region Exported Properties
+
+		[Export] public string IllusoryWallId { private set; get; }
+
+		#endregion
+
 		#region Private Fields
 
 		private Node3D _wallRoot;                   // The "Wall" scene instance
 		private MeshInstance3D _mesh;               // The mesh inside Wall
 		private CollisionShape3D _collider;         // Collider inside Wall
 		private AudioStreamPlayer3D _sfxPlayer;     // Reveal SFX
-		private bool _isRevealed = false;           // State flag
+		public bool _isRevealed = false;           // State flag
+
+		private Dungeon _dungeon;
 
 		#endregion
 
@@ -40,6 +48,16 @@ namespace DungeonCrawler
 				GD.PrintErr("IllusoryWall: CollisionShape3D not found under Wall.");
 			if (_sfxPlayer == null)
 				GD.PrintErr("IllusoryWall: SFXPlayer node not found.");
+
+			// Get dungeon reference from the root
+			Node main = GetTree().Root.GetNodeOrNull("Main");
+			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
+
+			if (_dungeon == null)
+				GD.PrintErr("PitTrap: Dungeon reference not found.");
+
+			_dungeon.AddObject(this);
+			InitializeState();
 		}
 
 		#endregion
@@ -88,5 +106,18 @@ namespace DungeonCrawler
 		}
 
 		#endregion
+
+		private void InitializeState()
+		{
+			if (_dungeon == null || string.IsNullOrEmpty(IllusoryWallId)) return;
+
+			_isRevealed = _dungeon.LoadObjectState("IllusoryWall", IllusoryWallId, "Revealed");
+
+			if (_isRevealed && _mesh != null && _collider != null)
+			{
+				_collider.SetDeferred("disabled", true);
+				_wallRoot.Visible = false;
+			}
+		}
 	}
 }

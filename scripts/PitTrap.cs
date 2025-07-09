@@ -10,6 +10,7 @@ namespace DungeonCrawler
 	{
 		#region Exported Properties
 
+		[Export] public string PitTrapId { private set; get; }
 		[Export(PropertyHint.File, "*.tscn")]
 		private string _targetScenePath = "";
 
@@ -24,7 +25,7 @@ namespace DungeonCrawler
 		private AudioStreamPlayer3D _sfxPlayer;
 		private Area3D _triggerArea;
 
-		private bool _isTriggered = false;
+		public bool _isTriggered = false;
 
 		private Dungeon _dungeon;
 
@@ -56,6 +57,24 @@ namespace DungeonCrawler
 
 			if (_dungeon == null)
 				GD.PrintErr("PitTrap: Dungeon reference not found.");
+
+			_dungeon.AddObject(this);
+			InitializeState();
+		}
+
+		private void InitializeState()
+		{
+			if (_dungeon == null || string.IsNullOrEmpty(PitTrapId)) return;
+
+			_isTriggered = _dungeon.LoadObjectState("PitTrap", PitTrapId, "Triggered");
+
+			if (_isTriggered && _fakeFloor != null)
+			{
+				_fakeFloor.Visible = false;
+
+				var collider = _fakeFloor.GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
+				collider?.SetDeferred("disabled", true);
+			}
 		}
 
 		#endregion
@@ -69,7 +88,7 @@ namespace DungeonCrawler
 		/// <param name="body">The body that entered the area.</param>
 		private void OnBodyEntered(Node3D body)
 		{
-			if (_isTriggered || body == null)
+			if (body == null)
 				return;
 
 			if (body.IsInGroup("player"))
@@ -85,20 +104,23 @@ namespace DungeonCrawler
 		/// </summary>
 		private async void TriggerTrap()
 		{
-			_isTriggered = true;
 
-			// Play trap sound
-			_sfxPlayer?.Play();
-
-			// Hide floor and disable collision
-			if (_fakeFloor != null)
+			if (!_isTriggered)
 			{
-				_fakeFloor.Visible = false;
+				// Play trap sound
+				_sfxPlayer?.Play();
 
-				var collider = _fakeFloor.GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
-				if (collider != null)
-					collider.SetDeferred("disabled", true);
+				// Hide floor and disable collision
+				if (_fakeFloor != null)
+				{
+					_fakeFloor.Visible = false;
+
+					var collider = _fakeFloor.GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
+					collider?.SetDeferred("disabled", true);
+				}
 			}
+
+			_isTriggered = true;
 
 			// Delay before teleport
 			await ToSignal(GetTree().CreateTimer(1f), SceneTreeTimer.SignalName.Timeout);

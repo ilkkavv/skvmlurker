@@ -1208,8 +1208,10 @@ _gate = NodePath("../Gate3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
 _gate = NodePath("../Gate4")
 
-[node name="Lever" parent="Objects" instance=ExtResource("9_hv7s3")]
+[node name="Lever" parent="Objects" node_paths=PackedStringArray("_gatesArray") instance=ExtResource("9_hv7s3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -28)
+LeverId = "lever1"
+_gatesArray = [NodePath("../Gate2")]
 
 [node name="Stairs" parent="Objects" instance=ExtResource("10_6dhoo")]
 transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, 10, 0, -34)

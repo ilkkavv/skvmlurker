@@ -19,6 +19,11 @@ namespace DungeonCrawler
 		private SaveManager _saveManager;
 
 		private List<Gate> _gates = new();
+		private List<PitTrap> _pitTraps = new();
+		private List<IllusoryWall> _illusoryWalls = new();
+		private List<Lever> _levers = new();
+		private List<SecretButton> _secretButtons = new();
+		private List<TeleportTrap> _teleportTraps = new();
 
 		#endregion
 
@@ -153,7 +158,7 @@ namespace DungeonCrawler
 			float finalRot = newPlayerRot ?? _player.GlobalRotationDegrees.Y;
 			SetPlayerPos(newPlayerPos, finalRot);
 
-			InitializeObjectStates();
+			//InitializeObjectStates();
 
 			// Player takes fall damage
 			if (fallDamage)
@@ -169,10 +174,32 @@ namespace DungeonCrawler
 			_player.UnblockInput();
 		}
 
-		public void AddGate(Gate gate)
+		public void AddObject(Node3D obj)
 		{
-			GD.Print($"[Dungeon] Registered gate: {gate.GateId}");
-			_gates.Add(gate);
+			switch (obj)
+			{
+				case Gate gate:
+					_gates.Add(gate);
+					break;
+				case PitTrap pitTrap:
+					_pitTraps.Add(pitTrap);
+					break;
+				case IllusoryWall wall:
+					_illusoryWalls.Add(wall);
+					break;
+				case Lever lever:
+					_levers.Add(lever);
+					break;
+				case SecretButton secretButton:
+					_secretButtons.Add(secretButton);
+					break;
+				case TeleportTrap teleportTrap:
+					_teleportTraps.Add(teleportTrap);
+					break;
+				default:
+					GD.PrintErr($"[Dungeon] Unhandled object type in AddObject: {obj.GetType().Name}");
+					break;
+			}
 		}
 
 		public bool LoadObjectState(string objectType, string objectId, string key)
@@ -189,31 +216,50 @@ namespace DungeonCrawler
 
 		private void SaveObjectStates()
 		{
-			GD.Print($"[Dungeon] Saving {_gates.Count} gates in level '{_currentLevel?.Name}'");
-
 			Dictionary<string, bool> gatesToSave = [];
+			Dictionary<string, bool> pitTrapsToSave = [];
+			Dictionary<string, bool> illusoryWallsToSave = [];
+			Dictionary<string, bool> leversToSave = [];
+			Dictionary<string, bool> secretButtonsToSave = [];
+			Dictionary<string, bool> teleportTrapsToSave = [];
 
 			foreach (var entry in _gates)
 			{
 				gatesToSave.Add(entry.GateId, entry._gateOpen);
 			}
-
-			_saveManager.SaveLevel(_currentLevel.Name, gatesToSave);
-		}
-
-		private void InitializeObjectStates()
-		{
-			GD.Print($"[Dungeon] Initializing {_gates.Count} gate states for level '{_currentLevel?.Name}'");
-			foreach (var gate in _gates)
+			foreach (var entry in _pitTraps)
 			{
-				GD.Print($"[Dungeon] -> Initializing gate {gate.GateId}");
-				gate.InitializeState();
+				pitTrapsToSave.Add(entry.PitTrapId, entry._isTriggered);
 			}
+			foreach (var entry in _illusoryWalls)
+			{
+				illusoryWallsToSave.Add(entry.IllusoryWallId, entry._isRevealed);
+			}
+			foreach (var entry in _levers)
+			{
+				leversToSave.Add(entry.LeverId, entry._leverOn);
+			}
+			foreach (var entry in _secretButtons)
+			{
+				secretButtonsToSave.Add(entry.SecretButtonId, entry._pressed);
+			}
+			foreach (var entry in _teleportTraps)
+			{
+				teleportTrapsToSave.Add(entry.TeleportTrapId, entry._isTriggered);
+			}
+
+			_saveManager.SaveLevel(_currentLevel.Name, gatesToSave, pitTrapsToSave,
+				illusoryWallsToSave, leversToSave, secretButtonsToSave, teleportTrapsToSave);
 		}
 
 		private void ClearObjectLists()
 		{
 			_gates.Clear();
+			_pitTraps.Clear();
+			_illusoryWalls.Clear();
+			_levers.Clear();
+			_secretButtons.Clear();
+			_teleportTraps.Clear();
 		}
 	}
 }

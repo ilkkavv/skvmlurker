@@ -11,6 +11,7 @@ namespace DungeonCrawler
 	{
 		#region Exported Settings
 
+		[Export] public string SecretButtonId { private set; get; }
 		[Export] private Gate _gate;
 		[Export] private float _pressDelay = 0.3f;
 
@@ -20,10 +21,10 @@ namespace DungeonCrawler
 
 		private StaticBody3D _tile;
 		private AudioStreamPlayer3D _sfxPlayer;
-		private bool _pressed = false;
+		private Dungeon _dungeon;
+		public bool _pressed = false;
 
 		private static readonly Vector3 PressedPosition = new(0, 0, -0.1f);
-		private static readonly Vector3 DefaultPosition = Vector3.Zero;
 
 		#endregion
 
@@ -40,6 +41,16 @@ namespace DungeonCrawler
 				GD.PrintErr("SecretButton: SFXPlayer node not found.");
 			if (_gate == null)
 				GD.PrintErr("SecretButton: Gate reference not assigned.");
+
+			// Get dungeon reference from the root
+			Node main = GetTree().Root.GetNodeOrNull("Main");
+			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
+
+			if (_dungeon == null)
+				GD.PrintErr("PitTrap: Dungeon reference not found.");
+
+			_dungeon.AddObject(this);
+			InitializeState();
 		}
 
 		#endregion
@@ -67,5 +78,15 @@ namespace DungeonCrawler
 		}
 
 		#endregion
+
+		private void InitializeState()
+		{
+			if (_dungeon == null || _tile == null) return;
+
+			_pressed = _dungeon.LoadObjectState("SecretButton", SecretButtonId, "Pressed");
+
+			if (_pressed)
+				_tile.Position = PressedPosition;
+		}
 	}
 }

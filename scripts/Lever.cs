@@ -13,6 +13,7 @@ namespace DungeonCrawler
 	{
 		#region Exported Settings
 
+		[Export] public string LeverId { private set; get; }
 		[Export] private Gate[] _gatesArray; // Assign in the editor
 
 		#endregion
@@ -29,8 +30,9 @@ namespace DungeonCrawler
 
 		private StaticBody3D _handle;
 		private AudioStreamPlayer3D _sfxPlayer;
-		private bool _leverOn = false;
+		public bool _leverOn;
 		private List<Gate> _gates = new();
+		private Dungeon _dungeon;
 
 		#endregion
 
@@ -50,6 +52,16 @@ namespace DungeonCrawler
 			if (_handle == null) GD.PrintErr("Lever: Handle node not found.");
 			if (_sfxPlayer == null) GD.PrintErr("Lever: SFXPlayer node not found.");
 			if (_gates.Count == 0) GD.PrintErr("Lever: No gates assigned.");
+
+			// Get dungeon reference from the root
+			Node main = GetTree().Root.GetNodeOrNull("Main");
+			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
+
+			if (_dungeon == null)
+				GD.PrintErr("PitTrap: Dungeon reference not found.");
+
+			_dungeon.AddObject(this);
+			InitializeState();
 		}
 
 		#endregion
@@ -84,5 +96,13 @@ namespace DungeonCrawler
 		}
 
 		#endregion
+
+		private void InitializeState()
+		{
+			if (_dungeon == null || _handle == null) return;
+
+			_leverOn = _dungeon.LoadObjectState("Lever", LeverId, "On");
+			_handle.Position = _leverOn ? HandleDownPosition : HandleUpPosition;
+		}
 	}
 }

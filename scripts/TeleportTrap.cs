@@ -10,6 +10,7 @@ namespace DungeonCrawler
 	{
 		#region Exported Settings
 
+		[Export] public string TeleportTrapId { private set; get; }
 		[Export] private Vector3 _targetPosition = Vector3.Zero;  // Destination position for the player
 		[Export] private float _targetRotation = 0f;              // Y-axis rotation to apply after teleport
 		[Export] private bool _triggerOnce = false;               // Whether the trap can be triggered only once
@@ -24,7 +25,7 @@ namespace DungeonCrawler
 		private ScreenFlasher _screenFlasher;
 		private Player _player;
 
-		private bool _isTriggered = false; // Internal flag to prevent multiple triggers
+		public bool _isTriggered = false; // Internal flag to prevent multiple triggers
 
 		#endregion
 
@@ -67,6 +68,12 @@ namespace DungeonCrawler
 
 			if (_screenFlasher == null)
 				GD.PrintErr("TeleportTrap: ScreenFader not found.");
+
+			if (_triggerOnce)
+			{
+				_dungeon.AddObject(this);
+				InitializeState();
+			}
 		}
 
 		#endregion
@@ -124,5 +131,12 @@ namespace DungeonCrawler
 		}
 
 		#endregion
+
+		private void InitializeState()
+		{
+			if (_dungeon == null || _triggerArea == null) return;
+
+			_isTriggered = _dungeon.LoadObjectState("TeleportTrap", TeleportTrapId, "Triggered");
+		}
 	}
 }

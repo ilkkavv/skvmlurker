@@ -1,7 +1,7 @@
-using Godot;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
+using System.IO;
+using Godot;
 
 namespace DungeonCrawler
 {
@@ -19,14 +19,37 @@ namespace DungeonCrawler
 			}
 		}
 
-		public void SaveLevel(string levelName, Dictionary<string, bool> gatesToSave)
+		public void SaveLevel(string levelName, Dictionary<string, bool> gatesToSave,
+			Dictionary<string, bool> pitTrapsToSave, Dictionary<string, bool> illusoryWallsToSave,
+			Dictionary<string, bool> leversToSave, Dictionary<string, bool> secretButtonsToSave,
+			Dictionary<string, bool> teleportTrapsToSave)
 		{
 			if (!_saveData.Levels.ContainsKey(levelName))
 				_saveData.Levels[levelName] = new LevelData();
 
 			foreach (var gate in gatesToSave)
 			{
-				_saveData.Levels[levelName].gate[gate.Key] = new GateState { open = gate.Value };
+				_saveData.Levels[levelName].gate[gate.Key] = new GateState { Open = gate.Value };
+			}
+			foreach (var pitTrap in pitTrapsToSave)
+			{
+				_saveData.Levels[levelName].pitTrap[pitTrap.Key] = new PitTrapState { Triggered = pitTrap.Value };
+			}
+			foreach (var illusoryWall in illusoryWallsToSave)
+			{
+				_saveData.Levels[levelName].illusoryWall[illusoryWall.Key] = new IllusoryWallState { Revealed = illusoryWall.Value };
+			}
+			foreach (var lever in leversToSave)
+			{
+				_saveData.Levels[levelName].lever[lever.Key] = new LeverState { On = lever.Value };
+			}
+			foreach (var secretButton in secretButtonsToSave)
+			{
+				_saveData.Levels[levelName].secretButton[secretButton.Key] = new SecretButtonState { Pressed = secretButton.Value };
+			}
+			foreach (var teleportTrap in teleportTrapsToSave)
+			{
+				_saveData.Levels[levelName].teleportTrap[teleportTrap.Key] = new TeleportTrapState { Triggered = teleportTrap.Value };
 			}
 
 			string updatedJson = JsonSerializer.Serialize(_saveData, new JsonSerializerOptions { WriteIndented = true });
@@ -44,13 +67,29 @@ namespace DungeonCrawler
 			{
 				switch (objectType)
 				{
-					case "gate":
+					case "Gate":
 						return level.gate.ContainsKey(objectId)
-							? (key == "open" ? level.gate[objectId].open : defaultValue)
+							? (key == "Open" ? level.gate[objectId].Open : defaultValue)
 							: defaultValue;
-					case "pitTrap":
+					case "PitTrap":
 						return level.pitTrap.ContainsKey(objectId)
-							? (key == "triggered" ? level.pitTrap[objectId].triggered : defaultValue)
+							? (key == "Triggered" ? level.pitTrap[objectId].Triggered : defaultValue)
+							: defaultValue;
+					case "IllusoryWall":
+						return level.illusoryWall.ContainsKey(objectId)
+							? (key == "Revealed" ? level.illusoryWall[objectId].Revealed : defaultValue)
+							: defaultValue;
+					case "Lever":
+						return level.lever.ContainsKey(objectId)
+							? (key == "On" ? level.lever[objectId].On : defaultValue)
+							: defaultValue;
+					case "SecretButton":
+						return level.secretButton.ContainsKey(objectId)
+							? (key == "Pressed" ? level.secretButton[objectId].Pressed : defaultValue)
+							: defaultValue;
+					case "TeleportTrap":
+						return level.teleportTrap.ContainsKey(objectId)
+							? (key == "Triggered" ? level.teleportTrap[objectId].Triggered : defaultValue)
 							: defaultValue;
 					default:
 						return defaultValue;
