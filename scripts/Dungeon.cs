@@ -154,10 +154,13 @@ namespace DungeonCrawler
 			if (fallDamage)
 				_player.TakeDamage(1, 6);
 
-			_screenFader.FadeBack(_fadeTime);
-			await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
+			if (_player.Hp > 0)
+			{
+				_screenFader.FadeBack(_fadeTime);
+				await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
 
-			_player.UnblockInput();
+				_player.UnblockInput();
+			}
 		}
 
 		/// <summary>

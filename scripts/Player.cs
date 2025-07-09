@@ -16,7 +16,7 @@ namespace DungeonCrawler
 		private int _con;
 		private int _wis;
 
-		private int _hp = 20;
+		[Export] public int Hp { private set; get; } = 20;
 
 		#endregion
 
@@ -117,14 +117,14 @@ namespace DungeonCrawler
 			int damage = diceCount * rnd.Next(1, diceType + 1);
 			GD.Print($"You take {damage} damage!");
 
-			_hp -= damage;
-			GD.Print($"HP = {_hp}");
+			Hp -= damage;
+			GD.Print($"HP = {Hp}");
 
 			// Visual/audio feedback
 			_screenFlasher?.Flash(new Color(1f, 0f, 0f, 1f)); // Red flash
 			_playerController?.PlayHurt();
 
-			if (_hp <= 0)
+			if (Hp <= 0)
 				Die();
 		}
 

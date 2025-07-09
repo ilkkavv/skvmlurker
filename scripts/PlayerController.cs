@@ -15,6 +15,7 @@ namespace DungeonCrawler
 		[Export] private string _pathToFootstepSfx = "res://assets/audio/sfx/footstep.wav";
 		[Export] private string _pathToGruntSfx = "res://assets/audio/sfx/grunt.wav";
 		[Export] private string _pathToHurtSfx = "res://assets/audio/sfx/hurt.wav";
+		[Export] private string _pathToDeathSfx = "res://assets/audio/sfx/death.wav";
 
 		// === Internal Node References ===
 		private AudioStreamPlayer3D _sfxPlayer;
@@ -28,6 +29,7 @@ namespace DungeonCrawler
 		private AudioStream _footstepSound;
 		private AudioStream _gruntSound;
 		private AudioStream _hurtSound;
+		private AudioStream _deathSound;
 
 		// === Constants ===
 		private const float TravelDistance = 2f;
@@ -80,6 +82,7 @@ namespace DungeonCrawler
 			_footstepSound = GD.Load<AudioStream>(_pathToFootstepSfx);
 			_gruntSound = GD.Load<AudioStream>(_pathToGruntSfx);
 			_hurtSound = GD.Load<AudioStream>(_pathToHurtSfx);
+			_deathSound = GD.Load<AudioStream>(_pathToDeathSfx);
 
 			// Null checks with clear messages
 			if (_frontRaycast == null) GD.PrintErr("PlayerController: FrontRaycast not found.");
@@ -92,6 +95,7 @@ namespace DungeonCrawler
 			if (_footstepSound == null) GD.PrintErr("PlayerController: Footstep sound effect not found.");
 			if (_gruntSound == null) GD.PrintErr("PlayerController: Grunt sound effect not found.");
 			if (_hurtSound == null) GD.PrintErr("PlayerController: Hurt sound effect not found.");
+			if (_deathSound == null) GD.PrintErr("PlayerController: Death sound effect not found.");
 
 				_travelTime = TravelDistance / _movementSpeed;
 		}
@@ -391,7 +395,15 @@ namespace DungeonCrawler
 		/// </summary>
 		public void PlayHurt()
 		{
-			_sfxPlayer.Stream = _hurtSound;
+			if (_player.Hp > 0)
+			{
+				_sfxPlayer.Stream = _hurtSound;
+			}
+			else
+			{
+				_sfxPlayer.Stream = _deathSound;
+			}
+
 			_sfxPlayer.VolumeDb = 0f;
 			_sfxPlayer.PitchScale = 1f;
 			_sfxPlayer.Play();

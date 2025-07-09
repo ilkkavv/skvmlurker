@@ -101,7 +101,14 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 - Source: https://opengameart.org/content/20-sword-sound-effects-attacks-and-clashes
 - License: CC0
 - Used As: `spike-trap-trigger.wav` and `spike-trap-reset.wav`
-- Notes: Slight editing and layering Audacity.
+- Notes: Slight editing and layering in Audacity.
+
+**11. "grunts of male death and pain"**
+- Original Author: thebardofblasphemy
+- Source: https://opengameart.org/content/grunts-male-death-and-pain
+- License: CC0
+- Used As: `death.wav`
+- Notes: Slight editing in Audacity.
 
 ---
 
