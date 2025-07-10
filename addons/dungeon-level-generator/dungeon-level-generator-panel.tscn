@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://bmf5fjvu83hr5"]
+
+[node name="DungeonLevelGeneratorPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Dungeon Level Generator"
+
+[node name="PickCSVButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Pick CSV File"
+
+[node name="CSVPathLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="CSVPicker" type="FileDialog" parent="VBoxContainer"]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.csv ; CSV Files")
+
+[node name="PickCeilingSceneButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Pick Ceiling Scene
+"
+
+[node name="CeilingScenePathLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="CeilingScenePickerDialog" type="FileDialog" parent="VBoxContainer"]
+auto_translate_mode = 1
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.tscn ; Scene Files")
+
+[node name="PickFloorSceneButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Pick Floor Scene
+"
+
+[node name="FloorScenePathLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="FloorScenePickerDialog" type="FileDialog" parent="VBoxContainer"]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.tscn ; Scene Files")
+
+[node name="PickWallSceneButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Pick Wall Scene
+"
+
+[node name="WallScenePathLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="WallScenePickerDialog" type="FileDialog" parent="VBoxContainer"]
+auto_translate_mode = 1
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.tscn ; Scene Files")
+
+[node name="PickWaterSceneButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Pick Water Scene
+"
+
+[node name="WaterScenePathLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="WaterScenePickerDialog" type="FileDialog" parent="VBoxContainer"]
+auto_translate_mode = 1
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.tscn ; Scene Files")
+
+[node name="PickDitchWallSceneButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Pick Ditch Wall Scene
+"
+
+[node name="DitchWallScenePathLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="DitchWallScenePickerDialog" type="FileDialog" parent="VBoxContainer"]
+auto_translate_mode = 1
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.tscn ; Scene Files")
+
+[node name="GenerateCeilingsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Generate Ceilings"
+
+[node name="GenerateFloorsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Generate Floors"
+
+[node name="GenerateWallsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Generate Walls"
+
+[node name="GenerateWaterButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Generate Water"
+
+[node name="GenerateDitchWallsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Generate Ditch Walls"

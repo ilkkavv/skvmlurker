@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 mouse_cursor/custom_image="uid://demptwilvshbe"
 
 [dotnet]
@@ -27,7 +27,7 @@ project/assembly_name="Dungeon Crawler"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/dungeon-level-generator/plugin.cfg")
 
 [input]
 
