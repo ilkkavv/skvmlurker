@@ -25,10 +25,6 @@ mouse_cursor/custom_image="uid://demptwilvshbe"
 
 project/assembly_name="Dungeon Crawler"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/dungeon-level-generator/plugin.cfg")
-
 [input]
 
 MoveForward={

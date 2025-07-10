@@ -15,8 +15,8 @@ namespace DungeonCrawler
 		[Export(PropertyHint.File, "*.tscn")]
 		private string _startLevelPath;
 
-		[Export]
-		private float _fadeTime = 0.5f;
+		[Export] private Vector3 _playerStartPos = Vector3.Zero;
+		[Export] private float _fadeTime = 0.5f;
 
 		#endregion
 
@@ -88,7 +88,7 @@ namespace DungeonCrawler
 				return;
 			}
 
-			_ = ChangeLevel(startScene, Vector3.Zero, 0f); // Fire and forget
+			_ = ChangeLevel(startScene, _playerStartPos, 0f); // Fire and forget
 		}
 
 		#endregion
