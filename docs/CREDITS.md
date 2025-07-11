@@ -112,6 +112,15 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 
 ---
 
+**12. "Water Splash (Yo Frankie!)"**
+- Original Author: Blender Foundation
+- Source: https://opengameart.org/content/water-splash-yo-frankie
+- License: CC-BY 3.0
+- Used As: `water.wav`
+- Notes: No editing.
+
+---
+
 ## 📄 License Notes
 
 - **CC0** assets do not require attribution, but are credited here out of courtesy.

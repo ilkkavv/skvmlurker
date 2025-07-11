@@ -30,7 +30,7 @@ target_position = Vector3(2, 0, 0)
 target_position = Vector3(0, 0, 2)
 
 [node name="DownRaycast" type="RayCast3D" parent="PlayerController/CollisionShape3D"]
-target_position = Vector3(0, -2, 0)
+target_position = Vector3(0, -1.5, 0)
 
 [node name="PlayerCamera" type="Camera3D" parent="PlayerController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

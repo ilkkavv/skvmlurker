@@ -131,11 +131,14 @@ namespace DungeonCrawler
 		/// <summary>
 		/// Triggers the player's death sequence.
 		/// </summary>
-		private void Die()
+		public void Die(bool drown = false)
 		{
+			float fadeTime = 0.5f;
+			if (drown) fadeTime = 0.25f;
+
 			BlockInput();
 			_isDead = true;
-			_screenFader?.FadeToBlack();
+			_screenFader?.FadeToBlack(fadeTime);
 			GD.Print("You died!");
 		}
 

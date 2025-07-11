@@ -1,18 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqie7hvvku01t"]
+[gd_scene load_steps=5 format=3 uid="uid://dqie7hvvku01t"]
 
-[ext_resource type="ArrayMesh" uid="uid://b6gkrqbsrbdj2" path="res://assets/models/wall.obj" id="1_h4btd"]
+[ext_resource type="ArrayMesh" uid="uid://oj0iamce5hy6" path="res://assets/models/ditch-wall-top.obj" id="1_xrr15"]
 [ext_resource type="Material" uid="uid://ct8mh45wgxiax" path="res://assets/materials/brick-dungeon.tres" id="2_xrr15"]
+[ext_resource type="ArrayMesh" uid="uid://d1vcmef6a8k6f" path="res://assets/models/ditch-wall-bot.obj" id="3_5j4di"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bgbbd"]
-size = Vector3(2, 2, 0.001)
+size = Vector3(2, 6, 0.001)
 
-[node name="Wall" type="StaticBody3D"]
+[node name="DitchWall" type="StaticBody3D"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="DitchWallTop" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
-mesh = ExtResource("1_h4btd")
+mesh = ExtResource("1_xrr15")
+surface_material_override/0 = ExtResource("2_xrr15")
+
+[node name="DichWallMid" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+mesh = ExtResource("3_5j4di")
+surface_material_override/0 = ExtResource("2_xrr15")
+
+[node name="DichWallBot" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
+mesh = ExtResource("3_5j4di")
 surface_material_override/0 = ExtResource("2_xrr15")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1.0005)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -1.0005)
 shape = SubResource("BoxShape3D_bgbbd")
