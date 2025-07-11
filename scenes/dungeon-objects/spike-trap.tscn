@@ -15,9 +15,10 @@ script = ExtResource("1_pnlvs")
 _triggerSfxPath = "res://assets/audio/sfx/spike-trap-trigger.wav"
 _resetSfxPath = "res://assets/audio/sfx/spike-trap-reset.wav"
 
-[node name="Floor" parent="." instance=ExtResource("1_hsb1d")]
+[node name="SpikeTrapFloor" parent="." instance=ExtResource("1_hsb1d")]
 
 [node name="Spikes" parent="." instance=ExtResource("2_pnlvs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00164676, -0.00730783, -0.000150919)
 
 [node name="DamageArea" type="Area3D" parent="Spikes"]
 

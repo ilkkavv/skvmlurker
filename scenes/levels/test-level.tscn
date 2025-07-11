@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://d20o0el17nqky"]
+[gd_scene load_steps=7 format=3 uid="uid://d20o0el17nqky"]
 
 [ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="1_q4av7"]
 [ext_resource type="PackedScene" uid="uid://cp1hvsxb0m2rm" path="res://scenes/dungeon-tile-parts/wall.tscn" id="2_npghq"]
 [ext_resource type="PackedScene" uid="uid://b1llk7v42wga1" path="res://scenes/dungeon-tile-parts/ceiling.tscn" id="3_y7dj2"]
 [ext_resource type="PackedScene" uid="uid://d4f5bttpb5lg1" path="res://scenes/dungeon-tile-parts/water.tscn" id="4_aq76q"]
 [ext_resource type="PackedScene" uid="uid://dqie7hvvku01t" path="res://scenes/dungeon-tile-parts/ditch-wall.tscn" id="5_e8cd8"]
+[ext_resource type="PackedScene" uid="uid://dg7rh1uuy5fqo" path="res://scenes/dungeon-objects/spike-trap.tscn" id="6_npghq"]
 
 [node name="TestLevel" type="Node3D"]
 
@@ -318,9 +319,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 80)
 
 [node name="Floor103" parent="Floors" instance=ExtResource("1_q4av7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 82)
-
-[node name="Floor104" parent="Floors" instance=ExtResource("1_q4av7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 82)
 
 [node name="Floor105" parent="Floors" instance=ExtResource("1_q4av7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 82)
@@ -847,489 +845,651 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 38, 0,
 
 [node name="Ceiling1" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling2" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling3" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling4" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling5" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling6" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling7" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling8" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling9" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling10" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling11" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling12" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling13" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling14" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling15" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling16" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 56)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling17" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling18" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling19" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling20" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling21" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling22" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling23" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling24" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling25" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling26" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling27" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling28" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling29" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling30" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling31" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling32" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 58)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling33" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling34" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling35" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling36" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling37" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling38" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling39" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling40" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling41" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling42" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling43" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling44" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling45" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling46" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling47" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling48" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 60)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling49" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling50" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling51" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling52" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling53" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling54" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling55" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling56" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling57" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling58" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling59" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling60" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling61" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling62" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling63" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling64" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 62)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling65" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling66" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling67" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling68" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling69" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling70" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling71" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling72" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling73" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling74" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling75" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling76" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling77" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling78" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling79" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling80" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 64)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling81" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 66)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling82" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 66)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling83" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 68)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling84" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 68)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling85" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 70)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling86" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 70)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling87" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling88" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling89" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling90" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling91" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling92" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling93" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling94" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling95" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling96" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling97" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling98" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 72)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling99" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 74)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling100" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 74)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling101" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 74)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling102" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 76)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling103" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 76)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling104" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 76)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling105" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 78)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling106" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 78)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling107" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 78)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling108" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 80)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling109" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 80)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling110" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 80)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling111" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 80)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling112" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 80)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling113" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 80)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling114" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 80)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling115" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 80)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling116" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 80)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling117" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 80)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling118" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 80)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling119" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 82)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling120" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 82)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling121" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 82)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling122" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 82)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling123" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 82)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling124" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 82)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling125" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 82)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling126" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 82)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling127" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 82)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling128" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 82)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling129" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 82)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling130" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling131" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling132" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling133" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling134" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling135" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling136" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling137" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling138" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling139" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling140" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling141" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling142" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 84)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling143" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 86)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling144" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 86)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling145" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 86)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling146" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 86)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling147" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 86)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling148" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 86)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling149" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 86)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling150" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 86)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling151" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 86)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling152" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 86)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling153" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 88)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling154" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 88)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling155" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 88)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling156" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 88)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling157" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 88)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling158" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 88)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling159" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 88)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling160" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 88)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling161" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 88)
+metadata/_edit_lock_ = true
 
 [node name="Ceiling162" parent="Ceilings" instance=ExtResource("3_y7dj2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 88)
+metadata/_edit_lock_ = true
 
 [node name="Waters" type="Node3D" parent="."]
 
@@ -1499,3 +1659,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 34, 0,
 
 [node name="Ditchwall38" parent="Ditchwalls" instance=ExtResource("5_e8cd8")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 34, 0, 84)
+
+[node name="SpikeTrap" parent="." instance=ExtResource("6_npghq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 82)

@@ -31,7 +31,7 @@ namespace DungeonCrawler
 		private bool _dealDamage = true;     // Ensures damage is dealt only once per trigger
 		private float _damageTimer = 0.3f;
 
-		private readonly Vector3 _spikesUpPos = new(0, 1, 0); // Raised spike position
+		private readonly Vector3 _spikesUpPos = new(0, 1.5f, 0); // Raised spike position
 
 		#endregion
 
