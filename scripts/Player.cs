@@ -35,6 +35,9 @@ namespace DungeonCrawler
 		/// </summary>
 		public bool IsInputBlocked { get; private set; } = false;
 
+		// This feature will be implemented in the future.
+		public string KeyId { get; private set; } = "666";
+
 		private bool _isDead = false;
 
 		#endregion

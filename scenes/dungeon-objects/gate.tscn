@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://jom4mpp0rhqy"]
+[gd_scene load_steps=6 format=3 uid="uid://jom4mpp0rhqy"]
 
 [ext_resource type="Script" uid="uid://dlkrsairjfodw" path="res://scripts/Gate.cs" id="1_hr1a4"]
 [ext_resource type="PackedScene" uid="uid://c8vhbifiv6sxq" path="res://scenes/dungeon-tile-parts/gate-wall.tscn" id="3_5s6n8"]
+[ext_resource type="PackedScene" uid="uid://beqb6jxessbk3" path="res://scenes/dungeon-tile-parts/gate-lock.tscn" id="3_vkf4n"]
 [ext_resource type="AudioStream" uid="uid://h0bvq3tusgxp" path="res://assets/audio/sfx/gate.wav" id="4_q326e"]
 [ext_resource type="PackedScene" uid="uid://dsnrlf1tbxpck" path="res://scenes/dungeon-tile-parts/gate-body.tscn" id="4_slhlu"]
 
@@ -9,6 +10,9 @@
 script = ExtResource("1_hr1a4")
 
 [node name="GateWall" parent="." instance=ExtResource("3_5s6n8")]
+
+[node name="GateLock" parent="." instance=ExtResource("3_vkf4n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0.1)
 
 [node name="GateBody" parent="." instance=ExtResource("4_slhlu")]
 

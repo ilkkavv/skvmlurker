@@ -11,8 +11,10 @@ namespace DungeonCrawler
 		#region Exported Properties
 
 		[Export] public string GateId { private set; get; }
+		[Export] public string KeyId { private set; get; }
 
 		[Export] public bool _gateOpen = false;
+		[Export] private bool _isLocked = false;
 		[Export] private float _openHeight = 1.4f;
 		[Export] private float _stepHeight = 0.2f;
 		[Export] private float _openDelay = 0.2f;
@@ -24,7 +26,9 @@ namespace DungeonCrawler
 
 		private Dungeon _dungeon;
 		private StaticBody3D _gateBody;
+		private StaticBody3D _gateLock;
 		private AudioStreamPlayer3D _sfxPlayer;
+		private float _removeDelay = 0.5f;
 
 		// Prevents timers from running after scene unload
 		private bool _isActive = true;
@@ -42,12 +46,17 @@ namespace DungeonCrawler
 			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
 
 			_gateBody = GetNodeOrNull<StaticBody3D>("GateBody");
+			_gateLock = GetNodeOrNull<StaticBody3D>("GateLock");
 			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("SFXPlayer");
 
 			if (_dungeon == null) GD.PrintErr("Gate: Dungeon not found.");
 			if (_gateBody == null) GD.PrintErr("Gate: GateBody node not found.");
+			if (_gateLock == null) GD.PrintErr("Gate: GateLock node not found.");
 			if (_sfxPlayer == null) GD.PrintErr("Gate: SFXPlayer node not found.");
 			if (string.IsNullOrEmpty(GateId)) GD.PrintErr("Gate: ID not set.");
+
+			if (!_isLocked)
+				_gateLock.QueueFree();
 
 			_dungeon?.AddObject(this);
 			InitializeState();
@@ -120,6 +129,19 @@ namespace DungeonCrawler
 			_gateBody.Position = new Vector3(0, 0, 0);
 		}
 
+		/// <summary>
+		/// Opens the lock and the gate.
+		/// </summary>
+		public async void OpenLock()
+		{
+			_isLocked = false;
+			_gateLock.Visible = false;
+			await ToSignal(GetTree().CreateTimer(_removeDelay), SceneTreeTimer.SignalName.Timeout);
+			_gateLock.QueueFree();
+			await ToSignal(GetTree().CreateTimer(_openDelay), SceneTreeTimer.SignalName.Timeout);
+			OpenGate();
+		}
+
 		#endregion
 
 		#region Initialization & Audio
@@ -134,7 +156,10 @@ namespace DungeonCrawler
 			_gateOpen = _dungeon.LoadObjectState("Gate", GateId, "Open");
 
 			if (_gateOpen && _gateBody != null)
+			{
+				_gateLock.QueueFree();
 				_gateBody.Position = new Vector3(0, _openHeight, 0);
+			}
 		}
 
 		/// <summary>

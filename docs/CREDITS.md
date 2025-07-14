@@ -87,6 +87,8 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 - Used As: `grunt.wav`
 - Notes: Slight editing in Ableton Live Lite.
 
+---
+
 **9. "Grunt 2"**
 - Original Author: n3b
 - Source: https://opengameart.org/content/grunt-2
@@ -103,6 +105,8 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 - Used As: `spike-trap-trigger.wav` and `spike-trap-reset.wav`
 - Notes: Slight editing and layering in Audacity.
 
+---
+
 **11. "grunts of male death and pain"**
 - Original Author: thebardofblasphemy
 - Source: https://opengameart.org/content/grunts-male-death-and-pain
@@ -117,6 +121,15 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 - Source: https://opengameart.org/content/water-splash-yo-frankie
 - License: CC-BY 3.0
 - Used As: `water.wav`
+- Notes: No editing.
+
+---
+
+**13. "80 CC0 RPG SFX)"**
+- Original Author: rubberduck
+- Source: https://opengameart.org/content/80-cc0-rpg-sfx
+- License: CC0
+- Used As: `locked.wav`, `open-lock.wav` and `remove-lock.wav`
 - Notes: No editing.
 
 ---

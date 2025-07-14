@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://dyxlrsbnrhxpg" path="res://assets/materials/dungeon-alpha.tres" id="2_orn37"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m5dj5"]
-size = Vector3(2, 2.5, 0.5)
+size = Vector3(2, 2.5, 0.001)
 
 [node name="GateBody" type="StaticBody3D"]
 
