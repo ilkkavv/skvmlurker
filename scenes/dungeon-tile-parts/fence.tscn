@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq2ib4pjdm2t1"]
+
+[ext_resource type="ArrayMesh" uid="uid://dc7fyt5y5ank7" path="res://assets/models/fence.obj" id="1_r46bn"]
+[ext_resource type="Material" uid="uid://dyxlrsbnrhxpg" path="res://assets/materials/dungeon-alpha.tres" id="2_sb0a7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u4alu"]
+size = Vector3(2, 2, 0.001)
+
+[node name="Fence" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_r46bn")
+surface_material_override/0 = ExtResource("2_sb0a7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.9995)
+shape = SubResource("BoxShape3D_u4alu")
