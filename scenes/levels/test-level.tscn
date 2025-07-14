@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d20o0el17nqky"]
+[gd_scene load_steps=11 format=3 uid="uid://d20o0el17nqky"]
 
 [ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="1_q4av7"]
 [ext_resource type="PackedScene" uid="uid://cp1hvsxb0m2rm" path="res://scenes/dungeon-tile-parts/wall.tscn" id="2_npghq"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cwuhbokpaekh7" path="res://scenes/dungeon-tile-parts/pillar.tscn" id="7_aq76q"]
 [ext_resource type="PackedScene" uid="uid://dq2ib4pjdm2t1" path="res://scenes/dungeon-tile-parts/fence.tscn" id="8_e8cd8"]
 [ext_resource type="PackedScene" uid="uid://jom4mpp0rhqy" path="res://scenes/dungeon-objects/gate.tscn" id="9_e8cd8"]
+[ext_resource type="PackedScene" uid="uid://saro2n4by3a7" path="res://scenes/dungeon-objects/chest.tscn" id="10_c328r"]
 
 [node name="TestLevel" type="Node3D"]
 
@@ -762,9 +763,6 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 44, 0,
 
 [node name="Wall105" parent="Walls" instance=ExtResource("2_npghq")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 44, 0, 82)
-
-[node name="Wall106" parent="Walls" instance=ExtResource("2_npghq")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 18, 0, 84)
 
 [node name="Wall107" parent="Walls" instance=ExtResource("2_npghq")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 26, 0, 84)
@@ -1707,3 +1705,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 69)
 GateId = "gate1"
 KeyId = "666"
 _isLocked = true
+
+[node name="Chest" parent="." instance=ExtResource("10_c328r")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17, 0, 84)
+
+[node name="Floor" parent="." instance=ExtResource("1_q4av7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 84)
+
+[node name="Ceiling" parent="." instance=ExtResource("3_y7dj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 84)

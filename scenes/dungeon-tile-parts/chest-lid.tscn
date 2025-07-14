@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6v7c30uvyef2"]
+
+[ext_resource type="ArrayMesh" uid="uid://bf77nlibe01pd" path="res://assets/models/chest-lid.obj" id="1_113ue"]
+[ext_resource type="Material" uid="uid://ct8mh45wgxiax" path="res://assets/materials/brick-dungeon.tres" id="2_7lmls"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3oxaa"]
+size = Vector3(1.4, 0.2, 0.6)
+
+[node name="ChestLid" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_113ue")
+surface_material_override/0 = ExtResource("2_7lmls")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96046e-08, 0.7, 0)
+shape = SubResource("BoxShape3D_3oxaa")
