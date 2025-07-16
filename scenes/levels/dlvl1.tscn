@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b36yf0fchgh1d"]
+[gd_scene load_steps=18 format=3 uid="uid://b36yf0fchgh1d"]
 
 [ext_resource type="PackedScene" uid="uid://ck8bi77dhcsfd" path="res://scenes/dungeon-wall-tiles/corner-tile.tscn" id="1_bpre1"]
 [ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="1_c7ctl"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://vaddryju6pwi" path="res://scenes/dungeon-objects/secret-button.tscn" id="14_rg66n"]
 [ext_resource type="PackedScene" uid="uid://dg7rh1uuy5fqo" path="res://scenes/dungeon-objects/spike-trap.tscn" id="15_ohchh"]
 [ext_resource type="PackedScene" uid="uid://saro2n4by3a7" path="res://scenes/dungeon-objects/chest.tscn" id="16_wvto6"]
+[ext_resource type="PackedScene" uid="uid://ltwe057uh5xy" path="res://scenes/dungeon-objects/graffiti-wall.tscn" id="17_7uk8a"]
 
 [node name="Dlvl1" type="Node3D"]
 
@@ -1203,9 +1204,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4)
 [node name="Wall2" parent="Walls" instance=ExtResource("6_d74uk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
 
-[node name="Wall3" parent="Walls" instance=ExtResource("6_d74uk")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 0, -2)
-
 [node name="Wall4" parent="Walls" instance=ExtResource("6_d74uk")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 0, 0)
 
@@ -1398,3 +1396,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -24)
 [node name="Chest" parent="." instance=ExtResource("16_wvto6")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, -24)
 ChestId = "chest1"
+
+[node name="GraffitiWall" parent="." instance=ExtResource("17_7uk8a")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 0, -2)
+_text = "Welcome to Ilbu's Dungeon!"
