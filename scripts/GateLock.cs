@@ -3,12 +3,12 @@ using Godot;
 namespace DungeonCrawler
 {
 	/// <summary>
-	/// Interactable component for a lever's handle.
-	/// Relays interaction calls to its parent <see cref="Lever"/>.
+	/// Interactable component for a gate lock.
+	/// Checks if the player has the correct key and opens the lock if valid.
+	/// Otherwise, plays a locked sound effect.
 	/// </summary>
 	public partial class GateLock : Interactable
 	{
-
 		[Export] private string _pathToLockedSfx = "res://assets/audio/sfx/locked.wav";
 		[Export] private string _pathToOpenLockSfx = "res://assets/audio/sfx/open-lock.wav";
 		[Export] private string _pathToRemoveLockSfx = "res://assets/audio/sfx/remove-lock.wav";
@@ -22,7 +22,7 @@ namespace DungeonCrawler
 		private AudioStream _openLockSound;
 		private AudioStream _removeLockSound;
 
-		#region Lifecycle
+		#region Godot Lifecycle
 
 		public override void _Ready()
 		{
@@ -46,11 +46,12 @@ namespace DungeonCrawler
 
 		#endregion
 
-		#region Interaction
+		#region Interactions
 
 		/// <summary>
-		/// Called when the player interacts with the handle.
-		/// Toggles the parent lever if valid.
+		/// Called when the player interacts with the gate lock.
+		/// Opens the gate if the player's key matches the gate's key ID.
+		/// Otherwise, plays a locked sound.
 		/// </summary>
 		public override void OnInteract()
 		{
@@ -63,6 +64,9 @@ namespace DungeonCrawler
 			}
 		}
 
+		/// <summary>
+		/// Plays unlock and remove lock sound effects, then signals the gate to unlock.
+		/// </summary>
 		private async void Open()
 		{
 			_sfxPlayer.Stream = _openLockSound;
