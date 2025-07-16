@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d4f5bttpb5lg1" path="res://scenes/dungeon-tile-parts/water.tscn" id="4_aq76q"]
 [ext_resource type="PackedScene" uid="uid://dqie7hvvku01t" path="res://scenes/dungeon-tile-parts/ditch-wall.tscn" id="5_e8cd8"]
 [ext_resource type="PackedScene" uid="uid://dg7rh1uuy5fqo" path="res://scenes/dungeon-objects/spike-trap.tscn" id="6_npghq"]
-[ext_resource type="PackedScene" uid="uid://cwuhbokpaekh7" path="res://scenes/dungeon-tile-parts/pillar.tscn" id="7_aq76q"]
+[ext_resource type="PackedScene" uid="uid://cwuhbokpaekh7" path="res://scenes/dungeon-objects/small-pillar.tscn" id="7_aq76q"]
 [ext_resource type="PackedScene" uid="uid://dq2ib4pjdm2t1" path="res://scenes/dungeon-tile-parts/fence.tscn" id="8_e8cd8"]
 [ext_resource type="PackedScene" uid="uid://jom4mpp0rhqy" path="res://scenes/dungeon-objects/gate.tscn" id="9_e8cd8"]
 [ext_resource type="PackedScene" uid="uid://saro2n4by3a7" path="res://scenes/dungeon-objects/chest.tscn" id="10_c328r"]

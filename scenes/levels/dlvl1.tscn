@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b36yf0fchgh1d"]
+[gd_scene load_steps=21 format=3 uid="uid://b36yf0fchgh1d"]
 
 [ext_resource type="PackedScene" uid="uid://ck8bi77dhcsfd" path="res://scenes/dungeon-wall-tiles/corner-tile.tscn" id="1_bpre1"]
 [ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="1_c7ctl"]
@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://saro2n4by3a7" path="res://scenes/dungeon-objects/chest.tscn" id="16_wvto6"]
 [ext_resource type="PackedScene" uid="uid://ltwe057uh5xy" path="res://scenes/dungeon-objects/graffiti-wall.tscn" id="17_7uk8a"]
 [ext_resource type="PackedScene" uid="uid://c3me586usmrlc" path="res://scenes/dungeon-objects/skeleton.tscn" id="18_8yik3"]
+[ext_resource type="PackedScene" uid="uid://cwuhbokpaekh7" path="res://scenes/dungeon-objects/small-pillar.tscn" id="19_e1row"]
+[ext_resource type="PackedScene" uid="uid://cpcp5fsp3xjxd" path="res://scenes/dungeon-objects/large-pillar.tscn" id="20_087t7"]
 
 [node name="Dlvl1" type="Node3D"]
 
@@ -1407,3 +1409,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
 
 [node name="Skeleton2" parent="." instance=ExtResource("18_8yik3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="SmallPillar" parent="." instance=ExtResource("19_e1row")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -3)
+
+[node name="SmallPillar2" parent="." instance=ExtResource("19_e1row")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -3)
+
+[node name="LargePillar" parent="." instance=ExtResource("20_087t7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0)
+
+[node name="LargePillar2" parent="." instance=ExtResource("20_087t7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+
+[node name="LargePillar3" parent="." instance=ExtResource("20_087t7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -4)
+
+[node name="LargePillar4" parent="." instance=ExtResource("20_087t7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -4)
