@@ -79,8 +79,7 @@ environment = SubResource("Environment_o5qli")
 
 [node name="Dungeon" type="Node3D" parent="GameWorld"]
 script = ExtResource("4_jyhfs")
-_startLevelPath = "uid://d20o0el17nqky"
-_playerStartPos = Vector3(24, 0, 88)
+_startLevelPath = "uid://b36yf0fchgh1d"
 
 [node name="BGMPlayer" type="AudioStreamPlayer2D" parent="GameWorld"]
 stream = ExtResource("4_tbgi4")

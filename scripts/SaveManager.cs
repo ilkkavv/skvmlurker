@@ -50,7 +50,8 @@ namespace DungeonCrawler
 			Dictionary<string, bool> illusoryWallsToSave,
 			Dictionary<string, bool> leversToSave,
 			Dictionary<string, bool> secretButtonsToSave,
-			Dictionary<string, bool> teleportTrapsToSave)
+			Dictionary<string, bool> teleportTrapsToSave,
+			Dictionary<string, bool> chestsToSave)
 		{
 			if (!_saveData.Levels.ContainsKey(levelName))
 				_saveData.Levels[levelName] = new LevelData();
@@ -74,6 +75,9 @@ namespace DungeonCrawler
 
 			foreach (var trap in teleportTrapsToSave)
 				level.TeleportTraps[trap.Key] = new TeleportTrapState { Triggered = trap.Value };
+
+			foreach (var chest in chestsToSave)
+				level.Chests[chest.Key] = new ChestState { Open = chest.Value };
 
 			// Write to disk as formatted JSON
 			string json = JsonSerializer.Serialize(_saveData, new JsonSerializerOptions { WriteIndented = true });
@@ -108,6 +112,7 @@ namespace DungeonCrawler
 					"Lever" => level.Levers.TryGetValue(objectId, out var l) ? (key == "On" ? l.On : defaultValue) : defaultValue,
 					"SecretButton" => level.SecretButtons.TryGetValue(objectId, out var b) ? (key == "Pressed" ? b.Pressed : defaultValue) : defaultValue,
 					"TeleportTrap" => level.TeleportTraps.TryGetValue(objectId, out var t) ? (key == "Triggered" ? t.Triggered : defaultValue) : defaultValue,
+					"Chest" => level.Chests.TryGetValue(objectId, out var t) ? (key == "Open" ? t.Open : defaultValue) : defaultValue,
 					_ => defaultValue
 				};
 			}

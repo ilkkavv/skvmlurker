@@ -9,9 +9,15 @@ namespace DungeonCrawler
 	/// </summary>
 	public partial class GateLock : Interactable
 	{
+		#region Exported Properties
+
 		[Export] private string _pathToLockedSfx = "res://assets/audio/sfx/locked.wav";
 		[Export] private string _pathToOpenLockSfx = "res://assets/audio/sfx/open-lock.wav";
 		[Export] private string _pathToRemoveLockSfx = "res://assets/audio/sfx/remove-lock.wav";
+
+		#endregion
+
+		#region Private Fields
 
 		private Gate _gate;
 		private AudioStreamPlayer3D _sfxPlayer;
@@ -21,6 +27,8 @@ namespace DungeonCrawler
 		private AudioStream _lockedSound;
 		private AudioStream _openLockSound;
 		private AudioStream _removeLockSound;
+
+		#endregion
 
 		#region Godot Lifecycle
 
@@ -69,12 +77,13 @@ namespace DungeonCrawler
 		/// </summary>
 		private async void Open()
 		{
+			_player.BlockInput();
 			_sfxPlayer.Stream = _openLockSound;
 			_sfxPlayer.Play();
 			await ToSignal(GetTree().CreateTimer(_delayTime), SceneTreeTimer.SignalName.Timeout);
 			_sfxPlayer.Stream = _removeLockSound;
 			_sfxPlayer.Play();
-			_gate?.OpenLock();
+			_gate?.OpenLock(_player);
 		}
 
 		#endregion

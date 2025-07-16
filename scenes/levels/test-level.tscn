@@ -1708,6 +1708,7 @@ _isLocked = true
 
 [node name="Chest" parent="." instance=ExtResource("10_c328r")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17, 0, 84)
+ChestId = "chest1"
 
 [node name="Floor" parent="." instance=ExtResource("1_q4av7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 84)

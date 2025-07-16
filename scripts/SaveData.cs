@@ -21,6 +21,7 @@ namespace DungeonCrawler
         public Dictionary<string, LeverState> Levers { get; set; } = new();
         public Dictionary<string, SecretButtonState> SecretButtons { get; set; } = new();
         public Dictionary<string, TeleportTrapState> TeleportTraps { get; set; } = new();
+        public Dictionary<string, ChestState> Chests { get; set; } = new();
     }
 
     /// <summary>State of a Gate object (open or closed).</summary>
@@ -57,5 +58,11 @@ namespace DungeonCrawler
     public class TeleportTrapState
     {
         public bool Triggered { get; set; }
+    }
+
+    /// <summary>State of a Chest (opened or not).</summary>
+    public class ChestState
+    {
+        public bool Open { get; set; }
     }
 }

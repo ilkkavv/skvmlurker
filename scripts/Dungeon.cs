@@ -37,6 +37,7 @@ namespace DungeonCrawler
 		private List<Lever> _levers = new();
 		private List<SecretButton> _secretButtons = new();
 		private List<TeleportTrap> _teleportTraps = new();
+		private List<Chest> _chests = new();
 
 		#endregion
 
@@ -188,6 +189,9 @@ namespace DungeonCrawler
 				case TeleportTrap teleportTrap:
 					_teleportTraps.Add(teleportTrap);
 					break;
+				case Chest chest:
+					_chests.Add(chest);
+					break;
 				default:
 					GD.PrintErr($"Dungeon: Unhandled object type in AddObject: {obj.GetType().Name}");
 					break;
@@ -220,6 +224,7 @@ namespace DungeonCrawler
 			Dictionary<string, bool> leversToSave = [];
 			Dictionary<string, bool> secretButtonsToSave = [];
 			Dictionary<string, bool> teleportTrapsToSave = [];
+			Dictionary<string, bool> chestsToSave = [];
 
 			foreach (var gate in _gates)
 				gatesToSave[gate.GateId] = gate._gateOpen;
@@ -239,6 +244,9 @@ namespace DungeonCrawler
 			foreach (var trap in _teleportTraps)
 				teleportTrapsToSave[trap.TeleportTrapId] = trap._isTriggered;
 
+			foreach (var chest in _chests)
+				chestsToSave[chest.ChestId] = chest._chestOpen;
+
 			_saveManager.SaveLevel(
 				_currentLevel.Name,
 				gatesToSave,
@@ -246,7 +254,8 @@ namespace DungeonCrawler
 				illusoryWallsToSave,
 				leversToSave,
 				secretButtonsToSave,
-				teleportTrapsToSave
+				teleportTrapsToSave,
+				chestsToSave
 			);
 		}
 

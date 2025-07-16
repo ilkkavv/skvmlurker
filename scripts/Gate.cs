@@ -132,13 +132,14 @@ namespace DungeonCrawler
 		/// <summary>
 		/// Opens the lock and the gate.
 		/// </summary>
-		public async void OpenLock()
+		public async void OpenLock(Player player)
 		{
 			_isLocked = false;
 			_gateLock.Visible = false;
 			await ToSignal(GetTree().CreateTimer(_removeDelay), SceneTreeTimer.SignalName.Timeout);
 			_gateLock.QueueFree();
 			await ToSignal(GetTree().CreateTimer(_openDelay), SceneTreeTimer.SignalName.Timeout);
+			player.UnblockInput();
 			OpenGate();
 		}
 

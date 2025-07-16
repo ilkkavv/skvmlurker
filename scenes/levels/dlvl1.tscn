@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b36yf0fchgh1d"]
+[gd_scene load_steps=17 format=3 uid="uid://b36yf0fchgh1d"]
 
 [ext_resource type="PackedScene" uid="uid://ck8bi77dhcsfd" path="res://scenes/dungeon-wall-tiles/corner-tile.tscn" id="1_bpre1"]
 [ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="1_c7ctl"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://des1iao7oaelb" path="res://scenes/dungeon-objects/teleport-trap.tscn" id="13_sn6fm"]
 [ext_resource type="PackedScene" uid="uid://vaddryju6pwi" path="res://scenes/dungeon-objects/secret-button.tscn" id="14_rg66n"]
 [ext_resource type="PackedScene" uid="uid://dg7rh1uuy5fqo" path="res://scenes/dungeon-objects/spike-trap.tscn" id="15_ohchh"]
+[ext_resource type="PackedScene" uid="uid://saro2n4by3a7" path="res://scenes/dungeon-objects/chest.tscn" id="16_wvto6"]
 
 [node name="Dlvl1" type="Node3D"]
 
@@ -1232,9 +1233,6 @@ transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -4, 0, -
 [node name="Wall12" parent="Walls" instance=ExtResource("6_d74uk")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -14)
 
-[node name="Wall13" parent="Walls" instance=ExtResource("6_d74uk")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4, 0, -24)
-
 [node name="Wall14" parent="Walls" instance=ExtResource("6_d74uk")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 2, 0, -24)
 
@@ -1319,6 +1317,8 @@ GateId = "gate1"
 [node name="GateClosed2" parent="Objects" instance=ExtResource("7_p6x0l")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 23, 0, -14)
 GateId = "gate2"
+KeyId = "666"
+_isLocked = true
 
 [node name="Gate1" parent="Objects" instance=ExtResource("7_p6x0l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -17)
@@ -1388,3 +1388,13 @@ _gate = NodePath("../GateClosed")
 
 [node name="SpikeTrap" parent="Objects" instance=ExtResource("15_ohchh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Ceiling" parent="." instance=ExtResource("2_fulge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -24)
+
+[node name="Floor" parent="." instance=ExtResource("1_c7ctl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -24)
+
+[node name="Chest" parent="." instance=ExtResource("16_wvto6")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, -24)
+ChestId = "chest1"

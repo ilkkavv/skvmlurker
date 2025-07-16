@@ -8,7 +8,7 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 - Original Author: artisticdude
 - Source: https://opengameart.org/content/impact
 - License: CC0 (Public Domain)
-- Used As: `gate.wav`
+- Used As: `gate.wav` and `chest-lid-open.wav`
 - Notes: Slight editing done in Audacity.
 
 ---
@@ -130,6 +130,24 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 - Source: https://opengameart.org/content/80-cc0-rpg-sfx
 - License: CC0
 - Used As: `locked.wav`, `open-lock.wav` and `remove-lock.wav`
+- Notes: No editing.
+
+---
+
+**14. "Stone Door"**
+- Original Author: bonebrah
+- Source: https://opengameart.org/content/stone-door
+- License: CC0
+- Used As: `chest-lid-move.ogg`
+- Notes: No editing.
+
+---
+
+**15. "3 Item sounds"**
+- Original Author: Michel Baradari
+- Source: https://opengameart.org/content/3-item-sounds
+- License: CC-BY 3.0
+- Used As: `pickup.wav`
 - Notes: No editing.
 
 ---

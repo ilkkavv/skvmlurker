@@ -8,7 +8,7 @@ namespace DungeonCrawler
 
 		// === Exported Config Values ===
 		[Export] private float _movementSpeed = 5f;
-		[Export] private float _interactDistance = 1.0f;
+		[Export] private float _interactDistance = 2.0f;
 		[Export] private float _fallDistance = 10f;
 		[Export] private float _fallDuration = 1f;
 		[Export] private float _raycastDistance = 100f;
