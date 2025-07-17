@@ -46,6 +46,12 @@ stream = ExtResource("2_dqkch")
 
 [node name="Torch" type="OmniLight3D" parent="PlayerController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 light_color = Color(0.713726, 0.243137, 0, 1)
 light_energy = 0.01
 script = ExtResource("3_qlg0r")
+
+[node name="Glow" type="OmniLight3D" parent="PlayerController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+light_color = Color(0.498039, 0.74902, 1, 1)
+light_energy = 0.1

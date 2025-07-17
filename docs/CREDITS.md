@@ -1,6 +1,6 @@
 # Game Audio Credits
 
-This game uses several audio assets from OpenGameArt.org. Below is a list of the original sources and license information.
+This game uses several audio assets from opengameart.org and freesound.org. Below is a list of the original sources and license information.
 
 ---
 
@@ -152,13 +152,23 @@ This game uses several audio assets from OpenGameArt.org. Below is a list of the
 
 ---
 
-## 📄 License Notes
+**16. "Fireplace rumble"**
+- Original Author: LukaCafuka
+- Source: https://freesound.org/people/LukaCafuka/sounds/783660/?
+- License: CC0 1.0
+- Used As: `torch.wav`
+- Notes: Slight editing in Audacity.
+
+---
+
+## License Notes
 
 - **CC0** assets do not require attribution, but are credited here out of courtesy.
+- **CC0 1.0 assets are dedicated to the public domain and do not require attribution, but are credited here out of courtesy. This allows unrestricted use, including commercial projects, without the need to credit the creator.
 - **CC-BY 3.0** assets **must be attributed** with author and source.
 
 ---
 
-## 🧱 Texture Assets
+## Texture Assets
 
 Textures were created using source materials from [ambientCG](https://ambientcg.com/), licensed under [Creative Commons CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/).

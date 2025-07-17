@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b36yf0fchgh1d"]
+[gd_scene load_steps=22 format=3 uid="uid://b36yf0fchgh1d"]
 
 [ext_resource type="PackedScene" uid="uid://ck8bi77dhcsfd" path="res://scenes/dungeon-wall-tiles/corner-tile.tscn" id="1_bpre1"]
 [ext_resource type="PackedScene" uid="uid://cvhxga5cj6kbt" path="res://scenes/dungeon-tile-parts/floor.tscn" id="1_c7ctl"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://c3me586usmrlc" path="res://scenes/dungeon-objects/skeleton.tscn" id="18_8yik3"]
 [ext_resource type="PackedScene" uid="uid://cwuhbokpaekh7" path="res://scenes/dungeon-objects/small-pillar.tscn" id="19_e1row"]
 [ext_resource type="PackedScene" uid="uid://cpcp5fsp3xjxd" path="res://scenes/dungeon-objects/large-pillar.tscn" id="20_087t7"]
+[ext_resource type="PackedScene" uid="uid://cjpeqwg2jefnf" path="res://scenes/dungeon-objects/torch.tscn" id="21_77ftw"]
 
 [node name="Dlvl1" type="Node3D"]
 
@@ -1427,3 +1428,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -4)
 
 [node name="LargePillar4" parent="." instance=ExtResource("20_087t7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -4)
+
+[node name="Torch" parent="." instance=ExtResource("21_77ftw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.2, -1.75003)
+
+[node name="Torch2" parent="." instance=ExtResource("21_77ftw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.2, -1.75003)
