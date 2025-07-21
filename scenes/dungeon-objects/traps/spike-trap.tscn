@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dg7rh1uuy5fqo"]
 
-[ext_resource type="PackedScene" uid="uid://b1q81eebah11f" path="res://scenes/dungeon-tile-parts/spike-trap-floor.tscn" id="1_hsb1d"]
+[ext_resource type="PackedScene" uid="uid://b1q81eebah11f" path="res://scenes/dungeon-object-parts/spike-trap-floor.tscn" id="1_hsb1d"]
 [ext_resource type="Script" uid="uid://hkn5qfh307kk" path="res://scripts/SpikeTrap.cs" id="1_pnlvs"]
-[ext_resource type="PackedScene" uid="uid://bgau872x8o7oj" path="res://scenes/dungeon-tile-parts/spike-trap-spikes.tscn" id="2_pnlvs"]
+[ext_resource type="PackedScene" uid="uid://bgau872x8o7oj" path="res://scenes/dungeon-object-parts/spike-trap-spikes.tscn" id="2_pnlvs"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hsb1d"]
 size = Vector3(1.6, 1, 1.6)

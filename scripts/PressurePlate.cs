@@ -11,6 +11,7 @@ namespace DungeonCrawler
 		#region Exported Properties
 
 		[Export] private Gate _gate;
+		[Export] private bool _closeGate = false;
 		[Export] private string _pressSfxPath;
 		[Export] private string _releaseSfxPath;
 
@@ -120,11 +121,21 @@ namespace DungeonCrawler
 				}
 			}
 
-			// Open gate if applicable
+			// Open or close gate depending on _closeGate flag
 			if (pressed && _gate != null)
 			{
 				await ToSignal(GetTree().CreateTimer(0.5f), SceneTreeTimer.SignalName.Timeout);
-				_gate.OpenGate(_gateOpenDuration);
+
+				if (_closeGate)
+				{
+					// If _closeGate is true, close the gate immediately
+					_gate.CloseGate();
+				}
+				else
+				{
+					// If _closeGate is false, open the gate
+					_gate.OpenGate(_gateOpenDuration);
+				}
 			}
 		}
 

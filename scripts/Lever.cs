@@ -38,6 +38,9 @@ namespace DungeonCrawler
 		private AudioStreamPlayer3D _sfxPlayer;
 		private Dungeon _dungeon;
 
+		private float _cooldown = 1f;
+		private bool _useBlock = false;
+
 		/// <summary>
 		/// Current state of the lever (true = down/on).
 		/// </summary>
@@ -88,21 +91,30 @@ namespace DungeonCrawler
 		/// </summary>
 		public async void ToggleLever()
 		{
-			if (_handle == null || _sfxPlayer == null || _gates.Count == 0)
-				return;
-
-			_leverOn = !_leverOn;
-			_handle.Position = _leverOn ? HandleDownPosition : HandleUpPosition;
-			_sfxPlayer.Play();
-
-			await ToSignal(GetTree().CreateTimer(LeverDelaySeconds), SceneTreeTimer.SignalName.Timeout);
-
-			foreach (Gate gate in _gates)
+			if (!_useBlock)
 			{
-				if (gate._gateOpen)
-					gate.CloseGate();
-				else
-					gate.OpenGate();
+				if (_handle == null || _sfxPlayer == null || _gates.Count == 0)
+					return;
+
+				_useBlock = true;
+
+				_leverOn = !_leverOn;
+				_handle.Position = _leverOn ? HandleDownPosition : HandleUpPosition;
+				_sfxPlayer.Play();
+
+				await ToSignal(GetTree().CreateTimer(LeverDelaySeconds), SceneTreeTimer.SignalName.Timeout);
+
+				foreach (Gate gate in _gates)
+				{
+					if (gate._gateOpen)
+						gate.CloseGate();
+					else
+						gate.OpenGate();
+				}
+
+				await ToSignal(GetTree().CreateTimer(_cooldown), SceneTreeTimer.SignalName.Timeout);
+
+				_useBlock = false;
 			}
 		}
 

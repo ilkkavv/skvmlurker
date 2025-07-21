@@ -15,20 +15,22 @@ namespace DungeonCrawler
 
 		[Export] public bool _gateOpen = false;
 		[Export] private bool _isLocked = false;
-		[Export] private float _openHeight = 1.4f;
-		[Export] private float _stepHeight = 0.2f;
-		[Export] private float _openDelay = 0.2f;
-		[Export] private float _closeDelay = 0.1f;
 
 		#endregion
 
 		#region Private Fields
+
+		private float _openHeight = 1.4f;
+		private float _stepHeight = 0.2f;
+		private float _openDelay = 0.2f;
+		private float _closeDelay = 0.1f;
 
 		private Dungeon _dungeon;
 		private StaticBody3D _gateBody;
 		private StaticBody3D _gateLock;
 		private AudioStreamPlayer3D _sfxPlayer;
 		private float _removeDelay = 0.5f;
+		private bool _isClosing = false;
 
 		// Prevents timers from running after scene unload
 		private bool _isActive = true;
@@ -111,22 +113,25 @@ namespace DungeonCrawler
 		/// </summary>
 		public async void CloseGate()
 		{
-			if (!_gateOpen || !_isActive || _gateBody == null)
+			if (_isClosing || !_isActive || _gateBody == null)
 				return;
 
 			_gateOpen = false;
+			_isClosing = true;
+
 			float targetY = 0f;
 			float currentY = _gateBody.Position.Y;
 
-			while (currentY > targetY && !_gateOpen && _isActive)
+			while (currentY > targetY && _isActive)
 			{
 				currentY = Mathf.Max(currentY - _stepHeight, targetY);
 				_gateBody.Position = new Vector3(0, currentY, 0);
-				PlaySound(0.8f); // Lower pitch
+				PlaySound(0.8f);
 				await ToSignal(GetTree().CreateTimer(_closeDelay), SceneTreeTimer.SignalName.Timeout);
 			}
 
 			_gateBody.Position = new Vector3(0, 0, 0);
+			_isClosing = false;
 		}
 
 		/// <summary>

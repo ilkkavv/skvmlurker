@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bg168fmwt06ed"]
 
-[ext_resource type="PackedScene" uid="uid://cp1hvsxb0m2rm" path="res://scenes/dungeon-tile-parts/wall.tscn" id="1_6pgb7"]
+[ext_resource type="PackedScene" uid="uid://cp1hvsxb0m2rm" path="res://scenes/dungeon-structural-elements/wall.tscn" id="1_6pgb7"]
 
 [node name="Shaft" type="Node3D"]
 

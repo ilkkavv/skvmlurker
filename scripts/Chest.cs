@@ -111,6 +111,7 @@ namespace DungeonCrawler
 				await ToSignal(GetTree().CreateTimer(_openDelay), SceneTreeTimer.SignalName.Timeout);
 
 				GD.Print($"You loot the chest and get: {_loot}!");
+				player.SetKeyId(_loot);
 
 				player.UnblockInput();
 			}

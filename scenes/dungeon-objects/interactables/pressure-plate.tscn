@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dajjv7041jbak"]
 
 [ext_resource type="Script" uid="uid://plwgpkdunw7b" path="res://scripts/PressurePlate.cs" id="1_3gra3"]
-[ext_resource type="PackedScene" uid="uid://dx2ij1dwkrsqc" path="res://scenes/dungeon-tile-parts/pressure-plate-floor.tscn" id="1_ggr4t"]
-[ext_resource type="PackedScene" uid="uid://e6xwkaqdv8f7" path="res://scenes/dungeon-tile-parts/pressure-plate-plate.tscn" id="2_symn7"]
+[ext_resource type="PackedScene" uid="uid://dx2ij1dwkrsqc" path="res://scenes/dungeon-object-parts/pressure-plate-floor.tscn" id="1_ggr4t"]
+[ext_resource type="PackedScene" uid="uid://e6xwkaqdv8f7" path="res://scenes/dungeon-object-parts/pressure-plate-plate.tscn" id="2_symn7"]
 [ext_resource type="AudioStream" uid="uid://b81k25qgplkp5" path="res://assets/audio/sfx/pressure-plate-press.wav" id="3_symn7"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_x5uxn"]

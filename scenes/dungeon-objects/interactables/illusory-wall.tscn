@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c7tm1mo2ev7kv"]
 
 [ext_resource type="Script" uid="uid://xvt7485v1w3h" path="res://scripts/IllusoryWall.cs" id="1_5u27u"]
-[ext_resource type="PackedScene" uid="uid://ddx7hvwortcxe" path="res://scenes/dungeon-tile-parts/fake-wall.tscn" id="2_qqe3f"]
+[ext_resource type="PackedScene" uid="uid://ddx7hvwortcxe" path="res://scenes/dungeon-object-parts/fake-wall.tscn" id="2_qqe3f"]
 [ext_resource type="AudioStream" uid="uid://dib647lambwwa" path="res://assets/audio/sfx/illusory-wall.wav" id="3_u0ejc"]
 
 [node name="IllusoryWall" type="Node3D"]

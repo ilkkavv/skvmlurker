@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://3ylgp2pjv45g"]
-
-[ext_resource type="PackedScene" uid="uid://cp1hvsxb0m2rm" path="res://scenes/dungeon-tile-parts/wall.tscn" id="2_swhsi"]
-
-[node name="Wall" type="Node3D"]
-
-[node name="Wall" parent="." instance=ExtResource("2_swhsi")]

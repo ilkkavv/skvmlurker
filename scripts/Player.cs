@@ -36,7 +36,7 @@ namespace DungeonCrawler
 		public bool IsInputBlocked { get; private set; } = false;
 
 		// This feature will be implemented in the future.
-		public string KeyId { get; private set; } = "666";
+		public string KeyId { get; private set; } = "";
 
 		private bool _isDead = false;
 
@@ -143,6 +143,19 @@ namespace DungeonCrawler
 			_isDead = true;
 			_screenFader?.FadeToBlack(fadeTime);
 			GD.Print("You died!");
+		}
+
+		#endregion
+
+		#region Inventory Management
+
+		/// <summary>
+		/// This feature will be properly implemented in the future.
+		/// </summary>
+		/// <param name="keyId"></param>
+		public void SetKeyId(string keyId)
+		{
+			KeyId = keyId;
 		}
 
 		#endregion
