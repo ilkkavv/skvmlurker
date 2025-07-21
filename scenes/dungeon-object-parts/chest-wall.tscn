@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://crd8v80i0v7nc"]
+
+[ext_resource type="ArrayMesh" uid="uid://bpfif2ma0cg24" path="res://assets/models/chest-wall.obj" id="1_fycth"]
+[ext_resource type="Material" uid="uid://ct8mh45wgxiax" path="res://assets/materials/brick-dungeon.tres" id="2_4l40a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fm1ty"]
+size = Vector3(2, 2, 0.001)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6qm6t"]
+size = Vector3(0.001, 2, 1)
+
+[node name="ChestWall" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_fycth")
+surface_material_override/0 = ExtResource("2_4l40a")
+
+[node name="CollisionShape3D1" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.9995)
+shape = SubResource("BoxShape3D_fm1ty")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0005, 1, -0.5)
+shape = SubResource("BoxShape3D_6qm6t")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9995, 1, -0.5)
+shape = SubResource("BoxShape3D_6qm6t")

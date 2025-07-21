@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b028jk47qbsju"]
+
+[ext_resource type="ArrayMesh" uid="uid://3gkfe6x75tna" path="res://assets/models/lever-wall.obj" id="1_2i7yk"]
+[ext_resource type="Material" uid="uid://ct8mh45wgxiax" path="res://assets/materials/brick-dungeon.tres" id="2_iqxe4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t3k6b"]
+size = Vector3(2, 2, 0.001)
+
+[node name="Lever-wall" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_2i7yk")
+surface_material_override/0 = ExtResource("2_iqxe4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.0005)
+shape = SubResource("BoxShape3D_t3k6b")

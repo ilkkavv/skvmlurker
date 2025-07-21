@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://d4f5bttpb5lg1"]
+
+[ext_resource type="ArrayMesh" uid="uid://eu20kpi2any1" path="res://assets/models/floor.obj" id="1_7y57d"]
+[ext_resource type="Script" uid="uid://db4h52p5clcc8" path="res://scripts/Water.cs" id="1_vplcp"]
+[ext_resource type="Material" uid="uid://udrrqet31ci1" path="res://assets/materials/water.tres" id="2_7y57d"]
+[ext_resource type="AudioStream" uid="uid://b53bg4ejxbkco" path="res://assets/audio/sfx/water.wav" id="3_ixs4b"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7y57d"]
+radius = 0.7
+
+[node name="Water" type="StaticBody3D"]
+script = ExtResource("1_vplcp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = ExtResource("1_7y57d")
+surface_material_override/0 = ExtResource("2_7y57d")
+
+[node name="TriggerArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TriggerArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("SphereShape3D_7y57d")
+
+[node name="SFXPlayer" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+stream = ExtResource("3_ixs4b")

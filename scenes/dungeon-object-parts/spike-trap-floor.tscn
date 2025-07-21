@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1q81eebah11f"]
+
+[ext_resource type="ArrayMesh" uid="uid://fr7bfo6gu4x5" path="res://assets/models/spike-trap-floor.obj" id="1_pvljj"]
+[ext_resource type="Material" uid="uid://dyxlrsbnrhxpg" path="res://assets/materials/dungeon-alpha.tres" id="2_pvljj"]
+[ext_resource type="Material" uid="uid://ct8mh45wgxiax" path="res://assets/materials/brick-dungeon.tres" id="2_tw6fb"]
+[ext_resource type="ArrayMesh" uid="uid://d2m42s7pmd111" path="res://assets/models/spike-trap-base.obj" id="3_euwi1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_euwi1"]
+size = Vector3(2, 0.001, 2)
+
+[node name="SpikeTrapFloor" type="StaticBody3D"]
+
+[node name="Grate" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_pvljj")
+surface_material_override/0 = ExtResource("2_pvljj")
+
+[node name="Base" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_euwi1")
+surface_material_override/0 = ExtResource("2_tw6fb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000499994, 0)
+shape = SubResource("BoxShape3D_euwi1")

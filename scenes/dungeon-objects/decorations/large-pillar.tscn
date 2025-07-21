@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpcp5fsp3xjxd"]
+
+[ext_resource type="ArrayMesh" uid="uid://2dm141sa5gth" path="res://assets/models/large-pillar.obj" id="1_2a6mj"]
+[ext_resource type="Material" uid="uid://ct8mh45wgxiax" path="res://assets/materials/brick-dungeon.tres" id="2_t66a6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cnrpy"]
+size = Vector3(1, 2, 1)
+
+[node name="LargePillar" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_2a6mj")
+surface_material_override/0 = ExtResource("2_t66a6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_cnrpy")

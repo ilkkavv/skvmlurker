@@ -1,175 +1,163 @@
+using System;
 using Godot;
 
-namespace dungeon
+namespace DungeonCrawler
 {
+	/// <summary>
+	/// Represents the player character in the dungeon.
+	/// Handles stats, damage, input control, and death logic.
+	/// </summary>
 	public partial class Player : Node3D
 	{
-		[Export] private float _movementSpeed = 4f;
-		[Export] private float _turnSpeed = 10f;
-		[Export] private int _playerStartPosX = 0;
-		[Export] private int _playerStartPosY = 0;
-		[Export] private Test _dungeonMap;
-		[Export] private AudioStreamPlayer2D _sfxPlayer;
+		#region Player Stats
 
-		private Node3D _leftNode;
-		private Node3D _frontNode;
-		private Node3D _rightNode;
-		private Node3D _backNode;
+		private int _str;
+		private int _agi;
+		private int _con;
+		private int _wis;
 
-		private bool _playSound = false;
-		private bool _isMoving = false;
-		private bool _isRotating = false;
-		private float _targetRot = 0f;
-		private Vector3 _targetPos = Vector3.Zero;
-		private Vector3 _movementDir = Vector3.Zero;
+		[Export] public int Hp { private set; get; } = 20;
 
-		private bool CheckCollision(float x, float y)
-		{
-			int mapX = Mathf.FloorToInt(x / 2);
-			int mapY = Mathf.FloorToInt(y / 2);
+		#endregion
 
-			if (_dungeonMap.ReturnDungeonTile(mapY, mapX) == "#")
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
+		#region Dependencies
 
-		private void MovePlayer(double delta)
-		{
-			if (_isMoving)
-			{
-				float distance = GlobalTransform.Origin.DistanceTo(_targetPos);
-				float moveStep = _movementSpeed * (float)delta;
+		private PlayerController _playerController;
+		private ScreenFlasher _screenFlasher;
+		private ScreenFader _screenFader;
 
-				if (distance > 0.01f)
-				{
-					if (moveStep >= distance)
-					{
-						// Snap to final position to avoid overshoot
-						GlobalTransform = new Transform3D(GlobalTransform.Basis, _targetPos);
-						_isMoving = false;
+		#endregion
 
-						if (_playSound)
-						{
-							_sfxPlayer.Play();
-							_playSound = false;
-						}
-					}
-					else
-					{
-						Vector3 newPosition = GlobalTransform.Origin + _movementDir * moveStep;
-						GlobalTransform = new Transform3D(GlobalTransform.Basis, newPosition);
-						_playSound = true;
-					}
-				}
-				else
-				{
-					// Fallback safety
-					_isMoving = false;
-					GlobalTransform = new Transform3D(GlobalTransform.Basis, _targetPos);
+		#region Properties
 
-					if (_playSound)
-					{
-						_sfxPlayer.Play();
-						_playSound = false;
-					}
-				}
-			}
-		}
+		/// <summary>
+		/// Indicates whether player input is currently blocked.
+		/// </summary>
+		public bool IsInputBlocked { get; private set; } = false;
 
-		private void RotatePlayer(double delta)
-		{
-			float currentRotY = Rotation.Y;
-			float newRotY = Mathf.LerpAngle(currentRotY, _targetRot, _turnSpeed * (float)delta);
-			Rotation = new Vector3(0, newRotY, 0);
+		// This feature will be implemented in the future.
+		public string KeyId { get; private set; } = "";
 
-			// Stop rotating when close enough
-			if (Mathf.Abs(Mathf.AngleDifference(newRotY, _targetRot)) < 0.01f)
-			{
-				Rotation = new Vector3(0, _targetRot, 0);
-				_isRotating = false;
-				//_sfxPlayer.Play();
-			}
-		}
+		private bool _isDead = false;
 
-		private void HandleInput()
-		{
-			if (!_isMoving && !_isRotating)
-			{
-				if (Input.IsActionPressed("TurnLeft"))
-				{
-					_isRotating = true;
-					_targetRot = Rotation.Y + Mathf.Pi / 2;
-				}
-				if (Input.IsActionPressed("TurnRight"))
-				{
-					_isRotating = true;
-					_targetRot = Rotation.Y - Mathf.Pi / 2;
-				}
-				if (Input.IsActionPressed("MoveLeft"))
-				{
-					if (!CheckCollision(_leftNode.GlobalPosition.X, _leftNode.GlobalPosition.Z))
-					{
-						_isMoving = true;
-						_targetPos = _leftNode.GlobalTransform.Origin;
-						_movementDir = (_targetPos - GlobalTransform.Origin).Normalized();
-					}
-				}
-				if (Input.IsActionPressed("MoveForward"))
-				{
-					if (!CheckCollision(_frontNode.GlobalPosition.X, _frontNode.GlobalPosition.Z))
-					{
-						_isMoving = true;
-						_targetPos = _frontNode.GlobalTransform.Origin;
-						_movementDir = (_targetPos - GlobalTransform.Origin).Normalized();
-					}
-				}
-				if (Input.IsActionPressed("MoveRight"))
-				{
-					if (!CheckCollision(_rightNode.GlobalPosition.X, _rightNode.GlobalPosition.Z))
-					{
-						_isMoving = true;
-						_targetPos = _rightNode.GlobalTransform.Origin;
-						_movementDir = (_targetPos - GlobalTransform.Origin).Normalized();
-					}
-				}
-				if (Input.IsActionPressed("MoveBackward"))
-				{
-					if (!CheckCollision(_backNode.GlobalPosition.X, _backNode.GlobalPosition.Z))
-					{
-						_isMoving = true;
-						_targetPos = _backNode.GlobalTransform.Origin;
-						_movementDir = (_targetPos - GlobalTransform.Origin).Normalized();
-					}
-				}
-				if (Input.IsActionJustPressed("Quit"))
-				{
-					GetTree().Quit();
-				}
-			}
-		}
+		#endregion
 
-		// Called when the node enters the scene tree for the first time.
+		#region Godot Lifecycle
+
+		/// <summary>
+		/// Called when the node enters the scene tree.
+		/// Sets up component references from the scene.
+		/// </summary>
 		public override void _Ready()
 		{
-			_leftNode = GetNode<Node3D>("LeftNode");
-			_frontNode = GetNode<Node3D>("FrontNode");
-			_rightNode = GetNode<Node3D>("RightNode");
-			_backNode = GetNode<Node3D>("BackNode");
+			_playerController = GetNodeOrNull<PlayerController>("PlayerController");
+			if (_playerController == null)
+				GD.PrintErr("Player: PlayerController not found.");
 
-			Position = new Vector3(_playerStartPosX * 2, 0, _playerStartPosY * 2);
+			Node main = GetTree().Root.GetNodeOrNull("Main");
+			if (main == null)
+			{
+				GD.PrintErr("Player: 'Main' node not found.");
+				return;
+			}
+
+			_screenFlasher = main.GetNodeOrNull<ScreenFlasher>("CanvasLayer/ScreenFlasher");
+			if (_screenFlasher == null)
+				GD.PrintErr("Player: ScreenFlasher not found at 'CanvasLayer/ScreenFlasher'.");
+
+			_screenFader = main.GetNodeOrNull<ScreenFader>("CanvasLayer/ScreenFader");
+			if (_screenFader == null)
+				GD.PrintErr("Player: ScreenFader not found at 'CanvasLayer/ScreenFader'.");
 		}
 
-		// Called every frame. 'delta' is the elapsed time since the previous frame.
-		public override void _Process(double delta)
+		#endregion
+
+		#region Input Control
+
+		/// <summary>
+		/// Disables all player input (used during events or death).
+		/// </summary>
+		public void BlockInput()
 		{
-			HandleInput();
-			MovePlayer(delta);
-			RotatePlayer(delta);
+			IsInputBlocked = true;
 		}
+
+		/// <summary>
+		/// Enables player input, unless the player is dead.
+		/// </summary>
+		public void UnblockInput()
+		{
+			if (_isDead)
+				return;
+
+			IsInputBlocked = false;
+		}
+
+		#endregion
+
+		#region Movement Control
+
+		/// <summary>
+		/// Immediately stops any active movement tween.
+		/// </summary>
+		public void StopPlayer()
+		{
+			_playerController?.TweenInstance?.Kill();
+		}
+
+		#endregion
+
+		#region Combat and Health
+
+		/// <summary>
+		/// Deals randomized damage to the player and handles death logic.
+		/// </summary>
+		/// <param name="diceCount">Number of dice to roll.</param>
+		/// <param name="diceType">Type of dice (e.g., 6-sided).</param>
+		public void TakeDamage(int diceCount, int diceType)
+		{
+			Random rnd = new();
+			int damage = diceCount * rnd.Next(1, diceType + 1);
+			GD.Print($"You take {damage} damage!");
+
+			Hp -= damage;
+			GD.Print($"HP = {Hp}");
+
+			// Visual/audio feedback
+			_screenFlasher?.Flash(new Color(1f, 0f, 0f, 1f)); // Red flash
+			_playerController?.PlayHurt();
+
+			if (Hp <= 0)
+				Die();
+		}
+
+		/// <summary>
+		/// Triggers the player's death sequence.
+		/// </summary>
+		public void Die(bool drown = false)
+		{
+			float fadeTime = 0.5f;
+			if (drown) fadeTime = 0.25f;
+
+			BlockInput();
+			_isDead = true;
+			_screenFader?.FadeToBlack(fadeTime);
+			GD.Print("You died!");
+		}
+
+		#endregion
+
+		#region Inventory Management
+
+		/// <summary>
+		/// This feature will be properly implemented in the future.
+		/// </summary>
+		/// <param name="keyId"></param>
+		public void SetKeyId(string keyId)
+		{
+			KeyId = keyId;
+		}
+
+		#endregion
 	}
 }

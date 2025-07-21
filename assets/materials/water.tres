@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://udrrqet31ci1"]
+
+[ext_resource type="Shader" uid="uid://bk18qjx16r40p" path="res://assets/shaders/water.gdshader" id="1_mlyr4"]
+[ext_resource type="Texture2D" uid="uid://vu04caa6ovi5" path="res://assets/textures/water.png" id="2_n5diq"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_mlyr4")
+shader_parameter/water_tex = ExtResource("2_n5diq")
+shader_parameter/alpha_val = 0.6
+shader_parameter/uv_scale = Vector2(0.5, 0.5)
+shader_parameter/move_speed = 0.5
+shader_parameter/move_amount = 0.05

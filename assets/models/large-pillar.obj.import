@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://2dm141sa5gth"
+path="res://.godot/imported/large-pillar.obj-d953fd769e1f92f9a307a148a624009a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/large-pillar.obj-d953fd769e1f92f9a307a148a624009a.mesh"]
+
+source_file="res://assets/models/large-pillar.obj"
+dest_files=["res://.godot/imported/large-pillar.obj-d953fd769e1f92f9a307a148a624009a.mesh", "res://.godot/imported/large-pillar.obj-d953fd769e1f92f9a307a148a624009a.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

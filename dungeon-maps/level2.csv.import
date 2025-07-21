@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b3diqklj15cd1"
+
+[deps]
+
+files=["res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation"]
+
+source_file="res://dungeon-maps/level2.csv"
+dest_files=["res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation", "res://dungeon-maps/level2.#.translation"]
+
+[params]
+
+compress=true
+delimiter=0

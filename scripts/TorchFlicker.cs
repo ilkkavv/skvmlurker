@@ -1,19 +1,46 @@
 using Godot;
-using System;
 
-public partial class TorchFlicker : OmniLight3D
+namespace DungeonCrawler
 {
-    private float baseEnergy = 3.0f;
-    private float flickerSpeed = 15.0f;
-    private float flickerAmount = 0.4f;
-    private float time = 0.0f;
+	/// <summary>
+	/// Simulates a flickering torch light effect by modifying light energy over time.
+	/// </summary>
+	public partial class TorchFlicker : OmniLight3D
+	{
+		#region Exported Settings
 
-    public override void _Process(double delta)
-    {
-        time += (float)delta * flickerSpeed;
-        float noise = Mathf.Sin(time * 3.0f) + Mathf.Cos(time * 2.1f);
-        float random = (float)GD.RandRange(-1.0f, 1.0f);
+		[Export] private float _baseEnergy = 3.0f;
+		[Export] private float _flickerSpeed = 15.0f;
+		[Export] private float _flickerAmount = 0.4f;
 
-        this.LightEnergy = baseEnergy + noise * flickerAmount * 0.5f + random * flickerAmount * 0.5f;
-    }
+		#endregion
+
+		#region Private Fields
+
+		private float _time = 0.0f;
+
+		#endregion
+
+		#region Light Flicker
+
+		/// <summary>
+		/// Updates the light's energy every frame to simulate flickering.
+		/// </summary>
+		public override void _Process(double delta)
+		{
+			// Advance time
+			_time += (float)delta * _flickerSpeed;
+
+			// Generate pseudo-random noise using sine and cosine functions
+			float noise = Mathf.Sin(_time * 3.0f) + Mathf.Cos(_time * 2.1f);
+
+			// Add some randomness
+			float random = (float)GD.RandRange(-1.0f, 1.0f);
+
+			// Apply energy flickering effect
+			LightEnergy = _baseEnergy + (noise + random) * _flickerAmount * 0.5f;
+		}
+
+		#endregion
+	}
 }
