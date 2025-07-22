@@ -228,6 +228,7 @@ namespace DungeonCrawler
 			}
 
 			_saveManager.WipeAllLevels();
+			_player.Respawn();
 			_ = ChangeLevel(startScene, _playerStartPos, 0f); // Fire-and-forget load
 		}
 

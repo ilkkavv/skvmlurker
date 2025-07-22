@@ -2,7 +2,7 @@
 
 [ext_resource type="ArrayMesh" uid="uid://c21ke1frpqdgx" path="res://assets/models/torch.obj" id="1_1tw4g"]
 [ext_resource type="Material" uid="uid://dyxlrsbnrhxpg" path="res://assets/materials/dungeon-alpha.tres" id="2_nsbix"]
-[ext_resource type="Script" uid="uid://cgx0heqlwcxq7" path="res://scripts/TorchFlicker.cs" id="3_0lc1o"]
+[ext_resource type="Script" uid="uid://cgx0heqlwcxq7" path="res://scripts/dungeon-objects/TorchFlicker.cs" id="3_0lc1o"]
 [ext_resource type="AudioStream" uid="uid://b2ho2oe8pk72u" path="res://assets/audio/sfx/torch.wav" id="4_nsbix"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dg7jh"]

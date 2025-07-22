@@ -39,6 +39,7 @@ namespace DungeonCrawler
 		public string KeyId { get; private set; } = "";
 
 		private bool _isDead = false;
+		private float _respawnTimer = 3f;
 
 		#endregion
 
@@ -134,7 +135,7 @@ namespace DungeonCrawler
 		/// <summary>
 		/// Triggers the player's death sequence.
 		/// </summary>
-		public void Die(bool drown = false)
+		public async void Die(bool drown = false)
 		{
 			float fadeTime = 0.5f;
 			if (drown) fadeTime = 0.25f;
@@ -142,6 +143,19 @@ namespace DungeonCrawler
 			BlockInput();
 			_isDead = true;
 			_screenFader?.FadeToBlack(fadeTime);
+
+			await ToSignal(GetTree().CreateTimer(_respawnTimer), SceneTreeTimer.SignalName.Timeout);
+
+			Global.Dungeon.StartNewGame();
+		}
+
+		/// <summary>
+		/// Restores the player to an active state by resetting health and death status.
+		/// </summary>
+		public void Respawn()
+		{
+			Hp = 20;
+			_isDead = false;
 		}
 
 		#endregion

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://catjos4pdmkip" path="res://scripts/Player.cs" id="1_dqkch"]
 [ext_resource type="Script" uid="uid://dsn7xspf5t8up" path="res://scripts/PlayerController.cs" id="1_qhqgy"]
 [ext_resource type="AudioStream" uid="uid://cks36b4ete7kt" path="res://assets/audio/sfx/footstep.wav" id="2_dqkch"]
-[ext_resource type="Script" uid="uid://cgx0heqlwcxq7" path="res://scripts/TorchFlicker.cs" id="3_qlg0r"]
+[ext_resource type="Script" uid="uid://cgx0heqlwcxq7" path="res://scripts/dungeon-objects/TorchFlicker.cs" id="3_qlg0r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dqkch"]
 

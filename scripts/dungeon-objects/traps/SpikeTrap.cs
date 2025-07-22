@@ -89,8 +89,11 @@ namespace DungeonCrawler
 		{
 			if (body.IsInGroup("player"))
 			{
-				Reset();
-				_dealDamage = true;
+				if (IsInsideTree())
+				{
+					Reset();
+					_dealDamage = true;
+				}
 			}
 		}
 
@@ -160,12 +163,18 @@ namespace DungeonCrawler
 			if (stream != null)
 			{
 				_sfxPlayer.Stream = stream;
-				_sfxPlayer.Play();
+				CallDeferred(nameof(DeferredPlaySfx));
 			}
 			else
 			{
 				GD.PrintErr($"SpikeTrap: Could not load sound: {sfxPath}");
 			}
+		}
+
+		private void DeferredPlaySfx()
+		{
+			if (_sfxPlayer.IsInsideTree())
+				_sfxPlayer.Play();
 		}
 
 		#endregion
