@@ -73,6 +73,7 @@ namespace DungeonCrawler
 			if (_isPressed || body == null || !body.IsInGroup("player"))
 				return;
 
+			Global.MessageBox.Message("Thy foot falleth upon a stone plate.");
 			TogglePlate(true);
 		}
 

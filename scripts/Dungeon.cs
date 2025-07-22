@@ -109,7 +109,8 @@ namespace DungeonCrawler
 		/// Transitions to a new level scene, saving current object states
 		/// and restoring them after load. Handles fade and optional fall damage.
 		/// </summary>
-		public async Task ChangeLevel(PackedScene targetScene, Vector3 newPlayerPos, float? newPlayerRot = null, bool fallDamage = false)
+		public async Task ChangeLevel(PackedScene targetScene, Vector3 newPlayerPos,
+			float? newPlayerRot = null, bool fallDamage = false, string message = "")
 		{
 			if (targetScene == null)
 			{
@@ -160,6 +161,7 @@ namespace DungeonCrawler
 				_screenFader.FadeBack(_fadeTime);
 				await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
 
+				if (message != "") Global.MessageBox.Message(message);
 				_player.UnblockInput();
 			}
 		}
@@ -227,9 +229,10 @@ namespace DungeonCrawler
 				return;
 			}
 
+			Global.MessageBox.ClearMessages();
 			_saveManager.WipeAllLevels();
+			_ = ChangeLevel(startScene, _playerStartPos, 0f, message: "Ye step into the gloom — welcome to the dungeon."); // Fire-and-forget load
 			_player.Respawn();
-			_ = ChangeLevel(startScene, _playerStartPos, 0f); // Fire-and-forget load
 		}
 
 		#endregion

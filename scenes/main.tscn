@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://clr6qv2hnek8k"]
+[gd_scene load_steps=11 format=3 uid="uid://clr6qv2hnek8k"]
 
 [ext_resource type="PackedScene" uid="uid://k4a3y5f8mdsx" path="res://scenes/player.tscn" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://jceswpgjtehe" path="res://scripts/SaveManager.cs" id="1_tefeu"]
@@ -6,6 +6,9 @@
 [ext_resource type="Script" uid="uid://cvmkee83k3516" path="res://scripts/Dungeon.cs" id="4_jyhfs"]
 [ext_resource type="AudioStream" uid="uid://8jhnijip0mxr" path="res://assets/audio/bgm/dungeon.ogg" id="4_tbgi4"]
 [ext_resource type="Script" uid="uid://dkcjsp1hutjew" path="res://scripts/ScreenFader.cs" id="4_tefeu"]
+[ext_resource type="Texture2D" uid="uid://d1whfitwo6hqe" path="res://assets/ui/overlay.png" id="5_o6xl0"]
+[ext_resource type="Theme" uid="uid://c6ng2t2nf32wd" path="res://themes/message-box.tres" id="5_tipki"]
+[ext_resource type="Script" uid="uid://dxdk7bqnbbmih" path="res://scripts/MessageBox.cs" id="6_85g3d"]
 
 [sub_resource type="Environment" id="Environment_o5qli"]
 ambient_light_source = 2
@@ -71,6 +74,22 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 script = ExtResource("3_tbgi4")
+
+[node name="MessageBox" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 1328.0
+offset_top = 176.0
+offset_right = 1808.0
+offset_bottom = 912.0
+theme = ExtResource("5_tipki")
+bbcode_enabled = true
+scroll_following = true
+script = ExtResource("6_85g3d")
+
+[node name="Overlay" type="TextureRect" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("5_o6xl0")
 
 [node name="GameWorld" type="Node3D" parent="."]
 

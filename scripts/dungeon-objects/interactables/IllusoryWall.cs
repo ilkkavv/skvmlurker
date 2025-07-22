@@ -77,7 +77,7 @@ namespace DungeonCrawler
 				return;
 
 			_isRevealed = true;
-
+			Global.MessageBox.Message("A false wall revealeth its truth — thou hast found a hidden path.");
 			_sfxPlayer?.Play();
 
 			if (_mesh.GetActiveMaterial(0) is not StandardMaterial3D sharedMaterial)

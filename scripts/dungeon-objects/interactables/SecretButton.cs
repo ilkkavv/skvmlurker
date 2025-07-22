@@ -86,6 +86,8 @@ namespace DungeonCrawler
 
 			_pressed = true;
 
+			Global.MessageBox.Message("With subtle touch, thou press’st a secret button.");
+
 			if (_tile != null)
 				_tile.Position = PressedPosition;
 

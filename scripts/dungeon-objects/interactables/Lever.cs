@@ -96,6 +96,8 @@ namespace DungeonCrawler
 				if (_handle == null || _sfxPlayer == null || _gates.Count == 0)
 					return;
 
+				Global.MessageBox.Message("Thou pull’st the ancient lever.");
+
 				_useBlock = true;
 
 				_leverOn = !_leverOn;

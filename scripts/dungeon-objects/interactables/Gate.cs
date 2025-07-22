@@ -31,6 +31,7 @@ namespace DungeonCrawler
 		private AudioStreamPlayer3D _sfxPlayer;
 		private float _removeDelay = 0.5f;
 		private bool _isClosing = false;
+		private bool _isOpening = false;
 		public bool _gateOpen = false;
 
 		// Prevents timers from running after scene unload
@@ -84,26 +85,28 @@ namespace DungeonCrawler
 		/// <param name="timer">Delay before automatically closing (0 = don't close).</param>
 		public async void OpenGate(float timer = 0f)
 		{
-			if (_gateOpen || !_isActive || _gateBody == null)
+			if (_gateOpen || _isOpening || !_isActive || _gateBody == null)
 				return;
 
-			_gateOpen = true;
+			_isOpening = true;
+
 			float targetY = _openHeight;
 			float currentY = _gateBody.Position.Y;
 
-			while (currentY < targetY && _gateOpen && _isActive)
+			while (currentY < targetY && _isOpening && _isActive)
 			{
 				currentY = Mathf.Min(currentY + _stepHeight, targetY);
 				_gateBody.Position = new Vector3(0, currentY, 0);
-				PlaySound(1f); // Normal pitch
+				PlaySound(1f);
 				await ToSignal(GetTree().CreateTimer(_openDelay), SceneTreeTimer.SignalName.Timeout);
 			}
 
 			_gateBody.Position = new Vector3(0, _openHeight, 0);
+			_isOpening = false;
+			_gateOpen = true; // Now truly open
 
-			if (timer > 0)
+			if (timer > 0 && _isActive)
 			{
-				_gateOpen = false;
 				await ToSignal(GetTree().CreateTimer(timer), SceneTreeTimer.SignalName.Timeout);
 				CloseGate();
 			}

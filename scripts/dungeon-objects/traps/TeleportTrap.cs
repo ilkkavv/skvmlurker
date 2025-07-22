@@ -110,6 +110,8 @@ namespace DungeonCrawler
 			if (_triggerOnce)
 				_isTriggered = true;
 
+			Global.MessageBox.Message("In but a blink, the walls are not as they were — thou art overcome by disorientation.");
+
 			_player.StopPlayer();
 			_sfxPlayer?.Play();
 

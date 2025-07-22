@@ -1,0 +1,28 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://c6ng2t2nf32wd"]
+
+[ext_resource type="FontFile" uid="uid://bbbuu5kpiputr" path="res://fonts/pokoljaro/Pokoljaro.otf" id="1_iljr4"]
+[ext_resource type="Texture2D" uid="uid://c0jnmwi4asar8" path="res://assets/ui/up.png" id="2_gebt3"]
+[ext_resource type="Texture2D" uid="uid://bjutgyn3n4f6d" path="res://assets/ui/down.png" id="3_vkhjr"]
+[ext_resource type="StyleBox" uid="uid://bv72fq3imij2m" path="res://themes/skull-grabber.tres" id="4_4on10"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gebt3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vkhjr"]
+
+[resource]
+RichTextLabel/font_sizes/normal_font_size = 24
+RichTextLabel/fonts/normal_font = ExtResource("1_iljr4")
+TextEdit/colors/background_color = Color(0, 0, 0, 1)
+TextEdit/font_sizes/font_size = 32
+VScrollBar/constants/min_grabber_size = 32
+VScrollBar/icons/decrement = ExtResource("2_gebt3")
+VScrollBar/icons/decrement_highlight = ExtResource("2_gebt3")
+VScrollBar/icons/decrement_pressed = ExtResource("2_gebt3")
+VScrollBar/icons/increment = ExtResource("3_vkhjr")
+VScrollBar/icons/increment_highlight = ExtResource("3_vkhjr")
+VScrollBar/icons/increment_pressed = ExtResource("3_vkhjr")
+VScrollBar/styles/grabber = ExtResource("4_4on10")
+VScrollBar/styles/grabber_highlight = ExtResource("4_4on10")
+VScrollBar/styles/grabber_pressed = ExtResource("4_4on10")
+VScrollBar/styles/scroll = SubResource("StyleBoxEmpty_gebt3")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_vkhjr")

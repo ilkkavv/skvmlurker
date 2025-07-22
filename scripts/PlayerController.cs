@@ -166,6 +166,8 @@ namespace DungeonCrawler
 			// 1. Try stairs
 			if (CheckStairs(raycast))
 			{
+				Global.MessageBox.Message("Thou entereth the stairwell, where shadow and stone entwine.");
+
 				_dungeon?.ChangeLevel(
 					_stairs.ReturnTargetScene(),
 					_stairs.ReturnNewPlayerPos(),
@@ -267,6 +269,8 @@ namespace DungeonCrawler
 		/// </summary>
 		private void Fall()
 		{
+			Global.MessageBox.Message("A misstep! Down thou plummet into darkness.");
+
 			_player.BlockInput();
 			_tween = CreateTween();
 

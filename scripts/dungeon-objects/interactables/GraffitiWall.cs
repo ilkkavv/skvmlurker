@@ -20,7 +20,7 @@ namespace DungeonCrawler
 		/// </summary>
 		public void Read()
 		{
-			GD.Print($"The writing on the wall says: {_text}");
+			Global.MessageBox.Message($"The stone beareth words of old, saying thus: {_text}");
 		}
 
 		#endregion

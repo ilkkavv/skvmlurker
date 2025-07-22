@@ -94,6 +94,8 @@ namespace DungeonCrawler
 
 				_chestOpen = true;
 
+				Global.MessageBox.Message("With struggle and sweat, thou forceth the old chest to yield its secrets.");
+
 				_lidSfxPlayer.Stream = _moveSound;
 				_lidSfxPlayer.Play();
 
@@ -110,7 +112,9 @@ namespace DungeonCrawler
 
 				await ToSignal(GetTree().CreateTimer(_openDelay), SceneTreeTimer.SignalName.Timeout);
 
-				GD.Print($"You loot the chest and get: {_loot}!");
+				// TODO: Remove this placeholder message
+				Global.MessageBox.Message("Thou discover’st a key of olden make.", color: "green");
+
 				player.SetKeyId(_loot);
 
 				player.UnblockInput();

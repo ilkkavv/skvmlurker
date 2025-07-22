@@ -119,10 +119,26 @@ namespace DungeonCrawler
 		{
 			Random rnd = new();
 			int damage = diceCount * rnd.Next(1, diceType + 1);
-			GD.Print($"You take {damage} damage!");
+
+			string message = "";
+			switch (damage)
+			{
+				case < 3:
+					message = "Thou art grazed by harm most slight.";
+					break;
+				case < 5:
+					message = "A grievous wound dost thou suffer.";
+					break;
+				case < 7:
+					message = "Pain sears thy flesh — a dire blow indeed!";
+					break;
+				default:
+					break;
+			}
+
+			Global.MessageBox.Message($"{message}", color: "red");
 
 			Hp -= damage;
-			GD.Print($"HP = {Hp}");
 
 			// Visual/audio feedback
 			_screenFlasher?.Flash(new Color(1f, 0f, 0f, 1f)); // Red flash
@@ -138,7 +154,16 @@ namespace DungeonCrawler
 		public async void Die(bool drown = false)
 		{
 			float fadeTime = 0.5f;
-			if (drown) fadeTime = 0.25f;
+			if (drown)
+			{
+				fadeTime = 0.25f;
+				Global.MessageBox.Message($"Thou drowneth, lungs aflood with sorrow.", color: "red");
+			}
+			else
+			{
+				Global.MessageBox.Message($"Thy tale endeth here. Thou hast perished in the dungeon.", color: "red");
+			}
+
 
 			BlockInput();
 			_isDead = true;

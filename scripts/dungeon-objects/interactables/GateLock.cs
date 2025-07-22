@@ -64,9 +64,13 @@ namespace DungeonCrawler
 		public override void OnInteract()
 		{
 			if (_player.KeyId == _gate.KeyId)
+			{
+				Global.MessageBox.Message("With cunning hand, thou undo’st the lock.");
 				Open();
+			}
 			else
 			{
+				Global.MessageBox.Message("The gate refuseth thee — it is sealed fast.");
 				_sfxPlayer.Stream = _lockedSound;
 				_sfxPlayer.Play();
 			}

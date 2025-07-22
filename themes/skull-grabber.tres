@@ -1,0 +1,8 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://bv72fq3imij2m"]
+
+[ext_resource type="Texture2D" uid="uid://c41gmy70njq6c" path="res://assets/ui/grabber.png" id="1_6sq4y"]
+
+[resource]
+texture = ExtResource("1_6sq4y")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
