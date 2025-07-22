@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://dg4wapa0u5snl"]
 
-[ext_resource type="Script" uid="uid://di7ukpdtdfo32" path="res://scripts/Lever.cs" id="1_bktly"]
+[ext_resource type="Script" uid="uid://di7ukpdtdfo32" path="res://scripts/dungeon-objects/interactables/Lever.cs" id="1_bktly"]
 [ext_resource type="PackedScene" uid="uid://b028jk47qbsju" path="res://scenes/dungeon-object-parts/lever-wall.tscn" id="2_bktly"]
 [ext_resource type="PackedScene" uid="uid://cdv5qy6k73x6p" path="res://scenes/dungeon-object-parts/lever-handle.tscn" id="3_6gd7h"]
-[ext_resource type="Script" uid="uid://c18rfwuar0jrv" path="res://scripts/LeverHandle.cs" id="5_6gd7h"]
+[ext_resource type="Script" uid="uid://c18rfwuar0jrv" path="res://scripts/dungeon-objects/interactables/LeverHandle.cs" id="5_6gd7h"]
 [ext_resource type="AudioStream" uid="uid://bsljp60m3jwge" path="res://assets/audio/sfx/lever.wav" id="7_3ai3i"]
 
 [node name="Lever" type="Node3D" node_paths=PackedStringArray("_gatesArray")]

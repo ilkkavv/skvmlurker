@@ -13,7 +13,7 @@ namespace DungeonCrawler
 		[Export] public string GateId { private set; get; }
 		[Export] public string KeyId { private set; get; }
 
-		[Export] public bool _gateOpen = false;
+		[Export] private bool _startOpen = false;
 		[Export] private bool _isLocked = false;
 
 		#endregion
@@ -31,6 +31,7 @@ namespace DungeonCrawler
 		private AudioStreamPlayer3D _sfxPlayer;
 		private float _removeDelay = 0.5f;
 		private bool _isClosing = false;
+		public bool _gateOpen = false;
 
 		// Prevents timers from running after scene unload
 		private bool _isActive = true;
@@ -159,7 +160,15 @@ namespace DungeonCrawler
 		{
 			if (_dungeon == null || string.IsNullOrEmpty(GateId)) return;
 
-			_gateOpen = _dungeon.LoadObjectState("Gate", GateId, "Open");
+			if (_startOpen)
+			{
+				_gateOpen = true;
+				_startOpen = false;
+			}
+			else
+			{
+				_gateOpen = _dungeon.LoadObjectState("Gate", GateId, "Open");
+			}
 
 			if (_gateOpen && _gateBody != null)
 			{

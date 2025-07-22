@@ -123,5 +123,18 @@ namespace DungeonCrawler
 		}
 
 		#endregion
+
+		#region Save Management Utilities
+
+		/// <summary>
+		/// Removes all saved data for every level from memory,
+		/// effectively resetting the game's level state without deleting the save file itself.
+		/// </summary>
+		public void WipeAllLevels()
+		{
+			_saveData.Levels.Clear(); // Remove all level-specific data
+		}
+
+		#endregion
 	}
 }

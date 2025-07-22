@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://lkltmikugp7l"]
 
-[ext_resource type="Script" uid="uid://dpjl3asfi0by" path="res://scripts/Stairs.cs" id="1_6n38f"]
+[ext_resource type="Script" uid="uid://dpjl3asfi0by" path="res://scripts/dungeon-objects/interactables/Stairs.cs" id="1_6n38f"]
 [ext_resource type="PackedScene" uid="uid://di3mk74r4b5l5" path="res://scenes/dungeon-object-parts/stairs-ceiling.tscn" id="2_4nt6w"]
 [ext_resource type="PackedScene" uid="uid://c62vw3nb6blkc" path="res://scenes/dungeon-object-parts/stairs.tscn" id="3_t1oh0"]
 [ext_resource type="PackedScene" uid="uid://cp1hvsxb0m2rm" path="res://scenes/dungeon-structural-elements/wall.tscn" id="4_4nt6w"]

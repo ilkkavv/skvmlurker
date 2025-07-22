@@ -142,7 +142,6 @@ namespace DungeonCrawler
 			BlockInput();
 			_isDead = true;
 			_screenFader?.FadeToBlack(fadeTime);
-			GD.Print("You died!");
 		}
 
 		#endregion

@@ -89,7 +89,7 @@ namespace DungeonCrawler
 				return;
 			}
 
-			_ = ChangeLevel(startScene, _playerStartPos, 0f); // Fire and forget
+			StartNewGame();
 		}
 
 		#endregion
@@ -207,6 +207,28 @@ namespace DungeonCrawler
 				return false;
 
 			return _saveManager.LoadBoolValue(_currentLevel.Name, objectType, objectId, key);
+		}
+
+		/// <summary>
+		/// Starts a new game by loading the initial level and positioning the player.
+		/// </summary>
+		public void StartNewGame()
+		{
+			if (string.IsNullOrEmpty(_startLevelPath))
+			{
+				GD.PrintErr("Dungeon: No start level path specified.");
+				return;
+			}
+
+			var startScene = ResourceLoader.Load<PackedScene>(_startLevelPath);
+			if (startScene == null)
+			{
+				GD.PrintErr($"Dungeon: Failed to load scene from path: {_startLevelPath}");
+				return;
+			}
+
+			_saveManager.WipeAllLevels();
+			_ = ChangeLevel(startScene, _playerStartPos, 0f); // Fire-and-forget load
 		}
 
 		#endregion

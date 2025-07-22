@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://ltwe057uh5xy"]
 
 [ext_resource type="ArrayMesh" uid="uid://n7r0nnd65t4e" path="res://assets/models/graffiti-wall.obj" id="1_ao38g"]
-[ext_resource type="Script" uid="uid://d248r0rot7olp" path="res://scripts/GraffitiWall.cs" id="1_oh2k3"]
+[ext_resource type="Script" uid="uid://d248r0rot7olp" path="res://scripts/dungeon-objects/interactables/GraffitiWall.cs" id="1_oh2k3"]
 [ext_resource type="Material" uid="uid://ct8mh45wgxiax" path="res://assets/materials/brick-dungeon.tres" id="2_ecpms"]
-[ext_resource type="Script" uid="uid://di5qtsn80uwyg" path="res://scripts/Graffiti.cs" id="4_agpc1"]
+[ext_resource type="Script" uid="uid://di5qtsn80uwyg" path="res://scripts/dungeon-objects/interactables/Graffiti.cs" id="4_agpc1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oh2k3"]
 size = Vector3(2, 2, 0.001)
