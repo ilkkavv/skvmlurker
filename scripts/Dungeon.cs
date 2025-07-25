@@ -232,7 +232,7 @@ namespace DungeonCrawler
 			Global.MessageBox.ClearMessages();
 			_saveManager.WipeAllLevels();
 			_ = ChangeLevel(startScene, _playerStartPos, 0f, message: "Ye step into the gloom — welcome to the dungeon."); // Fire-and-forget load
-			_player.Respawn();
+			_player.Spawn();
 		}
 
 		#endregion

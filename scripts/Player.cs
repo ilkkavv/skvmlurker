@@ -16,7 +16,8 @@ namespace DungeonCrawler
 		private int _con;
 		private int _wis;
 
-		[Export] public int Hp { private set; get; } = 20;
+		[Export] public int MaxHp { private set; get; } = 20;
+		public int Hp { private set; get; }
 
 		#endregion
 
@@ -144,6 +145,9 @@ namespace DungeonCrawler
 			_screenFlasher?.Flash(new Color(1f, 0f, 0f, 1f)); // Red flash
 			_playerController?.PlayHurt();
 
+			Global.Skull.UpdateSkull(MaxHp, Hp);
+			Global.Skull.PlayHurt(Hp);
+
 			if (Hp <= 0)
 				Die();
 		}
@@ -177,10 +181,11 @@ namespace DungeonCrawler
 		/// <summary>
 		/// Restores the player to an active state by resetting health and death status.
 		/// </summary>
-		public void Respawn()
+		public void Spawn()
 		{
-			Hp = 20;
+			Hp = MaxHp;
 			_isDead = false;
+			Global.Skull.UpdateSkull(MaxHp, Hp);
 		}
 
 		#endregion
