@@ -373,7 +373,7 @@ scroll_following = true
 script = ExtResource("6_85g3d")
 
 [node name="Skull" type="AnimatedSprite2D" parent="CanvasLayer"]
-position = Vector2(960, 920)
+position = Vector2(960, 928)
 sprite_frames = SubResource("SpriteFrames_yc10j")
 animation = &"damage0"
 frame_progress = 0.389852

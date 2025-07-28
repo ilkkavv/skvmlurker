@@ -14,12 +14,7 @@ namespace DungeonCrawler
 
 		public override void _Ready()
 		{
-			var vScroll = GetVScrollBar();
-			if (vScroll != null)
-			{
-				vScroll.Visible = true;
-				vScroll.CustomMinimumSize = new Vector2(0, 100);
-			}
+			ScrollActive = false;
 		}
 
 		public void Message(string message, string color = "white")
