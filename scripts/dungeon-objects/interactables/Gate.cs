@@ -30,8 +30,8 @@ namespace DungeonCrawler
 		private StaticBody3D _gateLock;
 		private AudioStreamPlayer3D _sfxPlayer;
 		private float _removeDelay = 0.5f;
-		private bool _isClosing = false;
-		private bool _isOpening = false;
+		public bool _isClosing = false;
+		public bool _isOpening = false;
 		public bool _gateOpen = false;
 
 		// Prevents timers from running after scene unload
@@ -89,6 +89,8 @@ namespace DungeonCrawler
 				return;
 
 			_isOpening = true;
+			_isClosing = false;
+			if (timer == 0) _gateOpen = true;
 
 			float targetY = _openHeight;
 			float currentY = _gateBody.Position.Y;
@@ -102,8 +104,6 @@ namespace DungeonCrawler
 			}
 
 			_gateBody.Position = new Vector3(0, _openHeight, 0);
-			_isOpening = false;
-			_gateOpen = true; // Now truly open
 
 			if (timer > 0 && _isActive)
 			{
@@ -122,11 +122,12 @@ namespace DungeonCrawler
 
 			_gateOpen = false;
 			_isClosing = true;
+			_isOpening = false;
 
 			float targetY = 0f;
 			float currentY = _gateBody.Position.Y;
 
-			while (currentY > targetY && _isActive)
+			while (currentY > targetY && _isClosing && _isActive)
 			{
 				currentY = Mathf.Max(currentY - _stepHeight, targetY);
 				_gateBody.Position = new Vector3(0, currentY, 0);
@@ -135,7 +136,6 @@ namespace DungeonCrawler
 			}
 
 			_gateBody.Position = new Vector3(0, 0, 0);
-			_isClosing = false;
 		}
 
 		/// <summary>

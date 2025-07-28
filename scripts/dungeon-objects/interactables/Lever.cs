@@ -38,7 +38,7 @@ namespace DungeonCrawler
 		private AudioStreamPlayer3D _sfxPlayer;
 		private Dungeon _dungeon;
 
-		private float _cooldown = 1f;
+		private float _cooldown = 0f;
 		private bool _useBlock = false;
 
 		/// <summary>
@@ -108,7 +108,7 @@ namespace DungeonCrawler
 
 				foreach (Gate gate in _gates)
 				{
-					if (gate._gateOpen)
+					if (gate._isOpening)
 						gate.CloseGate();
 					else
 						gate.OpenGate();
