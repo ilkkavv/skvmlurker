@@ -114,7 +114,7 @@ namespace DungeonCrawler
 		/// <param name="body">The body that entered the area.</param>
 		private void OnBodyEntered(Node3D body)
 		{
-			if (body == null || !body.IsInGroup("player"))
+			if (body == null || !body.IsInGroup("player") || (_dungeon != null && !_dungeon.TrapsEnabled))
 				return;
 
 			TriggerTrap();

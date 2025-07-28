@@ -39,6 +39,8 @@ namespace DungeonCrawler
 		private List<TeleportTrap> _teleportTraps = new();
 		private List<Chest> _chests = new();
 
+		public bool TrapsEnabled { get; private set; } = true;
+
 		#endregion
 
 		#region Lifecycle
@@ -118,6 +120,8 @@ namespace DungeonCrawler
 				return;
 			}
 
+			TrapsEnabled = false;
+
 			_player.BlockInput();
 			_screenFader.FadeToBlack(_fadeTime);
 			await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
@@ -148,8 +152,6 @@ namespace DungeonCrawler
 			_currentLevel = newLevelInstance;
 			AddChild(_currentLevel);
 
-			GD.Print($"Dungeon: Loaded level: {_currentLevel.Name}");
-
 			float finalRot = newPlayerRot ?? _player.GlobalRotationDegrees.Y;
 			SetPlayerPos(newPlayerPos, finalRot);
 
@@ -163,6 +165,8 @@ namespace DungeonCrawler
 
 				if (message != "") Global.MessageBox.Message(message);
 				_player.UnblockInput();
+
+				TrapsEnabled = true;
 			}
 		}
 
