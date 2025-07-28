@@ -364,7 +364,7 @@ script = ExtResource("3_tbgi4")
 
 [node name="MessageBox" type="RichTextLabel" parent="CanvasLayer"]
 offset_left = 1328.0
-offset_top = 176.0
+offset_top = 160.0
 offset_right = 1808.0
 offset_bottom = 912.0
 theme = ExtResource("5_tipki")
@@ -376,7 +376,7 @@ script = ExtResource("6_85g3d")
 position = Vector2(960, 920)
 sprite_frames = SubResource("SpriteFrames_yc10j")
 animation = &"damage0"
-frame_progress = 0.0455474
+frame_progress = 0.389852
 script = ExtResource("8_eb6dy")
 
 [node name="Overlay" type="TextureRect" parent="CanvasLayer"]
@@ -389,7 +389,7 @@ texture = ExtResource("5_o6xl0")
 position = Vector2(960, 96)
 sprite_frames = SubResource("SpriteFrames_0ld40")
 autoplay = "default"
-frame_progress = 0.0157201
+frame_progress = 0.360021
 
 [node name="GameWorld" type="Node3D" parent="."]
 
