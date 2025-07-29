@@ -42,6 +42,7 @@ size = Vector2(0.02, 0.02)
 [node name="Torch" type="StaticBody3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+cast_shadow = 0
 mesh = ExtResource("1_1tw4g")
 surface_material_override/0 = ExtResource("2_nsbix")
 
@@ -53,6 +54,7 @@ shape = SubResource("BoxShape3D_dg7jh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.781518)
 light_color = Color(0.713726, 0.243137, 0, 1)
 light_energy = 0.01
+shadow_enabled = true
 script = ExtResource("3_0lc1o")
 _baseEnergy = 1.5
 
