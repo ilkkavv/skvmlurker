@@ -69,3 +69,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.43, -0.76)
 stream = ExtResource("4_nsbix")
 volume_db = -30.0
 autoplay = true
+bus = &"Sfx"

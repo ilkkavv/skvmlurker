@@ -13,3 +13,4 @@ script = ExtResource("1_5u27u")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 stream = ExtResource("3_u0ejc")
 volume_db = -20.0
+bus = &"Sfx"

@@ -405,5 +405,6 @@ _playerStartPos = Vector3(6, 0, 56)
 stream = ExtResource("4_tbgi4")
 volume_db = 10.0
 autoplay = true
+bus = &"Bgm"
 
 [connection signal="animation_finished" from="CanvasLayer/Skull" to="CanvasLayer/Skull" method="_on_animation_finished"]

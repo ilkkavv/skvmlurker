@@ -21,3 +21,4 @@ shape = SubResource("SphereShape3D_vgt70")
 
 [node name="SFXPlayer" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_7dl5f")
+bus = &"Sfx"

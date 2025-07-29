@@ -19,3 +19,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.000499964)
 shape = SubResource("BoxShape3D_87tu1")
 
 [node name="SFXPlayer" type="AudioStreamPlayer3D" parent="."]
+bus = &"Sfx"

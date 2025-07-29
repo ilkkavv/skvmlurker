@@ -18,3 +18,4 @@ script = ExtResource("5_6gd7h")
 [node name="SFXPlayer" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 stream = ExtResource("7_3ai3i")
+bus = &"Sfx"

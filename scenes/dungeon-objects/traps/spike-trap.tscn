@@ -33,3 +33,4 @@ shape = SubResource("SphereShape3D_pnlvs")
 
 [node name="SFXPlayer" type="AudioStreamPlayer3D" parent="."]
 volume_db = -20.0
+bus = &"Sfx"
