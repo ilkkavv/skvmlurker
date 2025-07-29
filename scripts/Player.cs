@@ -183,6 +183,7 @@ namespace DungeonCrawler
 		public void Spawn()
 		{
 			Hp = MaxHp;
+			KeyId = "";
 			_isDead = false;
 			Global.Skull.UpdateSkull(MaxHp, Hp);
 		}

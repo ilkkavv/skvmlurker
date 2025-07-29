@@ -108,7 +108,7 @@ namespace DungeonCrawler
 
 				foreach (Gate gate in _gates)
 				{
-					if (gate._isOpening)
+					if (gate._isOpening || gate._gateOpen)
 						gate.CloseGate();
 					else
 						gate.OpenGate();
