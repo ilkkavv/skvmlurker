@@ -168,7 +168,6 @@ namespace DungeonCrawler
 				Global.MessageBox.Message($"Thy tale endeth here. Thou hast perished in the dungeon.", color: "red");
 			}
 
-
 			BlockInput();
 			_isDead = true;
 			_screenFader?.FadeToBlack(fadeTime);

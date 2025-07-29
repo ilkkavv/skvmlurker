@@ -34,6 +34,19 @@ namespace DungeonCrawler
 		// === Constants ===
 		private const float TravelDistance = 2f;
 
+		private const int FootstepCount = 3;
+		private const float BaseVolumeDb = -110f;
+		private const float VolumeStepDb = 5f;
+		private const float MinPitch = 0.5f;
+		private const float MaxPitch = 0.75f;
+		private const float StepDelay = 0.24f;
+		private const float GruntVolumeDb = 0f;
+		private const float GruntPitchScale = 1f;
+		private const float HurtVolumeDb = 0f;
+		private const float HurtPitchScale = 1f;
+		private const float RandomFootstepVolumeMin = -110f;
+		private const float RandomFootstepVolumeMax = -105f;
+
 		// === Private State ===
 		private float _travelTime;
 		private Dungeon _dungeon;
@@ -97,7 +110,7 @@ namespace DungeonCrawler
 			if (_hurtSound == null) GD.PrintErr("PlayerController: Hurt sound effect not found.");
 			if (_deathSound == null) GD.PrintErr("PlayerController: Death sound effect not found.");
 
-				_travelTime = TravelDistance / _movementSpeed;
+			_travelTime = TravelDistance / _movementSpeed;
 		}
 
 		/// <summary>
@@ -167,6 +180,7 @@ namespace DungeonCrawler
 			if (CheckStairs(raycast))
 			{
 				Global.MessageBox.Message("Thou entereth the stairwell, where shadow and stone entwine.");
+				PlayStairFootsteps();
 
 				_dungeon?.ChangeLevel(
 					_stairs.ReturnTargetScene(),
@@ -373,43 +387,53 @@ namespace DungeonCrawler
 		#region Utility
 
 		/// <summary>
-		/// Plays a randomized footstep sound effect.
+		/// Plays a randomized footstep sound with pitch and volume variation.
 		/// </summary>
 		private void PlayFootstep()
 		{
 			_sfxPlayer.Stream = _footstepSound;
-			_sfxPlayer.VolumeDb = (float)GD.RandRange(-100f, -105f);
-			_sfxPlayer.PitchScale = (float)GD.RandRange(0.5f, 0.75f);
+			_sfxPlayer.VolumeDb = (float)GD.RandRange(RandomFootstepVolumeMin, RandomFootstepVolumeMax);
+			_sfxPlayer.PitchScale = (float)GD.RandRange(MinPitch, MaxPitch);
 			_sfxPlayer.Play();
 		}
 
 		/// <summary>
-		/// Plays a grunt sound effect.
+		/// Plays 3 randomized stair footstep sounds with decreasing volume and varied pitch, spaced evenly.
+		/// </summary>
+		private async void PlayStairFootsteps()
+		{
+			int counter = 0;
+
+			while (counter < FootstepCount)
+			{
+				_sfxPlayer.Stream = _footstepSound;
+				_sfxPlayer.VolumeDb = BaseVolumeDb - (VolumeStepDb * counter);
+				_sfxPlayer.PitchScale = (float)GD.RandRange(MinPitch, MaxPitch);
+				_sfxPlayer.Play();
+				counter += 1;
+				await ToSignal(GetTree().CreateTimer(StepDelay), SceneTreeTimer.SignalName.Timeout);
+			}
+		}
+
+		/// <summary>
+		/// Plays a grunt sound effect with default pitch and volume.
 		/// </summary>
 		private void PlayGrunt()
 		{
 			_sfxPlayer.Stream = _gruntSound;
-			_sfxPlayer.VolumeDb = 0f;
-			_sfxPlayer.PitchScale = 1f;
+			_sfxPlayer.VolumeDb = GruntVolumeDb;
+			_sfxPlayer.PitchScale = GruntPitchScale;
 			_sfxPlayer.Play();
 		}
 
 		/// <summary>
-		/// Plays a hurt sound effect.
+		/// Plays a hurt or death sound effect based on player HP, using default pitch and volume.
 		/// </summary>
 		public void PlayHurt()
 		{
-			if (_player.Hp > 0)
-			{
-				_sfxPlayer.Stream = _hurtSound;
-			}
-			else
-			{
-				_sfxPlayer.Stream = _deathSound;
-			}
-
-			_sfxPlayer.VolumeDb = 0f;
-			_sfxPlayer.PitchScale = 1f;
+			_sfxPlayer.Stream = _player.Hp > 0 ? _hurtSound : _deathSound;
+			_sfxPlayer.VolumeDb = HurtVolumeDb;
+			_sfxPlayer.PitchScale = HurtPitchScale;
 			_sfxPlayer.Play();
 		}
 

@@ -5719,7 +5719,6 @@ GateId = "gate6"
 [node name="Gate7" parent="Objects/Gates" instance=ExtResource("7_g7tkf")]
 transform = Transform3D(1, 0, -1.63425e-13, 0, 1, 0, 1.63425e-13, 0, 1, 32, 0, 27)
 GateId = "gate7"
-_startOpen = true
 
 [node name="Gate8" parent="Objects/Gates" instance=ExtResource("7_g7tkf")]
 transform = Transform3D(-4.37116e-08, 0, -1, 0, 1, 0, 1, 0, -4.37116e-08, 37, 0, 32)
@@ -5765,7 +5764,7 @@ _gate = NodePath("../Gate2")
 [node name="PressurePlate3" parent="Objects/Gates" node_paths=PackedStringArray("_gate") instance=ExtResource("8_4fww7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 32)
 _gate = NodePath("../Gate3")
-_gateOpenDuration = 3.0
+_gateOpenDuration = 3.5
 
 [node name="PressurePlate4" parent="Objects/Gates" node_paths=PackedStringArray("_gate") instance=ExtResource("8_4fww7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 22)
