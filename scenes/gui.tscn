@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://b4pek7coi43w1"]
+[gd_scene load_steps=41 format=3 uid="uid://b4pek7coi43w1"]
 
 [ext_resource type="Script" uid="uid://dkcjsp1hutjew" path="res://scripts/ScreenFader.cs" id="1_4yt8u"]
 [ext_resource type="Script" uid="uid://8rfa0re8gx1i" path="res://scripts/ScreenFlasher.cs" id="2_p54wi"]
@@ -92,6 +92,10 @@ region = Rect2(576, 768, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_pibwh"]
 atlas = ExtResource("5_xqxrh")
 region = Rect2(0, 960, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yt8u"]
+atlas = ExtResource("5_xqxrh")
+region = Rect2(192, 960, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yc10j"]
 animations = [{
@@ -227,6 +231,14 @@ animations = [{
 "loop": true,
 "name": &"dead",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yt8u")
+}],
+"loop": true,
+"name": &"drown",
+"speed": 5.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_choun"]
@@ -347,8 +359,7 @@ script = ExtResource("4_v3be1")
 [node name="Skull" type="AnimatedSprite2D" parent="."]
 position = Vector2(960, 928)
 sprite_frames = SubResource("SpriteFrames_yc10j")
-animation = &"damage0"
-frame_progress = 0.389852
+animation = &"drown"
 script = ExtResource("6_qupqx")
 
 [node name="Overlay" type="TextureRect" parent="."]

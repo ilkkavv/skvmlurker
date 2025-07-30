@@ -153,6 +153,7 @@ namespace DungeonCrawler
 			float fadeTime = 0.5f;
 			if (drown)
 			{
+				Global.Skull.PlayDrown();
 				fadeTime = 0.25f;
 				Global.MessageBox.Message(_narrationDrown, Global.Red);
 			}

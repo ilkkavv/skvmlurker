@@ -68,6 +68,19 @@ namespace DungeonCrawler
 			}
 		}
 
+		/// <summary>
+		/// Plays the 'drown' animation if it exists.
+		/// Used to visually represent death by drowning.
+		/// </summary>
+		public void PlayDrown()
+		{
+			if (SpriteFrames.HasAnimation("drown"))
+			{
+				Animation = "drown";
+				Play();
+			}
+		}
+
 		#endregion
 
 		#region Private Methods
