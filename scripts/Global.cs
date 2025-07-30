@@ -20,6 +20,7 @@ namespace DungeonCrawler
 		public static ScreenFader SkullFader;
 		public static ScreenFlasher ScreenFlasher;
 		public static SaveManager SaveManager;
+		public static WorldEnvironment WorldEnvironment;
 
 		#endregion
 
@@ -48,6 +49,7 @@ namespace DungeonCrawler
 			SkullFader = main?.GetNodeOrNull<ScreenFader>("CanvasLayer/Gui/SkullFader");
 			ScreenFlasher = main?.GetNodeOrNull<ScreenFlasher>("CanvasLayer/Gui/ScreenFlasher");
 			SaveManager = main?.GetNodeOrNull<SaveManager>("SaveManager");
+			WorldEnvironment = main?.GetNodeOrNull<WorldEnvironment>("GameWorld/WorldEnvironment");
 
 			if (Dungeon == null) GD.PrintErr("Global: Dungeon not found.");
 			if (Player == null) GD.PrintErr("Global: Player not found.");
@@ -57,6 +59,7 @@ namespace DungeonCrawler
 			if (SkullFader == null) GD.PrintErr("Global: SkullFader not found.");
 			if (ScreenFlasher == null) GD.PrintErr("Global: ScreenFlasher not found.");
 			if (SaveManager == null) GD.PrintErr("Global: SaveManager not found.");
+			if (WorldEnvironment == null) GD.PrintErr("Global: WorldEnvironment not found.");
 		}
 
 		#endregion

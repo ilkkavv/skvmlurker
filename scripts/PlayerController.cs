@@ -156,6 +156,18 @@ namespace DungeonCrawler
 				raycast = _backRaycast;
 			}
 
+			// Placeholder brightness adjustment
+			else if (Input.IsActionJustPressed("IncreaseBrightness"))
+			{
+				if (Global.WorldEnvironment.Environment.TonemapExposure < 2.0f)
+					Global.WorldEnvironment.Environment.TonemapExposure += 0.1f;
+			}
+			else if (Input.IsActionJustPressed("DecreaseBrightness"))
+			{
+				if (Global.WorldEnvironment.Environment.TonemapExposure > 0.5f)
+					Global.WorldEnvironment.Environment.TonemapExposure -= 0.1f;
+			}
+
 			if (raycast == null || direction == Vector3.Zero)
 				return;
 

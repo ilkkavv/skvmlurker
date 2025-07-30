@@ -40,9 +40,6 @@ namespace DungeonCrawler
 
 		#region Properties
 
-		/// <summary>
-		/// Indicates whether player input is currently blocked.
-		/// </summary>
 		public bool IsInputBlocked { get; private set; } = false;
 
 		// This feature will be implemented in the future.
