@@ -138,7 +138,7 @@ namespace DungeonCrawler
 			Global.ScreenFlasher?.Flash(new Color(1f, 0f, 0f, 1f));
 			_playerController?.PlayHurt();
 
-			Global.Skull.UpdateSkull(MaxHp, Hp);
+			Global.Skull.UpdateSkull();
 			Global.Skull.PlayHurt(Hp);
 
 			if (Hp <= 0)
@@ -179,7 +179,6 @@ namespace DungeonCrawler
 			Hp = MaxHp;
 			KeyId = "";
 			_isDead = false;
-			Global.Skull.UpdateSkull(MaxHp, Hp);
 		}
 
 		#endregion

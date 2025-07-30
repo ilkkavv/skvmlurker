@@ -94,6 +94,7 @@ namespace DungeonCrawler
 
 			Global.Player.BlockInput();
 			Global.ScreenFader.FadeToBlack(_fadeTime);
+			Global.SkullFader.FadeToBlack(_fadeTime);
 			await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
 
 			if (_currentLevel != null)
@@ -130,7 +131,9 @@ namespace DungeonCrawler
 
 			if (Global.Player.Hp > 0)
 			{
+				Global.Skull.UpdateSkull();
 				Global.ScreenFader.FadeBack(_fadeTime);
+				Global.SkullFader.FadeBack(_fadeTime);
 				await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
 
 				if (narration != "") Global.MessageBox.Message(narration, Global.Grey);

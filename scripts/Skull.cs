@@ -31,9 +31,9 @@ namespace DungeonCrawler
 		/// </summary>
 		/// <param name="maxHp">Maximum health value.</param>
 		/// <param name="hp">Current health value.</param>
-		public void UpdateSkull(int maxHp, int hp)
+		public void UpdateSkull()
 		{
-			float percent = (float)hp / maxHp;
+			float percent = (float)Global.Player.Hp / Global.Player.MaxHp;
 
 			// Determine damage animation based on health %
 			string anim = percent switch

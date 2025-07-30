@@ -17,6 +17,7 @@ namespace DungeonCrawler
 		public static MessageBox MessageBox;
 		public static Skull Skull;
 		public static ScreenFader ScreenFader;
+		public static ScreenFader SkullFader;
 		public static ScreenFlasher ScreenFlasher;
 		public static SaveManager SaveManager;
 
@@ -44,6 +45,7 @@ namespace DungeonCrawler
 			MessageBox = main?.GetNodeOrNull<MessageBox>("CanvasLayer/Gui/MessageBox");
 			Skull = main?.GetNodeOrNull<Skull>("CanvasLayer/Gui/Skull");
 			ScreenFader = main?.GetNodeOrNull<ScreenFader>("CanvasLayer/Gui/ScreenFader");
+			SkullFader = main?.GetNodeOrNull<ScreenFader>("CanvasLayer/Gui/SkullFader");
 			ScreenFlasher = main?.GetNodeOrNull<ScreenFlasher>("CanvasLayer/Gui/ScreenFlasher");
 			SaveManager = main?.GetNodeOrNull<SaveManager>("SaveManager");
 
@@ -52,6 +54,7 @@ namespace DungeonCrawler
 			if (MessageBox == null) GD.PrintErr("Global: MessageBox not found.");
 			if (Skull == null) GD.PrintErr("Global: Skull not found.");
 			if (ScreenFader == null) GD.PrintErr("Global: ScreenFader not found.");
+			if (SkullFader == null) GD.PrintErr("Global: SkullFader not found.");
 			if (ScreenFlasher == null) GD.PrintErr("Global: ScreenFlasher not found.");
 			if (SaveManager == null) GD.PrintErr("Global: SaveManager not found.");
 		}
