@@ -11,25 +11,10 @@ namespace DungeonCrawler
 	{
 		#region Exported Properties
 
-		/// <summary>
-		/// Unique ID used for saving trap state.
-		/// </summary>
 		[Export] public string PitTrapId { private set; get; }
-
-		/// <summary>
-		/// Scene to load when the player falls into the trap.
-		/// </summary>
 		[Export(PropertyHint.File, "*.tscn")]
 		private string _targetScenePath = "";
-
-		/// <summary>
-		/// Position where the player will be teleported.
-		/// </summary>
 		[Export] private Vector3 _teleportPosition;
-
-		/// <summary>
-		/// Whether the fall should deal damage to the player.
-		/// </summary>
 		[Export] private bool _fallDamage = true;
 
 		#endregion
@@ -39,7 +24,6 @@ namespace DungeonCrawler
 		private StaticBody3D _fakeFloor;
 		private AudioStreamPlayer3D _sfxPlayer;
 		private Area3D _triggerArea;
-		private Dungeon _dungeon;
 
 		#endregion
 
@@ -59,7 +43,6 @@ namespace DungeonCrawler
 		/// </summary>
 		public override void _Ready()
 		{
-			// Get child node references
 			_fakeFloor = GetNodeOrNull<StaticBody3D>("FakeFloor");
 			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("SFXPlayer");
 			_triggerArea = GetNodeOrNull<Area3D>("TriggerArea");
@@ -72,17 +55,7 @@ namespace DungeonCrawler
 			if (_triggerArea != null)
 				_triggerArea.BodyEntered += OnBodyEntered;
 
-			// Get dungeon reference
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
-
-			if (_dungeon == null)
-			{
-				GD.PrintErr($"{nameof(PitTrap)}: Dungeon reference not found.");
-				return;
-			}
-
-			_dungeon.AddObject(this);
+			Global.Dungeon.AddObject(this);
 			InitializeState();
 		}
 
@@ -91,9 +64,9 @@ namespace DungeonCrawler
 		/// </summary>
 		private void InitializeState()
 		{
-			if (_dungeon == null || string.IsNullOrEmpty(PitTrapId)) return;
+			if (string.IsNullOrEmpty(PitTrapId)) return;
 
-			_isTriggered = _dungeon.LoadObjectState("PitTrap", PitTrapId, "Triggered");
+			_isTriggered = Global.Dungeon.LoadObjectState("PitTrap", PitTrapId, "Triggered");
 
 			if (_isTriggered && _fakeFloor != null)
 			{
@@ -114,7 +87,7 @@ namespace DungeonCrawler
 		/// <param name="body">The body that entered the area.</param>
 		private void OnBodyEntered(Node3D body)
 		{
-			if (body == null || !body.IsInGroup("player") || (_dungeon != null && !_dungeon.TrapsEnabled))
+			if (body == null || !body.IsInGroup("player") || !Global.Dungeon.TrapsEnabled)
 				return;
 
 			TriggerTrap();
@@ -145,7 +118,7 @@ namespace DungeonCrawler
 
 			await ToSignal(GetTree().CreateTimer(1f), SceneTreeTimer.SignalName.Timeout);
 
-			if (_dungeon == null || string.IsNullOrEmpty(_targetScenePath))
+			if (string.IsNullOrEmpty(_targetScenePath))
 				return;
 
 			var nextScene = ResourceLoader.Load<PackedScene>(_targetScenePath);
@@ -155,7 +128,7 @@ namespace DungeonCrawler
 				return;
 			}
 
-			await _dungeon.ChangeLevel(nextScene, _teleportPosition, fallDamage: _fallDamage);
+			await Global.Dungeon.ChangeLevel(nextScene, _teleportPosition, fallDamage: _fallDamage);
 		}
 
 		#endregion

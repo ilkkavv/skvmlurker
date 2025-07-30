@@ -25,7 +25,6 @@ namespace DungeonCrawler
 		private float _openDelay = 0.2f;
 		private float _closeDelay = 0.1f;
 
-		private Dungeon _dungeon;
 		private StaticBody3D _gateBody;
 		private StaticBody3D _gateLock;
 		private AudioStreamPlayer3D _sfxPlayer;
@@ -46,14 +45,11 @@ namespace DungeonCrawler
 		/// </summary>
 		public override void _Ready()
 		{
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
 
 			_gateBody = GetNodeOrNull<StaticBody3D>("GateBody");
 			_gateLock = GetNodeOrNull<StaticBody3D>("GateLock");
 			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("SFXPlayer");
 
-			if (_dungeon == null) GD.PrintErr("Gate: Dungeon not found.");
 			if (_gateBody == null) GD.PrintErr("Gate: GateBody node not found.");
 			if (_gateLock == null) GD.PrintErr("Gate: GateLock node not found.");
 			if (_sfxPlayer == null) GD.PrintErr("Gate: SFXPlayer node not found.");
@@ -62,7 +58,7 @@ namespace DungeonCrawler
 			if (!_isLocked)
 				_gateLock.QueueFree();
 
-			_dungeon?.AddObject(this);
+			Global.Dungeon?.AddObject(this);
 			InitializeState();
 		}
 
@@ -161,7 +157,7 @@ namespace DungeonCrawler
 		/// </summary>
 		private void InitializeState()
 		{
-			if (_dungeon == null || string.IsNullOrEmpty(GateId)) return;
+			if (string.IsNullOrEmpty(GateId)) return;
 
 			if (_startOpen)
 			{
@@ -170,7 +166,7 @@ namespace DungeonCrawler
 			}
 			else
 			{
-				_gateOpen = _dungeon.LoadObjectState("Gate", GateId, "Open");
+				_gateOpen = Global.Dungeon.LoadObjectState("Gate", GateId, "Open");
 			}
 
 			if (_gateOpen && _gateBody != null)

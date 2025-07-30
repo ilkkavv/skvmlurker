@@ -11,18 +11,18 @@ namespace DungeonCrawler
 		#region Exported Properties
 
 		[Export] public string IllusoryWallId { private set; get; }
+		[Export] private string _narration = "A false wall reveals its secret — you've discovered a hidden path.";
 
 		#endregion
 
 		#region Private Fields
 
-		private Node3D _wallRoot;                  // The parent node holding mesh and collider
-		private MeshInstance3D _mesh;              // Visual component
-		private CollisionShape3D _collider;        // Physical barrier
-		private AudioStreamPlayer3D _sfxPlayer;    // Sound effect on reveal
-		private Dungeon _dungeon;                  // Reference to dungeon for state saving
+		private Node3D _wallRoot;
+		private MeshInstance3D _mesh;
+		private CollisionShape3D _collider;
+		private AudioStreamPlayer3D _sfxPlayer;
 
-		public bool _isRevealed = false;           // Whether the wall has already been revealed
+		public bool _isRevealed = false;
 
 		#endregion
 
@@ -49,17 +49,7 @@ namespace DungeonCrawler
 			if (_collider == null) GD.PrintErr("IllusoryWall: CollisionShape3D not found.");
 			if (_sfxPlayer == null) GD.PrintErr("IllusoryWall: SFXPlayer node not found.");
 
-			// Get Dungeon reference
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
-
-			if (_dungeon == null)
-			{
-				GD.PrintErr("IllusoryWall: Dungeon reference not found.");
-				return;
-			}
-
-			_dungeon.AddObject(this);
+			Global.Dungeon.AddObject(this);
 			InitializeState();
 		}
 
@@ -77,7 +67,7 @@ namespace DungeonCrawler
 				return;
 
 			_isRevealed = true;
-			Global.MessageBox.Message("A false wall revealeth its truth — thou hast found a hidden path.");
+			Global.MessageBox.Message(_narration, Global.Green);
 			_sfxPlayer?.Play();
 
 			if (_mesh.GetActiveMaterial(0) is not StandardMaterial3D sharedMaterial)
@@ -117,10 +107,10 @@ namespace DungeonCrawler
 		/// </summary>
 		private void InitializeState()
 		{
-			if (_dungeon == null || string.IsNullOrEmpty(IllusoryWallId))
+			if (string.IsNullOrEmpty(IllusoryWallId))
 				return;
 
-			_isRevealed = _dungeon.LoadObjectState("IllusoryWall", IllusoryWallId, "Revealed");
+			_isRevealed = Global.Dungeon.LoadObjectState("IllusoryWall", IllusoryWallId, "Revealed");
 
 			if (_isRevealed && _mesh != null && _collider != null)
 			{

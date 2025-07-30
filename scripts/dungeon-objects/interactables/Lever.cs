@@ -12,15 +12,9 @@ namespace DungeonCrawler
 	{
 		#region Exported Properties
 
-		/// <summary>
-		/// Unique identifier used for state saving/loading.
-		/// </summary>
 		[Export] public string LeverId { private set; get; }
-
-		/// <summary>
-		/// Array of gates this lever controls. Assigned via editor.
-		/// </summary>
 		[Export] private Gate[] _gatesArray;
+		[Export] private string _narration = "You pull the lever.";
 
 		#endregion
 
@@ -36,7 +30,6 @@ namespace DungeonCrawler
 
 		private StaticBody3D _handle;
 		private AudioStreamPlayer3D _sfxPlayer;
-		private Dungeon _dungeon;
 
 		private float _cooldown = 0f;
 		private bool _useBlock = false;
@@ -68,16 +61,7 @@ namespace DungeonCrawler
 			if (_sfxPlayer == null) GD.PrintErr("Lever: SFXPlayer node not found.");
 			if (_gates.Count == 0) GD.PrintErr("Lever: No gates assigned.");
 
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
-
-			if (_dungeon == null)
-			{
-				GD.PrintErr("Lever: Dungeon reference not found.");
-				return;
-			}
-
-			_dungeon.AddObject(this);
+			Global.Dungeon.AddObject(this);
 			InitializeState();
 		}
 
@@ -96,7 +80,7 @@ namespace DungeonCrawler
 				if (_handle == null || _sfxPlayer == null || _gates.Count == 0)
 					return;
 
-				Global.MessageBox.Message("Thou pull’st the ancient lever.");
+				Global.MessageBox.Message(_narration, Global.Grey);
 
 				_useBlock = true;
 
@@ -129,10 +113,10 @@ namespace DungeonCrawler
 		/// </summary>
 		private void InitializeState()
 		{
-			if (_dungeon == null || _handle == null)
+			if (_handle == null)
 				return;
 
-			_leverOn = _dungeon.LoadObjectState("Lever", LeverId, "On");
+			_leverOn = Global.Dungeon.LoadObjectState("Lever", LeverId, "On");
 			_handle.Position = _leverOn ? HandleDownPosition : HandleUpPosition;
 		}
 

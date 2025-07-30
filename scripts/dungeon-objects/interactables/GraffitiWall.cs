@@ -9,7 +9,8 @@ namespace DungeonCrawler
 	{
 		#region Exported Properties
 
-		[Export] private string _text = "";
+		[Export] private string _narration = "Inscribed on the wall are old words that read: ";
+		[Export] private string _message = "";
 
 		#endregion
 
@@ -20,7 +21,7 @@ namespace DungeonCrawler
 		/// </summary>
 		public void Read()
 		{
-			Global.MessageBox.Message($"The stone beareth words of old, saying thus: {_text}");
+			Global.MessageBox.Message((_narration + _message), Global.Blue);
 		}
 
 		#endregion

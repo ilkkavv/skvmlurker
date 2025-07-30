@@ -10,25 +10,12 @@ namespace DungeonCrawler
 	{
 		#region Exported Properties
 
-		/// <summary>
-		/// Unique ID used for saving/loading the chest's state.
-		/// </summary>
 		[Export] public string ChestId { private set; get; }
-
-		/// <summary>
-		/// The loot inside the chest. Displayed to the player when looted.
-		/// </summary>
 		[Export] private string _loot = "Nothing";
-
-		/// <summary>
-		/// Path to the sound effect played when the lid starts to move.
-		/// </summary>
 		[Export] private string _pathToMoveSfx = "res://assets/audio/sfx/chest-lid-move.ogg";
-
-		/// <summary>
-		/// Path to the sound effect played when the lid finishes opening.
-		/// </summary>
 		[Export] private string _pathToOpenSfx = "res://assets/audio/sfx/chest-lid-open.wav";
+		[Export] private string _openNarration = "With effort and a creak, you manage to open the old chest.";
+		[Export] private string _lootNarration = "You find a key of ancient design.";
 
 		#endregion
 
@@ -37,7 +24,6 @@ namespace DungeonCrawler
 		public bool _chestOpen = false;
 
 		private StaticBody3D _chestLid;
-		private Dungeon _dungeon;
 		private AudioStreamPlayer3D _lidSfxPlayer;
 		private AudioStream _moveSound;
 		private AudioStream _openSound;
@@ -59,21 +45,17 @@ namespace DungeonCrawler
 		/// </summary>
 		public override void _Ready()
 		{
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
-
 			_chestLid = GetNodeOrNull<StaticBody3D>("ChestLid");
 			_lidSfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("ChestLid/SFXPlayer");
 			_moveSound = GD.Load<AudioStream>(_pathToMoveSfx);
 			_openSound = GD.Load<AudioStream>(_pathToOpenSfx);
 
 			if (string.IsNullOrEmpty(ChestId)) GD.PrintErr("Chest: ID not set.");
-			if (_dungeon == null) GD.PrintErr("Chest: Dungeon not found.");
 			if (_chestLid == null) GD.PrintErr("Chest: Lid node not found.");
 			if (_moveSound == null) GD.PrintErr("Chest: Move sound effect not found.");
 			if (_openSound == null) GD.PrintErr("Chest: Open sound effect not found.");
 
-			_dungeon?.AddObject(this);
+			Global.Dungeon?.AddObject(this);
 			InitializeState();
 		}
 
@@ -85,16 +67,15 @@ namespace DungeonCrawler
 		/// Opens the chest, plays lid animations and sounds, and prints the loot.
 		/// Blocks and unblocks player input during the sequence.
 		/// </summary>
-		/// <param name="player">The player interacting with the chest.</param>
-		public async void LootChest(Player player)
+		public async void LootChest()
 		{
 			if (!_chestOpen)
 			{
-				player.BlockInput();
+				Global.Player.BlockInput();
 
 				_chestOpen = true;
 
-				Global.MessageBox.Message("With struggle and sweat, thou forceth the old chest to yield its secrets.");
+				Global.MessageBox.Message(_openNarration, Global.Grey);
 
 				_lidSfxPlayer.Stream = _moveSound;
 				_lidSfxPlayer.Play();
@@ -112,12 +93,11 @@ namespace DungeonCrawler
 
 				await ToSignal(GetTree().CreateTimer(_openDelay), SceneTreeTimer.SignalName.Timeout);
 
-				// TODO: Remove this placeholder message
-				Global.MessageBox.Message("Thou discover’st a key of olden make.", color: "green");
+				Global.MessageBox.Message(_lootNarration, Global.Green);
 
-				player.SetKeyId(_loot);
+				Global.Player.SetKeyId(_loot);
 
-				player.UnblockInput();
+				Global.Player.UnblockInput();
 			}
 		}
 
@@ -130,9 +110,9 @@ namespace DungeonCrawler
 		/// </summary>
 		private void InitializeState()
 		{
-			if (_dungeon == null || string.IsNullOrEmpty(ChestId)) return;
+			if (string.IsNullOrEmpty(ChestId)) return;
 
-			_chestOpen = _dungeon.LoadObjectState("Chest", ChestId, "Open");
+			_chestOpen = Global.Dungeon.LoadObjectState("Chest", ChestId, "Open");
 
 			if (_chestOpen && _chestLid != null)
 			{

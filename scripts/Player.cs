@@ -16,16 +16,25 @@ namespace DungeonCrawler
 		private int _con;
 		private int _wis;
 
-		[Export] public int MaxHp { private set; get; } = 20;
 		public int Hp { private set; get; }
+
+		#endregion
+
+		#region Exported Properties
+
+		[Export] public int MaxHp { private set; get; } = 20;
+
+		[Export] private string _narrationLightWound = "You suffer a light graze.";
+		[Export] private string _narrationSeriousWound = "You take a serious wound.";
+		[Export] private string _narrationBrutalWound = "Pain sears your flesh — a brutal blow!";
+		[Export] private string _narrationDrown = "You drown, your lungs filling with sorrow.";
+		[Export] private string _narrationDeath = "Your tale ends here. You have perished in the dungeon.";
 
 		#endregion
 
 		#region Dependencies
 
 		private PlayerController _playerController;
-		private ScreenFlasher _screenFlasher;
-		private ScreenFader _screenFader;
 
 		#endregion
 
@@ -55,21 +64,6 @@ namespace DungeonCrawler
 			_playerController = GetNodeOrNull<PlayerController>("PlayerController");
 			if (_playerController == null)
 				GD.PrintErr("Player: PlayerController not found.");
-
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			if (main == null)
-			{
-				GD.PrintErr("Player: 'Main' node not found.");
-				return;
-			}
-
-			_screenFlasher = main.GetNodeOrNull<ScreenFlasher>("CanvasLayer/ScreenFlasher");
-			if (_screenFlasher == null)
-				GD.PrintErr("Player: ScreenFlasher not found at 'CanvasLayer/ScreenFlasher'.");
-
-			_screenFader = main.GetNodeOrNull<ScreenFader>("CanvasLayer/ScreenFader");
-			if (_screenFader == null)
-				GD.PrintErr("Player: ScreenFader not found at 'CanvasLayer/ScreenFader'.");
 		}
 
 		#endregion
@@ -125,24 +119,23 @@ namespace DungeonCrawler
 			switch (damage)
 			{
 				case < 3:
-					message = "Thou art grazed by harm most slight.";
+					message = _narrationLightWound;
 					break;
 				case < 5:
-					message = "A grievous wound dost thou suffer.";
+					message = _narrationSeriousWound;
 					break;
 				case < 7:
-					message = "Pain sears thy flesh — a dire blow indeed!";
+					message = _narrationBrutalWound;
 					break;
 				default:
 					break;
 			}
 
-			Global.MessageBox.Message($"{message}", color: "red");
+			Global.MessageBox.Message($"{message}", Global.Red);
 
 			Hp -= damage;
 
-			// Visual/audio feedback
-			_screenFlasher?.Flash(new Color(1f, 0f, 0f, 1f)); // Red flash
+			Global.ScreenFlasher?.Flash(new Color(1f, 0f, 0f, 1f));
 			_playerController?.PlayHurt();
 
 			Global.Skull.UpdateSkull(MaxHp, Hp);
@@ -161,16 +154,16 @@ namespace DungeonCrawler
 			if (drown)
 			{
 				fadeTime = 0.25f;
-				Global.MessageBox.Message($"Thou drowneth, lungs aflood with sorrow.", color: "red");
+				Global.MessageBox.Message(_narrationDrown, Global.Red);
 			}
 			else
 			{
-				Global.MessageBox.Message($"Thy tale endeth here. Thou hast perished in the dungeon.", color: "red");
+				Global.MessageBox.Message(_narrationDeath, Global.Red);
 			}
 
 			BlockInput();
 			_isDead = true;
-			_screenFader?.FadeToBlack(fadeTime);
+			Global.ScreenFader?.FadeToBlack(fadeTime);
 
 			await ToSignal(GetTree().CreateTimer(_respawnTimer), SceneTreeTimer.SignalName.Timeout);
 

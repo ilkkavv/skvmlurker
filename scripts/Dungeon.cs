@@ -17,14 +17,12 @@ namespace DungeonCrawler
 
 		[Export] private Vector3 _playerStartPos = Vector3.Zero;
 		[Export] private float _fadeTime = 0.5f;
+		[Export] private string _narration = "You step into the gloom — welcome to the dungeon.";
 
 		#endregion
 
 		#region Runtime References
 
-		private Player _player;
-		private ScreenFader _screenFader;
-		private SaveManager _saveManager;
 		private Node3D _currentLevel;
 
 		#endregion
@@ -50,34 +48,6 @@ namespace DungeonCrawler
 		/// </summary>
 		public override void _Ready()
 		{
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			if (main == null)
-			{
-				GD.PrintErr("Dungeon: 'Main' node not found.");
-				return;
-			}
-
-			_player = main.GetNodeOrNull<Player>("CanvasLayer/SubViewportContainer/SubViewport/Player");
-			if (_player == null)
-			{
-				GD.PrintErr("Dungeon: Player not found.");
-				return;
-			}
-
-			_screenFader = main.GetNodeOrNull<ScreenFader>("CanvasLayer/ScreenFader");
-			if (_screenFader == null)
-			{
-				GD.PrintErr("Dungeon: ScreenFader not found.");
-				return;
-			}
-
-			_saveManager = main.GetNodeOrNull<SaveManager>("SaveManager");
-			if (_saveManager == null)
-			{
-				GD.PrintErr("Dungeon: SaveManager not found.");
-				return;
-			}
-
 			if (string.IsNullOrEmpty(_startLevelPath))
 			{
 				GD.PrintErr("Dungeon: No start level path specified.");
@@ -103,8 +73,8 @@ namespace DungeonCrawler
 		/// </summary>
 		public void SetPlayerPos(Vector3 position, float rotation)
 		{
-			_player.GlobalPosition = position;
-			_player.GlobalRotationDegrees = new Vector3(0, rotation, 0);
+			Global.Player.GlobalPosition = position;
+			Global.Player.GlobalRotationDegrees = new Vector3(0, rotation, 0);
 		}
 
 		/// <summary>
@@ -112,7 +82,7 @@ namespace DungeonCrawler
 		/// and restoring them after load. Handles fade and optional fall damage.
 		/// </summary>
 		public async Task ChangeLevel(PackedScene targetScene, Vector3 newPlayerPos,
-			float? newPlayerRot = null, bool fallDamage = false, string message = "")
+			float? newPlayerRot = null, bool fallDamage = false, string narration = "")
 		{
 			if (targetScene == null)
 			{
@@ -122,8 +92,8 @@ namespace DungeonCrawler
 
 			TrapsEnabled = false;
 
-			_player.BlockInput();
-			_screenFader.FadeToBlack(_fadeTime);
+			Global.Player.BlockInput();
+			Global.ScreenFader.FadeToBlack(_fadeTime);
 			await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
 
 			if (_currentLevel != null)
@@ -152,19 +122,19 @@ namespace DungeonCrawler
 			_currentLevel = newLevelInstance;
 			AddChild(_currentLevel);
 
-			float finalRot = newPlayerRot ?? _player.GlobalRotationDegrees.Y;
+			float finalRot = newPlayerRot ?? Global.Player.GlobalRotationDegrees.Y;
 			SetPlayerPos(newPlayerPos, finalRot);
 
 			if (fallDamage)
-				_player.TakeDamage(1, 6);
+				Global.Player.TakeDamage(1, 6);
 
-			if (_player.Hp > 0)
+			if (Global.Player.Hp > 0)
 			{
-				_screenFader.FadeBack(_fadeTime);
+				Global.ScreenFader.FadeBack(_fadeTime);
 				await ToSignal(GetTree().CreateTimer(_fadeTime), SceneTreeTimer.SignalName.Timeout);
 
-				if (message != "") Global.MessageBox.Message(message);
-				_player.UnblockInput();
+				if (narration != "") Global.MessageBox.Message(narration, Global.Grey);
+				Global.Player.UnblockInput();
 
 				TrapsEnabled = true;
 			}
@@ -212,7 +182,7 @@ namespace DungeonCrawler
 			if (_currentLevel == null)
 				return false;
 
-			return _saveManager.LoadBoolValue(_currentLevel.Name, objectType, objectId, key);
+			return Global.SaveManager.LoadBoolValue(_currentLevel.Name, objectType, objectId, key);
 		}
 
 		/// <summary>
@@ -234,9 +204,9 @@ namespace DungeonCrawler
 			}
 
 			Global.MessageBox.ClearMessages();
-			_saveManager.WipeAllLevels();
-			_ = ChangeLevel(startScene, _playerStartPos, 0f, message: "Ye step into the gloom — welcome to the dungeon."); // Fire-and-forget load
-			_player.Spawn();
+			Global.SaveManager.WipeAllLevels();
+			_ = ChangeLevel(startScene, _playerStartPos, 0f, narration: _narration);
+			Global.Player.Spawn();
 		}
 
 		#endregion
@@ -277,7 +247,7 @@ namespace DungeonCrawler
 			foreach (var chest in _chests)
 				chestsToSave[chest.ChestId] = chest._chestOpen;
 
-			_saveManager.SaveLevel(
+			Global.SaveManager.SaveLevel(
 				_currentLevel.Name,
 				gatesToSave,
 				pitTrapsToSave,

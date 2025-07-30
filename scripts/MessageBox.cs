@@ -9,14 +9,6 @@ namespace DungeonCrawler
 	/// </summary>
 	public partial class MessageBox : RichTextLabel
 	{
-		#region Exported Colors
-
-		[Export] private Color _grey = new Color("#8b8b8b");
-		[Export] private Color _red = new Color("#7f0000");
-		[Export] private Color _green = new Color("#6b6b0f");
-
-		#endregion
-
 		#region Constants & Fields
 
 		private const int MaxMessages = 100;
@@ -28,7 +20,7 @@ namespace DungeonCrawler
 
 		public override void _Ready()
 		{
-			ScrollActive = false; // Prevent auto-scrolling unless triggered
+			ScrollActive = false;
 		}
 
 		#endregion
@@ -40,13 +32,12 @@ namespace DungeonCrawler
 		/// </summary>
 		/// <param name="message">The message text to display.</param>
 		/// <param name="color">Color tag for the message ("grey", "red", "green", or default).</param>
-		public void Message(string message, string color = "white")
+		public void Message(string message, Color color)
 		{
-			string formatted = $"[color={GetColor(color).ToHtml()}]• {message}[/color]";
+			string formatted = $"[color={color.ToHtml()}]• {message}[/color]";
 
 			_messageLog.Add(formatted);
 
-			// Keep log size within MaxMessages
 			if (_messageLog.Count > MaxMessages)
 				_messageLog.RemoveAt(0);
 
@@ -73,25 +64,6 @@ namespace DungeonCrawler
 		{
 			Text = string.Join("\n", _messageLog);
 			ScrollToLine(GetLineCount());
-		}
-
-		/// <summary>
-		/// Returns a color based on a string name.
-		/// Defaults to grey if name is unrecognized.
-		/// </summary>
-		private Color GetColor(string colorName)
-		{
-			switch (colorName.ToLower())
-			{
-				case "grey":
-					return _grey;
-				case "red":
-					return _red;
-				case "green":
-					return _green;
-				default:
-					return _grey;
-			}
 		}
 
 		#endregion

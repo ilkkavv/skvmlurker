@@ -12,9 +12,6 @@ namespace DungeonCrawler
 
 		private Area3D _triggerArea;
 		private AudioStreamPlayer3D _sfxPlayer;
-		private Dungeon _dungeon;
-		private ScreenFlasher _screenFlasher;
-		private Player _player;
 
 		#endregion
 
@@ -25,7 +22,6 @@ namespace DungeonCrawler
 		/// </summary>
 		public override void _Ready()
 		{
-			// Local node references
 			_triggerArea = GetNodeOrNull<Area3D>("TriggerArea");
 			_sfxPlayer = GetNodeOrNull<AudioStreamPlayer3D>("SFXPlayer");
 
@@ -35,16 +31,6 @@ namespace DungeonCrawler
 				GD.PrintErr("Water: Missing SFXPlayer node.");
 			else
 				_triggerArea.BodyEntered += OnBodyEntered;
-
-			// External references
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
-			_screenFlasher = main?.GetNodeOrNull<ScreenFlasher>("CanvasLayer/ScreenFlasher");
-
-			if (_dungeon == null)
-				GD.PrintErr("Water: Dungeon not found.");
-			if (_screenFlasher == null)
-				GD.PrintErr("Water: ScreenFlasher not found.");
 		}
 
 		#endregion
@@ -60,19 +46,16 @@ namespace DungeonCrawler
 			if (body == null || !body.IsInGroup("player"))
 				return;
 
-			GD.Print("Drown!");
-
-			_player = body.GetParentOrNull<Player>();
-			if (_player == null)
+			Global.Player = body.GetParentOrNull<Player>();
+			if (Global.Player == null)
 			{
 				GD.PrintErr("Water: Could not resolve Player node.");
 				return;
 			}
 
-			// Flash screen with dark green tone to simulate drowning
-			_screenFlasher?.Flash(new Color(0.0588f, 0.1059f, 0.0745f, 1.0f));
+			Global.ScreenFlasher?.Flash(Global.DarkGreen);
 
-			_player.Die(drown: true);
+			Global.Player.Die(drown: true);
 			_sfxPlayer.Play();
 		}
 

@@ -14,6 +14,7 @@ namespace DungeonCrawler
 		[Export] private bool _closeGate = false;
 		[Export] private string _pressSfxPath;
 		[Export] private string _releaseSfxPath;
+		[Export] private string _narration = "A plate shifts beneath your foot.";
 
 		/// <summary>
 		/// Duration in seconds to keep the gate open. If 0, the gate stays open indefinitely.
@@ -73,7 +74,7 @@ namespace DungeonCrawler
 			if (_isPressed || body == null || !body.IsInGroup("player"))
 				return;
 
-			Global.MessageBox.Message("Thy foot falleth upon a stone plate.");
+			Global.MessageBox.Message(_narration, Global.Grey);
 			TogglePlate(true);
 		}
 

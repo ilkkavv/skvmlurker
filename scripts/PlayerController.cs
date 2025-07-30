@@ -16,6 +16,8 @@ namespace DungeonCrawler
 		[Export] private string _pathToGruntSfx = "res://assets/audio/sfx/grunt.wav";
 		[Export] private string _pathToHurtSfx = "res://assets/audio/sfx/hurt.wav";
 		[Export] private string _pathToDeathSfx = "res://assets/audio/sfx/death.wav";
+		[Export] private string _narrationStairs = "You enter the stairwell, where shadow and stone entwine.";
+		[Export] private string _narrationFall = "A misstep! Down you plummet.";
 
 		// === Internal Node References ===
 		private AudioStreamPlayer3D _sfxPlayer;
@@ -25,7 +27,6 @@ namespace DungeonCrawler
 		private RayCast3D _backRaycast;
 		private RayCast3D _downRaycast;
 		private Camera3D _playerCamera;
-		private Player _player;
 		private AudioStream _footstepSound;
 		private AudioStream _gruntSound;
 		private AudioStream _hurtSound;
@@ -49,7 +50,6 @@ namespace DungeonCrawler
 
 		// === Private State ===
 		private float _travelTime;
-		private Dungeon _dungeon;
 		private Stairs _stairs;
 		private Tween _tween;
 		private bool _blocksInput = false;
@@ -67,23 +67,6 @@ namespace DungeonCrawler
 		/// </summary>
 		public override void _Ready()
 		{
-			// Reference player node from parent
-			_player = GetParent<Player>();
-			if (_player == null)
-				GD.PrintErr("PlayerController: Failed to find Player node as parent.");
-
-			// Get Dungeon reference from scene root
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			if (main == null)
-			{
-				GD.PrintErr("PlayerController: 'Main' node not found in scene tree.");
-				return;
-			}
-
-			_dungeon = main.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
-			if (_dungeon == null)
-				GD.PrintErr("PlayerController: Dungeon node not found at 'GameWorld/Dungeon'.");
-
 			// Internal child nodes
 			_frontRaycast = GetNodeOrNull<RayCast3D>("CollisionShape3D/FrontRaycast");
 			_leftRaycast = GetNodeOrNull<RayCast3D>("CollisionShape3D/LeftRaycast");
@@ -120,7 +103,7 @@ namespace DungeonCrawler
 		{
 			HandleSystemInput();
 
-			if (_player.IsInputBlocked || IsTweenRunning() || CheckForFall())
+			if (Global.Player.IsInputBlocked || IsTweenRunning() || CheckForFall())
 				return;
 
 			HandleMovementInput();
@@ -154,22 +137,22 @@ namespace DungeonCrawler
 
 			if (Input.IsActionPressed("MoveForward"))
 			{
-				direction = -_player.Transform.Basis.Z.Normalized();
+				direction = -Global.Player.Transform.Basis.Z.Normalized();
 				raycast = _frontRaycast;
 			}
 			else if (Input.IsActionPressed("MoveLeft"))
 			{
-				direction = -_player.Transform.Basis.X.Normalized();
+				direction = -Global.Player.Transform.Basis.X.Normalized();
 				raycast = _leftRaycast;
 			}
 			else if (Input.IsActionPressed("MoveRight"))
 			{
-				direction = _player.Transform.Basis.X.Normalized();
+				direction = Global.Player.Transform.Basis.X.Normalized();
 				raycast = _rightRaycast;
 			}
 			else if (Input.IsActionPressed("MoveBackward"))
 			{
-				direction = _player.Transform.Basis.Z.Normalized();
+				direction = Global.Player.Transform.Basis.Z.Normalized();
 				raycast = _backRaycast;
 			}
 
@@ -179,10 +162,10 @@ namespace DungeonCrawler
 			// 1. Try stairs
 			if (CheckStairs(raycast))
 			{
-				Global.MessageBox.Message("Thou entereth the stairwell, where shadow and stone entwine.");
+				Global.MessageBox.Message(_narrationStairs, Global.Grey);
 				PlayStairFootsteps();
 
-				_dungeon?.ChangeLevel(
+				Global.Dungeon?.ChangeLevel(
 					_stairs.ReturnTargetScene(),
 					_stairs.ReturnNewPlayerPos(),
 					_stairs.ReturnNewPlayerRot()
@@ -240,9 +223,9 @@ namespace DungeonCrawler
 		private void MoveInDirection(Vector3 direction)
 		{
 			_tween = CreateTween();
-			Transform3D targetTransform = _player.Transform.Translated(direction * TravelDistance);
+			Transform3D targetTransform = Global.Player.Transform.Translated(direction * TravelDistance);
 
-			_tween.TweenProperty(_player, "transform", targetTransform, _travelTime);
+			_tween.TweenProperty(Global.Player, "transform", targetTransform, _travelTime);
 			_tween.Parallel()
 				  .TweenCallback(Callable.From(() => PlayFootstep()))
 				  .SetDelay(_travelTime / 1.5f);
@@ -255,11 +238,11 @@ namespace DungeonCrawler
 		{
 			_tween = CreateTween();
 
-			Basis rotated = _player.Transform.Basis.Rotated(Vector3.Up, angle);
-			Transform3D newTransform = _player.Transform;
+			Basis rotated = Global.Player.Transform.Basis.Rotated(Vector3.Up, angle);
+			Transform3D newTransform = Global.Player.Transform;
 			newTransform.Basis = rotated;
 
-			_tween.TweenProperty(_player, "transform", newTransform, _travelTime);
+			_tween.TweenProperty(Global.Player, "transform", newTransform, _travelTime);
 		}
 
 		#endregion
@@ -283,15 +266,15 @@ namespace DungeonCrawler
 		/// </summary>
 		private void Fall()
 		{
-			Global.MessageBox.Message("A misstep! Down thou plummet into darkness.");
+			Global.MessageBox.Message(_narrationFall, Global.Red);
 
-			_player.BlockInput();
+			Global.Player.BlockInput();
 			_tween = CreateTween();
 
-			Vector3 startPos = _player.GlobalPosition;
+			Vector3 startPos = Global.Player.GlobalPosition;
 			Vector3 endPos = startPos + Vector3.Down * _fallDistance;
 
-			_tween.TweenProperty(_player, "global_position", endPos, _fallDuration)
+			_tween.TweenProperty(Global.Player, "global_position", endPos, _fallDuration)
 				  .SetTrans(Tween.TransitionType.Cubic)
 				  .SetEase(Tween.EaseType.In);
 		}
@@ -431,7 +414,7 @@ namespace DungeonCrawler
 		/// </summary>
 		public void PlayHurt()
 		{
-			_sfxPlayer.Stream = _player.Hp > 0 ? _hurtSound : _deathSound;
+			_sfxPlayer.Stream = Global.Player.Hp > 0 ? _hurtSound : _deathSound;
 			_sfxPlayer.VolumeDb = HurtVolumeDb;
 			_sfxPlayer.PitchScale = HurtPitchScale;
 			_sfxPlayer.Play();

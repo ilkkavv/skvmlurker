@@ -10,25 +10,21 @@ namespace DungeonCrawler
 	{
 		#region Exported Properties
 
-		/// <summary>Path to the spike trigger sound effect.</summary>
 		[Export] private string _triggerSfxPath;
-
-		/// <summary>Path to the spike reset (retract) sound effect.</summary>
 		[Export] private string _resetSfxPath;
 
 		#endregion
 
 		#region Private Fields
 
-		private Area3D _triggerArea;         // Detects player stepping on trap
-		private Area3D _damageArea;          // Detects when spikes deal damage
-		private StaticBody3D _spikes;        // The spikes mesh
+		private Area3D _triggerArea;
+		private Area3D _damageArea;
+		private StaticBody3D _spikes;
 		private AudioStreamPlayer3D _sfxPlayer;
 
-		private Player _player;
 		private Tween _tween;
 
-		private bool _dealDamage = true;     // Ensures damage is dealt only once per trigger
+		private bool _dealDamage = true;
 		private float _damageTimer = 0.3f;
 
 		private readonly Vector3 _spikesUpPos = new(0, 1.5f, 0); // Raised spike position
@@ -104,20 +100,15 @@ namespace DungeonCrawler
 		{
 			if (body.IsInGroup("player") && _dealDamage)
 			{
-				_player = body.GetParentOrNull<Player>();
-				if (_player == null)
-				{
-					GD.PrintErr("SpikeTrap: Could not resolve Player script.");
-					return;
-				}
+				Global.Player = body.GetParentOrNull<Player>();
 
-				_player.BlockInput();
+				Global.Player.BlockInput();
 
 				_dealDamage = false;
-				_player.TakeDamage(1, 6);
+				Global.Player.TakeDamage(1, 6);
 
 				await ToSignal(GetTree().CreateTimer(_damageTimer), SceneTreeTimer.SignalName.Timeout);
-				_player.UnblockInput();
+				Global.Player.UnblockInput();
 			}
 		}
 

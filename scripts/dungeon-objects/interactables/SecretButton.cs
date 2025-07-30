@@ -11,28 +11,17 @@ namespace DungeonCrawler
 	{
 		#region Exported Settings
 
-		/// <summary>
-		/// Unique ID used for saving the button's state.
-		/// </summary>
 		[Export] public string SecretButtonId { private set; get; }
-
-		/// <summary>
-		/// Gate that this button controls. Must be assigned in the editor.
-		/// </summary>
 		[Export] private Gate _gate;
-
-		/// <summary>
-		/// Delay (in seconds) between pressing the button and opening the gate.
-		/// </summary>
 		[Export] private float _pressDelay = 0.3f;
+		[Export] private string _narration = "With a subtle touch, you trigger a hidden mechanism.";
 
 		#endregion
 
 		#region Private Fields
 
-		private StaticBody3D _tile;                 // The button mesh that animates inward
-		private AudioStreamPlayer3D _sfxPlayer;     // Plays press sound effect
-		private Dungeon _dungeon;                   // Reference to the dungeon system
+		private StaticBody3D _tile;
+		private AudioStreamPlayer3D _sfxPlayer;
 
 		/// <summary>
 		/// Whether the button has already been pressed.
@@ -60,14 +49,7 @@ namespace DungeonCrawler
 			if (_gate == null)
 				GD.PrintErr("SecretButton: Gate reference not assigned.");
 
-			// Get Dungeon reference
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
-
-			if (_dungeon == null)
-				GD.PrintErr("SecretButton: Dungeon reference not found.");
-
-			_dungeon?.AddObject(this);
+			Global.Dungeon?.AddObject(this);
 			InitializeState();
 		}
 
@@ -86,7 +68,7 @@ namespace DungeonCrawler
 
 			_pressed = true;
 
-			Global.MessageBox.Message("With subtle touch, thou press’st a secret button.");
+			Global.MessageBox.Message(_narration, Global.Green);
 
 			if (_tile != null)
 				_tile.Position = PressedPosition;
@@ -107,10 +89,10 @@ namespace DungeonCrawler
 		/// </summary>
 		private void InitializeState()
 		{
-			if (_dungeon == null || string.IsNullOrEmpty(SecretButtonId))
+			if (Global.Dungeon == null || string.IsNullOrEmpty(SecretButtonId))
 				return;
 
-			_pressed = _dungeon.LoadObjectState("SecretButton", SecretButtonId, "Pressed");
+			_pressed = Global.Dungeon.LoadObjectState("SecretButton", SecretButtonId, "Pressed");
 
 			if (_pressed && _tile != null)
 				_tile.Position = PressedPosition;

@@ -6182,11 +6182,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 24)
 
 [node name="GraffitiWall" parent="Objects" instance=ExtResource("15_1xax6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 26)
-_text = "Step thou with heed, where shadow meets stone — for iron fang waiteth the unwatchful bone."
+_message = "Tread not swift where shadows creep, For fangs of iron lie buried deep. They rise with hunger, sharp and prone, To drink the blood of unwatchful bone."
 
 [node name="GraffitiWall2" parent="Objects" instance=ExtResource("15_1xax6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0, 10)
-_text = "Where stone stands false and shadows lie, A silent gate the bold espy. Strike not the foe, but firm façade — For truth walks where the world is flawed."
+_message = "The path ahead may seem to stall, But not all stone is truly wall. Where silence lingers, take a stride, What’s hidden waits on the other side."
 
 [node name="IllusoryWall" parent="Objects" instance=ExtResource("19_4fww7")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 44, 0, 10)

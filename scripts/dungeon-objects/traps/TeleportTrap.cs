@@ -10,17 +10,11 @@ namespace DungeonCrawler
 	{
 		#region Exported Settings
 
-		/// <summary>Unique identifier used for save/load state tracking.</summary>
 		[Export] public string TeleportTrapId { private set; get; }
-
-		/// <summary>Target global position to teleport the player to.</summary>
 		[Export] private Vector3 _targetPosition = Vector3.Zero;
-
-		/// <summary>Y-axis rotation (in degrees) to apply to the player after teleport.</summary>
 		[Export] private float _targetRotation = 0f;
-
-		/// <summary>If true, this trap can only trigger once per runtime.</summary>
 		[Export] private bool _triggerOnce = false;
+		[Export] private string _narration = "In the blink of an eye, the walls shift — you're struck by disorientation.";
 
 		#endregion
 
@@ -28,12 +22,9 @@ namespace DungeonCrawler
 
 		private Area3D _triggerArea;
 		private AudioStreamPlayer2D _sfxPlayer;
-		private Dungeon _dungeon;
-		private ScreenFlasher _screenFlasher;
-		private Player _player;
 
-		private const float _controlDelay = 0.25f; // Delay before regaining control
-		public bool _isTriggered = false;          // Flag for one-time triggers
+		private const float _controlDelay = 0.25f;
+		public bool _isTriggered = false;
 
 		#endregion
 
@@ -62,19 +53,9 @@ namespace DungeonCrawler
 			else
 				_triggerArea.BodyEntered += OnBodyEntered;
 
-			// External references
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			_dungeon = main?.GetNodeOrNull<Dungeon>("GameWorld/Dungeon");
-			_screenFlasher = main?.GetNodeOrNull<ScreenFlasher>("CanvasLayer/ScreenFlasher");
-
-			if (_dungeon == null)
-				GD.PrintErr("TeleportTrap: Dungeon not found.");
-			if (_screenFlasher == null)
-				GD.PrintErr("TeleportTrap: ScreenFlasher not found.");
-
 			if (_triggerOnce)
 			{
-				_dungeon?.AddObject(this);
+				Global.Dungeon?.AddObject(this);
 				InitializeState();
 			}
 		}
@@ -91,14 +72,7 @@ namespace DungeonCrawler
 			if (_isTriggered || body == null || !body.IsInGroup("player"))
 				return;
 
-			_player = body.GetParentOrNull<Player>();
-			if (_player == null)
-			{
-				GD.PrintErr("TeleportTrap: Could not resolve Player node.");
-				return;
-			}
-
-			_player.BlockInput();
+			Global.Player.BlockInput();
 			TriggerTeleport();
 		}
 
@@ -110,16 +84,16 @@ namespace DungeonCrawler
 			if (_triggerOnce)
 				_isTriggered = true;
 
-			Global.MessageBox.Message("In but a blink, the walls are not as they were — thou art overcome by disorientation.");
+			Global.MessageBox.Message(_narration, Global.Blue);
 
-			_player.StopPlayer();
+			Global.Player.StopPlayer();
 			_sfxPlayer?.Play();
 
-			_screenFlasher?.Flash(new Color(0.545f, 0.545f, 0.796f, 1f)); // Light purple flash
-			_dungeon?.SetPlayerPos(_targetPosition, _targetRotation);
+			Global.ScreenFlasher?.Flash(Global.Blue);
+			Global.Dungeon?.SetPlayerPos(_targetPosition, _targetRotation);
 
 			await ToSignal(GetTree().CreateTimer(_controlDelay), SceneTreeTimer.SignalName.Timeout);
-			_player.UnblockInput();
+			Global.Player.UnblockInput();
 		}
 
 		#endregion
@@ -128,13 +102,13 @@ namespace DungeonCrawler
 
 		/// <summary>
 		/// Loads the trigger state for one-time traps.
-		/// </summary>
+		/// </summary>s
 		private void InitializeState()
 		{
-			if (_dungeon == null || string.IsNullOrEmpty(TeleportTrapId))
+			if (string.IsNullOrEmpty(TeleportTrapId))
 				return;
 
-			_isTriggered = _dungeon.LoadObjectState("TeleportTrap", TeleportTrapId, "Triggered");
+			_isTriggered = Global.Dungeon.LoadObjectState("TeleportTrap", TeleportTrapId, "Triggered");
 		}
 
 		#endregion

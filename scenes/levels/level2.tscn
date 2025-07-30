@@ -2231,7 +2231,7 @@ _gate = NodePath("../Gate1")
 
 [node name="GraffitiWall" parent="." instance=ExtResource("8_8i1lk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 0, 56)
-_text = "Thou hast braved a realm yet unfinished — thy courage and curiosity art a boon to its making. I thank thee, brave soul, for lending thine eyes and hands to this humble work-in-progress. May thy feedback shape the dungeon's destiny. Press [Esc] should thou wish to depart this place."
+_message = "Brave soul who tread where few have gone, Through broken code and paths half-drawn, Your steps have shaped this world in kind, With bugs and magic intertwined. So take our thanks, though work remains, You’ve helped to spark what still sustains. Press ESC to leave this realm behind, And carry tales of what you find."
 
 [node name="Torch" parent="." instance=ExtResource("9_hgky1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 0, 56)

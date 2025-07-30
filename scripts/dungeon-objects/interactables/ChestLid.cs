@@ -9,19 +9,12 @@ namespace DungeonCrawler
 	public partial class ChestLid : Interactable
 	{
 		private Chest _chest;
-		private Player _player;
 
 		#region Lifecycle
 
 		public override void _Ready()
 		{
-			// External references
-			Node main = GetTree().Root.GetNodeOrNull("Main");
-			_player = main?.GetNodeOrNull<Player>("CanvasLayer/SubViewportContainer/SubViewport/Player");
-
 			_chest = GetParentOrNull<Chest>();
-
-			if (_player == null) GD.PrintErr("ChestLid: Player not found.");
 			if (_chest == null) GD.PrintErr("ChestLid: Could not find parent Chest.");
 		}
 
@@ -35,7 +28,7 @@ namespace DungeonCrawler
 		/// </summary>
 		public override void OnInteract()
 		{
-			_chest?.LootChest(_player);
+			_chest?.LootChest();
 		}
 
 		#endregion
