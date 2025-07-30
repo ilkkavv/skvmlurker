@@ -160,12 +160,19 @@ namespace DungeonCrawler
 			else if (Input.IsActionJustPressed("IncreaseBrightness"))
 			{
 				if (Global.WorldEnvironment.Environment.TonemapExposure < 2.0f)
+				{
 					Global.WorldEnvironment.Environment.TonemapExposure += 0.1f;
+					Global.MessageBox.Message($"Set TonemapExposure to {Global.WorldEnvironment.Environment.TonemapExposure}", Global.Yellow);
+				}
+
 			}
 			else if (Input.IsActionJustPressed("DecreaseBrightness"))
 			{
 				if (Global.WorldEnvironment.Environment.TonemapExposure > 0.5f)
+				{
 					Global.WorldEnvironment.Environment.TonemapExposure -= 0.1f;
+					Global.MessageBox.Message($"Set TonemapExposure to {Global.WorldEnvironment.Environment.TonemapExposure}", Global.Yellow);
+				}
 			}
 
 			if (raycast == null || direction == Vector3.Zero)

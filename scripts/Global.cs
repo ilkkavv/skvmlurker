@@ -31,6 +31,7 @@ namespace DungeonCrawler
 		public static Color Green = new Color("#6b6b0f");
 		public static Color DarkGreen = new Color("#0f1b13");
 		public static Color Blue = new Color("#8b8bcb");
+		public static Color Yellow = new Color("#fff31b");
 
 		#endregion
 
