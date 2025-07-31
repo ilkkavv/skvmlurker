@@ -2,6 +2,10 @@
 
 *Flavor text here*
 
+<p align="center">
+  <img src="media/gameplay.gif" alt="Gameplay Preview" width="512"/>
+</p>
+
 ## Description
 
 **An old-school, grid-based dungeon crawler with retro visuals and atmospheric exploration.**
@@ -28,6 +32,10 @@ The project also provided practical experience with **version control**, **maint
 - Mouse-driven interaction
 - Environmental mechanics like **pressure plates**, **levers**, and **gates**
 - Hidden dangers including **deadly traps** and hazardous tiles
+
+<p align="center">
+  <img src="media/screenshot.png" alt="Gameplay Preview" width="512"/>
+</p>
 
 ## **How to Play**
 
@@ -66,8 +74,9 @@ To run the project locally in the Godot Engine:
 
 ## **Status**
 
-This is a **work-in-progress** game!
+This is a **work-in-progress** game and not in active development!
 
+- Currently includes **only one level**, intended to **showcase gameplay features and mechanics**
 - Contains **bugs**, **incomplete mechanics**, and **placeholder assets**
 - Missing core features such as **combat**, **player stats**, and an **inventory system**
 - **Feedback and suggestions are welcome!**
