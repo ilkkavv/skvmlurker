@@ -78,7 +78,7 @@ For detailed attributions, see `docs/CREDITS.md`.
 
 ### Assets & References
 
-- **Sound effects** downloaded and edited from [OpenGameArt.org](https://opengameart.org/)
+- **Sound effects** downloaded and edited from [OpenGameArt.org](https://opengameart.org/) and [freesound](https://freesound.org/)
 - **Textures** downloaded and edited from [ambientCG](https://ambientcg.com/)
 - **Movement script** inspired by the tutorial:
   [Dungeon Crawler Movement in Godot 3.5 (+ Free Plugin!)](https://www.youtube.com/watch?v=Vr-Fsd6M5Tk) by  GameDev Compass
