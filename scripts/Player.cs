@@ -136,7 +136,7 @@ namespace DungeonCrawler
 			_playerController?.PlayHurt();
 
 			Global.Skull.UpdateSkull();
-			Global.Skull.PlayHurt(Hp);
+			Global.Skull.PlayHurt();
 
 			if (Hp <= 0)
 				Die();

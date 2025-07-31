@@ -7,7 +7,7 @@
 render_priority = 0
 shader = ExtResource("1_mlyr4")
 shader_parameter/water_tex = ExtResource("2_n5diq")
-shader_parameter/alpha_val = 0.6
+shader_parameter/alpha_val = 0.1
 shader_parameter/uv_scale = Vector2(0.5, 0.5)
 shader_parameter/move_speed = 0.5
 shader_parameter/move_amount = 0.05

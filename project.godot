@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Dungeon Crawler"
+config/name="Skvmlurker"
+config/description="An old-school, grid-based dungeon crawler with retro visuals and atmospheric exploration."
 run/main_scene="uid://clr6qv2hnek8k"
 config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
 config/icon="uid://588qkpy08bi0"
@@ -23,7 +24,7 @@ Global="*res://scripts/Global.cs"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
+window/stretch/mode="viewport"
 mouse_cursor/custom_image="uid://demptwilvshbe"
 
 [dotnet]
@@ -100,7 +101,6 @@ DecreaseBrightness={
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)

@@ -55,9 +55,9 @@ namespace DungeonCrawler
 		/// Temporarily plays a hurt animation overlay, if available.
 		/// </summary>
 		/// <param name="hp">Current health to determine if hurt animation should play.</param>
-		public void PlayHurt(int hp)
+		public void PlayHurt()
 		{
-			if (hp <= 0) return;
+			if (Global.Player.Hp <= 0) return;
 
 			string hurtAnim = $"{_defaultAnim}-hurt";
 
