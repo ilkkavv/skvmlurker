@@ -159,7 +159,7 @@ namespace DungeonCrawler
 			// Placeholder brightness adjustment
 			else if (Input.IsActionJustPressed("IncreaseBrightness"))
 			{
-				if (Global.WorldEnvironment.Environment.TonemapExposure < 2.0f)
+				if (Global.WorldEnvironment.Environment.TonemapExposure < 5.0f)
 				{
 					Global.WorldEnvironment.Environment.TonemapExposure += 0.1f;
 					Global.MessageBox.Message($"Set TonemapExposure to {Global.WorldEnvironment.Environment.TonemapExposure}", Global.Yellow);
