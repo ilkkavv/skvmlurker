@@ -1,12 +1,9 @@
 # SKVMLURKER
 
-*Days bleed into each other, a grey smear of monotony and meaninglessness.*<br/>
-*Your life - hollow, aimless - drifts forward without purpose.*<br/>
+*Days bleed into each other, a grey smear of monotony and meaninglessness. Your life - hollow, aimless - drifts forward without purpose.*<br/>
 *Then, without reason, a fire awakens in your mind. A pull. A compulsion. Something ancient and unknown whispers in the cracks of your thoughts, dragging you toward a place untouched by mercy.*<br/>
 *You've traveled far - through ruin, through silence - driven not by hope, but by the certainty that you must.*<br/>
-*Now you stand before it. The forgotten place.*<br/>
-*You do not know what you seek.*<br/>
-*Only that you must go in.*
+*Now you stand before it. The forgotten place. You do not know what you seek. Only that you must go in.*
 
 <p align="center">
   <img src="media/gameplay.gif" alt="Gameplay Preview" width="512"/>
