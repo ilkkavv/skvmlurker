@@ -6,6 +6,17 @@
   <img src="media/gameplay.gif" alt="Gameplay Preview" width="512"/>
 </p>
 
+## Table of Contents
+
+- [Description](#description)
+- [About the project](#about-the-project)
+- [Gameplay Features](#gameplay-features)
+- [How to Play](#how-to-play)
+- [Installation Instructions](#installation-instructions)
+- [Status](#status)
+- [Credits](#credits)
+- [Author](#author)
+
 ## Description
 
 **An old-school, grid-based dungeon crawler with retro visuals and atmospheric exploration.**
