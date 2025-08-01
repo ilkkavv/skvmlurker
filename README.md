@@ -1,6 +1,11 @@
 # SKVMLURKER
 
-*Flavor text here*
+*Days bleed into each other, a grey smear of monotony and meaninglessness. Your life - hollow, aimless - drifts forward without purpose.*
+*Then, without reason, a fire awakens in your mind. A pull. A compulsion. Something ancient and unknown whispers in the cracks of your thoughts, dragging you toward a place untouched by mercy.*
+*You've traveled far - through ruin, through silence - driven not by hope, but by the certainty that you must.*
+*Now you stand before it. The forgotten place.*
+*You do not know what you seek.*
+*Only that you must go in.*
 
 <p align="center">
   <img src="media/gameplay.gif" alt="Gameplay Preview" width="512"/>
@@ -59,7 +64,7 @@ To run the project locally in the Godot Engine:
 
    - Launch Godot
    - Click **"Import"**, then select the `project.godot` file inside the cloned folder
-  
+
 3. **Run the game**:
 
    - Press **F5** or click the **Play** button in the top-right corner of the editor
@@ -68,7 +73,7 @@ To run the project locally in the Godot Engine:
 
 - Godot Engine 4.4.1
 - .NET 6.0 SDK or later (for C# scripting support)
-- **Vulkan-capable GPU**  
+- **Vulkan-capable GPU**
 - **1080p monitor** recommended
 - **Keyboard and mouse** input required
 
@@ -94,6 +99,6 @@ For detailed attributions, see `docs/CREDITS.md`.
 
 ## Author
 
-Developed by **Ilkka Wahala**  
-*Business Information Systems* student at **TAMK (Tampere University of Applied Sciences)**  
+Developed by **Ilkka Wahala**
+*Business Information Systems* student at **TAMK (Tampere University of Applied Sciences)**
 Game Camp Summer Project, 2025
